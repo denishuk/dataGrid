@@ -51,10 +51,10 @@ export function DataTableHeader<T>({
       <th
         key={String(column.field)}
         className={cn(
-          "px-4 py-3 text-left",
-          isPinned && "sticky z-20",
-          column.pinned === 'left' && "left-0 bg-primary-50 border-r border-primary-200",
-          column.pinned === 'right' && "right-0 bg-primary-50 border-l border-primary-200"
+          "px-4 py-3 text-left bg-gray-50",
+          isPinned && "sticky z-20 bg-gray-50/95 backdrop-blur-sm",
+          column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-lg",
+          column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-lg"
         )}
         style={{
           minWidth: column.minWidth,

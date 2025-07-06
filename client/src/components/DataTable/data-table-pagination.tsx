@@ -1,13 +1,7 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@/components/ui/select';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface DataTablePaginationProps {
   currentPage: number;
@@ -26,14 +20,16 @@ export function DataTablePagination({
   onPageChange,
   onPageSizeChange,
 }: DataTablePaginationProps) {
-  const startItem = (currentPage - 1) * pageSize + 1;
-  const endItem = Math.min(currentPage * pageSize, totalItems);
+  const startIndex = (currentPage - 1) * pageSize + 1;
+  const endIndex = Math.min(currentPage * pageSize, totalItems);
+
+  const pageSizeOptions = [10, 20, 50, 100];
 
   return (
-    <div className="flex items-center justify-between p-4 border-t bg-white">
-      <div className="flex items-center gap-4">
-        <div className="text-sm text-gray-600">
-          Showing {startItem}-{endItem} of {totalItems} rows
+    <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 bg-white">
+      <div className="flex items-center gap-6">
+        <div className="text-sm text-gray-700">
+          Showing {startIndex} to {endIndex} of {totalItems} entries
         </div>
         
         <div className="flex items-center gap-2">
@@ -43,10 +39,11 @@ export function DataTablePagination({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="25">25</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-              <SelectItem value="100">100</SelectItem>
+              {pageSizeOptions.map(size => (
+                <SelectItem key={size} value={size.toString()}>
+                  {size}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -70,13 +67,11 @@ export function DataTablePagination({
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
-
-        <div className="flex items-center gap-1">
-          <span className="text-sm text-gray-600">Page</span>
-          <span className="font-medium">{currentPage}</span>
-          <span className="text-sm text-gray-600">of {totalPages}</span>
-        </div>
-
+        
+        <span className="text-sm text-gray-600 min-w-[100px] text-center">
+          Page {currentPage} of {totalPages}
+        </span>
+        
         <Button
           variant="outline"
           size="sm"

@@ -60,9 +60,9 @@ export function DataTableRow<T extends Record<string, any>>({
         key={String(column.field)}
         className={cn(
           "px-4 py-3",
-          isPinned && "sticky z-10",
-          column.pinned === 'left' && "left-0 bg-primary-50 border-r border-primary-200",
-          column.pinned === 'right' && "right-0 bg-primary-50 border-l border-primary-200",
+          isPinned && "sticky z-10 bg-white/95 backdrop-blur-sm",
+          column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-lg",
+          column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-lg",
           column.editable && "cursor-pointer hover:bg-gray-50"
         )}
         style={{
