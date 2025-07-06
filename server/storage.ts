@@ -174,7 +174,11 @@ export class MemStorage implements IStorage {
 
   async createEmployee(insertEmployee: InsertEmployee): Promise<Employee> {
     const id = this.currentEmployeeId++;
-    const employee: Employee = { ...insertEmployee, id };
+    const employee: Employee = { 
+      ...insertEmployee, 
+      id,
+      isActive: insertEmployee.isActive ?? true
+    };
     this.employees.set(id, employee);
     return employee;
   }

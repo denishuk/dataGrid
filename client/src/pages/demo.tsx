@@ -9,7 +9,7 @@ import { Gauge, Database, MemoryStick } from 'lucide-react';
 export default function Demo() {
   const [selectedRows, setSelectedRows] = useState<Employee[]>([]);
 
-  const { data: employees = [], isLoading } = useQuery({
+  const { data: employees = [], isLoading } = useQuery<Employee[]>({
     queryKey: ['/api/employees'],
   });
 
@@ -20,6 +20,7 @@ export default function Demo() {
       pinned: 'left',
       sortable: true,
       filterable: true,
+      editable: true,
       cellRenderer: (value) => (
         <div className="font-mono text-sm text-gray-900">{value}</div>
       ),
@@ -29,10 +30,19 @@ export default function Demo() {
       header: 'Name',
       sortable: true,
       filterable: true,
+      editable: true,
+      headerRenderer: (column) => (
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
+            <span className="text-xs font-bold text-blue-600">👤</span>
+          </div>
+          <span className="font-medium text-gray-900">{column.header}</span>
+        </div>
+      ),
       cellRenderer: (value, row) => (
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-            <span className="text-sm font-medium text-gray-600">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+            <span className="text-sm font-medium text-white">
               {value.split(' ').map((n: string) => n[0]).join('')}
             </span>
           </div>
@@ -49,8 +59,17 @@ export default function Demo() {
       sortable: true,
       filterable: true,
       groupable: true,
+      editable: true,
       type: 'select',
       options: ['Engineering', 'Marketing', 'Sales', 'HR', 'Finance'],
+      headerRenderer: (column) => (
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center">
+            <span className="text-xs font-bold text-purple-600">🏢</span>
+          </div>
+          <span className="font-medium text-gray-900">{column.header}</span>
+        </div>
+      ),
       cellRenderer: (value) => (
         <Badge variant="secondary" className="bg-blue-100 text-blue-800">
           {value}
@@ -62,9 +81,18 @@ export default function Demo() {
       header: 'Salary',
       sortable: true,
       filterable: true,
+      editable: true,
       type: 'number',
+      headerRenderer: (column) => (
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+            <span className="text-xs font-bold text-green-600">💰</span>
+          </div>
+          <span className="font-medium text-gray-900">{column.header}</span>
+        </div>
+      ),
       cellRenderer: (value) => (
-        <span className="font-mono text-sm text-gray-900">
+        <span className="font-mono text-sm text-gray-900 bg-green-50 px-2 py-1 rounded">
           ${Number(value).toLocaleString()}
         </span>
       ),
@@ -74,6 +102,7 @@ export default function Demo() {
       header: 'Status',
       sortable: true,
       filterable: true,
+      editable: true,
       type: 'select',
       options: ['Active', 'Inactive', 'On Leave'],
       cellRenderer: (value) => (
@@ -96,6 +125,7 @@ export default function Demo() {
       header: 'Location',
       sortable: true,
       filterable: true,
+      editable: true,
     },
   ];
 
@@ -105,6 +135,12 @@ export default function Demo() {
 
   const handleExport = (data: Employee[], format: 'csv' | 'json') => {
     console.log(`Exporting ${data.length} rows as ${format}`);
+  };
+
+  const handleCellEdit = (row: Employee, field: keyof Employee, value: any) => {
+    console.log(`Editing cell: ${String(field)} = ${value} for employee ${row.name}`);
+    // In a real application, you would make an API call to update the data
+    // For demo purposes, we'll just log the change
   };
 
   if (isLoading) {
@@ -139,13 +175,14 @@ export default function Demo() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto space-y-6">
         <DataTable
-          data={employees}
+          data={employees as Employee[]}
           columns={columns}
           virtualScrolling={true}
           selectionMode="multiple"
           stickyHeader={true}
           onRowSelect={handleRowSelect}
           onExport={handleExport}
+          onCellEdit={handleCellEdit}
         />
 
         {/* Performance Metrics */}
@@ -171,7 +208,7 @@ export default function Demo() {
                 </div>
                 <div>
                   <div className="text-sm text-gray-600">Total Rows</div>
-                  <div className="text-lg font-semibold text-gray-900">{employees.length}</div>
+                  <div className="text-lg font-semibold text-gray-900">{(employees as Employee[]).length}</div>
                 </div>
               </div>
             </CardContent>
@@ -201,12 +238,15 @@ export default function Demo() {
               {[
                 { title: 'Virtual Scrolling', description: 'Handles thousands of rows efficiently' },
                 { title: 'Column Pinning', description: 'Pin important columns left/right' },
-                { title: 'Advanced Filtering', description: 'Multiple filter types and conditions' },
-                { title: 'Grouping & Sorting', description: 'Multi-level grouping and sorting' },
+                { title: 'Inline Column Filters', description: 'Filters directly under each column header' },
+                { title: 'Inline Cell Editing', description: 'Double-click cells to edit values' },
+                { title: 'Custom Header Renderers', description: 'Override column header templates' },
+                { title: 'Custom Cell Renderers', description: 'Custom formatting and styling' },
+                { title: 'Multi-Level Grouping', description: 'Group by multiple columns with summaries' },
+                { title: 'Numeric Summaries', description: 'Automatic sum calculations for grouped data' },
                 { title: 'Row Selection', description: 'Single and multiple row selection' },
                 { title: 'Export Functionality', description: 'CSV and JSON export' },
                 { title: 'Responsive Design', description: 'Works on desktop and mobile' },
-                { title: 'Keyboard Navigation', description: 'Full keyboard accessibility' },
                 { title: 'TypeScript Support', description: 'Full type safety and IntelliSense' },
               ].map((feature, index) => (
                 <div key={index} className="flex items-start gap-3">

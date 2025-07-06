@@ -2,27 +2,34 @@ import React from 'react';
 import { ArrowUp, ArrowDown, ArrowUpDown, Pin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { DataTableColumn, SortConfig } from './types';
+import { DataTableColumn, SortConfig, FilterConfig } from './types';
+import { DataTableColumnFilter } from './DataTableColumnFilter';
 import { cn } from '@/lib/utils';
 
 interface DataTableHeaderProps<T> {
   columns: DataTableColumn<T>[];
   sorts: SortConfig[];
+  filters: FilterConfig[];
   selectedRows: T[];
   totalRows: number;
   onSort: (field: string) => void;
   onSelectAll: () => void;
+  onFilterChange: (field: string, filter: FilterConfig | null) => void;
   showSelection: boolean;
+  showFilters?: boolean;
 }
 
 export function DataTableHeader<T>({
   columns,
   sorts,
+  filters,
   selectedRows,
   totalRows,
   onSort,
   onSelectAll,
+  onFilterChange,
   showSelection,
+  showFilters = true,
 }: DataTableHeaderProps<T>) {
   const getSortIcon = (field: string) => {
     const sort = sorts.find(s => s.field === field);
@@ -37,37 +44,61 @@ export function DataTableHeader<T>({
   const unpinnedColumns = visibleColumns.filter(col => !col.pinned);
   const pinnedRightColumns = visibleColumns.filter(col => col.pinned === 'right');
 
-  const renderHeaderCell = (column: DataTableColumn<T>, isPinned: boolean = false) => (
-    <th
-      key={String(column.field)}
-      className={cn(
-        "px-4 py-3 text-left",
-        isPinned && "sticky z-20",
-        column.pinned === 'left' && "left-0 bg-primary-50 border-r border-primary-200",
-        column.pinned === 'right' && "right-0 bg-primary-50 border-l border-primary-200"
-      )}
-      style={{
-        minWidth: column.minWidth,
-        maxWidth: column.maxWidth,
-        width: column.width,
-      }}
-    >
-      <div className="flex items-center gap-2">
-        <span className="font-medium text-gray-900">{column.header}</span>
-        {column.pinned && <Pin className="h-3 w-3 text-primary-500" />}
-        {column.sortable && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="p-0 h-4 w-4"
-            onClick={() => onSort(String(column.field))}
-          >
-            {getSortIcon(String(column.field))}
-          </Button>
+  const renderHeaderCell = (column: DataTableColumn<T>, isPinned: boolean = false) => {
+    const currentFilter = filters.find(f => f.field === String(column.field));
+    
+    return (
+      <th
+        key={String(column.field)}
+        className={cn(
+          "px-4 py-3 text-left",
+          isPinned && "sticky z-20",
+          column.pinned === 'left' && "left-0 bg-primary-50 border-r border-primary-200",
+          column.pinned === 'right' && "right-0 bg-primary-50 border-l border-primary-200"
         )}
-      </div>
-    </th>
-  );
+        style={{
+          minWidth: column.minWidth,
+          maxWidth: column.maxWidth,
+          width: column.width,
+        }}
+      >
+        <div className="space-y-2">
+          {/* Header Content */}
+          <div className="flex items-center gap-2">
+            {column.headerRenderer ? (
+              column.headerRenderer(column)
+            ) : (
+              <>
+                <span className="font-medium text-gray-900">{column.header}</span>
+                {column.pinned && <Pin className="h-3 w-3 text-primary-500" />}
+                {column.sortable && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="p-0 h-4 w-4"
+                    onClick={() => onSort(String(column.field))}
+                  >
+                    {getSortIcon(String(column.field))}
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
+          
+          {/* Column Filter */}
+          {showFilters && (
+            <div className="w-full">
+              <DataTableColumnFilter
+                column={column}
+                filter={currentFilter}
+                onFilterChange={(filter) => onFilterChange(String(column.field), filter)}
+              />
+            </div>
+          )}
+        </div>
+      </th>
+    );
+  };
 
   return (
     <thead className="bg-gray-50 border-b border-gray-200 sticky top-0 z-10">

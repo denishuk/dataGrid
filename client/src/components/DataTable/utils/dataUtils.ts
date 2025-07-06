@@ -55,31 +55,51 @@ export function sortData<T>(data: T[], sorts: SortConfig[]): T[] {
   });
 }
 
-export function groupData<T>(data: T[], groupField: string, expandedGroups: Set<string>): T[] {
+export function groupData<T>(data: T[], groupFields: string | string[], expandedGroups: Set<string>, columns: any[]): T[] {
+  const fields = Array.isArray(groupFields) ? groupFields : [groupFields];
+  if (fields.length === 0 || fields[0] === '') return data;
+  
   const groups = new Map<string, T[]>();
   
   data.forEach(item => {
-    const groupValue = String((item as any)[groupField]);
-    if (!groups.has(groupValue)) {
-      groups.set(groupValue, []);
+    const groupKey = fields.map(field => String((item as any)[field])).join('|');
+    if (!groups.has(groupKey)) {
+      groups.set(groupKey, []);
     }
-    groups.get(groupValue)!.push(item);
+    groups.get(groupKey)!.push(item);
   });
 
   const result: T[] = [];
   
-  groups.forEach((items, groupValue) => {
+  groups.forEach((items, groupKey) => {
+    const groupValues = groupKey.split('|');
+    const groupDisplayValue = fields.map((field, index) => `${field}: ${groupValues[index]}`).join(', ');
+    
+    // Calculate summaries for numeric columns
+    const summaries = new Map<string, number>();
+    columns.forEach(column => {
+      if (column.type === 'number') {
+        const sum = items.reduce((acc, item) => {
+          const value = Number((item as any)[column.field]);
+          return acc + (isNaN(value) ? 0 : value);
+        }, 0);
+        summaries.set(String(column.field), sum);
+      }
+    });
+    
     // Add group header
     result.push({
       __isGroupHeader: true,
-      __groupField: groupField,
-      __groupValue: groupValue,
+      __groupFields: fields,
+      __groupValue: groupDisplayValue,
+      __groupKey: groupKey,
       __itemCount: items.length,
-      __expanded: expandedGroups.has(groupValue),
+      __expanded: expandedGroups.has(groupKey),
+      __summaries: summaries,
     } as any);
 
     // Add items if expanded
-    if (expandedGroups.has(groupValue)) {
+    if (expandedGroups.has(groupKey)) {
       result.push(...items);
     }
   });

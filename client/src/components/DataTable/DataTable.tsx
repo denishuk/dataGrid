@@ -28,6 +28,7 @@ export function DataTable<T extends Record<string, any>>({
   onRowSelect,
   onExport,
   onColumnChange,
+  onCellEdit,
 }: DataTableProps<T>) {
   const [columns, setColumns] = useState(initialColumns);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
@@ -50,6 +51,7 @@ export function DataTable<T extends Record<string, any>>({
     toggleRowSelection,
     toggleAllSelection,
     toggleGroup,
+    onFilterChange,
   } = useDataTable(data, columns);
 
   const totalPages = Math.ceil(filteredData.length / pageSize);
@@ -118,7 +120,10 @@ export function DataTable<T extends Record<string, any>>({
               />
             </div>
             <div className="flex items-center gap-2">
-              <Select value={groupBy || 'none'} onValueChange={handleGroupByChange}>
+              <Select 
+                value={typeof groupBy === 'string' ? groupBy || 'none' : 'none'} 
+                onValueChange={handleGroupByChange}
+              >
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Group by: None" />
                 </SelectTrigger>
@@ -217,23 +222,27 @@ export function DataTable<T extends Record<string, any>>({
                   <DataTableHeader
                     columns={columns}
                     sorts={sorts}
+                    filters={filters}
                     selectedRows={selectedRows}
                     totalRows={filteredData.length}
                     onSort={toggleSort}
                     onSelectAll={toggleAllSelection}
+                    onFilterChange={onFilterChange}
                     showSelection={showSelection}
+                    showFilters={showFilters}
                   />
                   <tbody className="bg-white divide-y divide-gray-200">
                     {virtualization.visibleItems.map(index => {
                       const row = groupedData[index];
                       if ((row as any).__isGroupHeader) {
                         return (
-                          <tr key={`group-${(row as any).__groupValue}`}>
+                          <tr key={`group-${(row as any).__groupKey || (row as any).__groupValue}`}>
                             <DataTableGroupHeader
                               groupValue={(row as any).__groupValue}
                               itemCount={(row as any).__itemCount}
                               expanded={(row as any).__expanded}
-                              onToggle={() => toggleGroup((row as any).__groupValue)}
+                              summaries={(row as any).__summaries}
+                              onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
                             />
                           </tr>
                         );
@@ -246,6 +255,7 @@ export function DataTable<T extends Record<string, any>>({
                           isSelected={selectedRows.some(r => r.id === row.id)}
                           showSelection={showSelection}
                           onRowSelect={toggleRowSelection}
+                          onCellEdit={onCellEdit}
                         />
                       );
                     })}
@@ -260,22 +270,26 @@ export function DataTable<T extends Record<string, any>>({
               <DataTableHeader
                 columns={columns}
                 sorts={sorts}
+                filters={filters}
                 selectedRows={selectedRows}
                 totalRows={filteredData.length}
                 onSort={toggleSort}
                 onSelectAll={toggleAllSelection}
+                onFilterChange={onFilterChange}
                 showSelection={showSelection}
+                showFilters={showFilters}
               />
               <tbody className="bg-white divide-y divide-gray-200">
                 {paginatedData.map((row, index) => {
                   if ((row as any).__isGroupHeader) {
                     return (
-                      <tr key={`group-${(row as any).__groupValue}`}>
+                      <tr key={`group-${(row as any).__groupKey || (row as any).__groupValue}`}>
                         <DataTableGroupHeader
                           groupValue={(row as any).__groupValue}
                           itemCount={(row as any).__itemCount}
                           expanded={(row as any).__expanded}
-                          onToggle={() => toggleGroup((row as any).__groupValue)}
+                          summaries={(row as any).__summaries}
+                          onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
                         />
                       </tr>
                     );
@@ -288,6 +302,7 @@ export function DataTable<T extends Record<string, any>>({
                       isSelected={selectedRows.some(r => r.id === row.id)}
                       showSelection={showSelection}
                       onRowSelect={toggleRowSelection}
+                      onCellEdit={onCellEdit}
                     />
                   );
                 })}

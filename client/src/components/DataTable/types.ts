@@ -10,14 +10,16 @@ export interface DataTableColumn<T = any> {
   minWidth?: number;
   maxWidth?: number;
   hidden?: boolean;
+  editable?: boolean;
   cellRenderer?: (value: any, row: T) => React.ReactNode;
+  headerRenderer?: (column: DataTableColumn<T>) => React.ReactNode;
   options?: string[]; // For select type
 }
 
 export interface DataTableProps<T = any> {
   data: T[];
   columns: DataTableColumn<T>[];
-  groupBy?: string;
+  groupBy?: string | string[];
   virtualScrolling?: boolean;
   selectionMode?: 'single' | 'multiple' | 'none';
   stickyHeader?: boolean;
@@ -28,6 +30,7 @@ export interface DataTableProps<T = any> {
   onRowSelect?: (selectedRows: T[]) => void;
   onExport?: (data: T[], format: 'csv' | 'json') => void;
   onColumnChange?: (columns: DataTableColumn<T>[]) => void;
+  onCellEdit?: (row: T, field: keyof T, value: any) => void;
 }
 
 export interface FilterConfig {
@@ -45,4 +48,13 @@ export interface SortConfig {
 export interface GroupConfig {
   field: string;
   expanded: boolean;
+}
+
+export interface GroupSummary {
+  field: string;
+  count: number;
+  sum?: number;
+  avg?: number;
+  min?: number;
+  max?: number;
 }

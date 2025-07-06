@@ -9,7 +9,7 @@ export function useDataTable<T extends Record<string, any>>(
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
   const [filters, setFilters] = useState<FilterConfig[]>([]);
   const [sorts, setSorts] = useState<SortConfig[]>([]);
-  const [groupBy, setGroupBy] = useState<string>('');
+  const [groupBy, setGroupBy] = useState<string | string[]>('');
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -35,9 +35,11 @@ export function useDataTable<T extends Record<string, any>>(
   }, [data, filters, sorts, searchQuery]);
 
   const groupedData = useMemo(() => {
-    if (!groupBy) return filteredData;
-    return groupData(filteredData, groupBy, expandedGroups);
-  }, [filteredData, groupBy, expandedGroups]);
+    if (!groupBy || (Array.isArray(groupBy) && groupBy.length === 0) || (typeof groupBy === 'string' && groupBy === '')) {
+      return filteredData;
+    }
+    return groupData(filteredData, groupBy, expandedGroups, columns);
+  }, [filteredData, groupBy, expandedGroups, columns]);
 
   const toggleSort = useCallback((field: string) => {
     setSorts(prev => {
@@ -93,6 +95,14 @@ export function useDataTable<T extends Record<string, any>>(
     });
   }, []);
 
+  const onFilterChange = useCallback((field: string, filter: FilterConfig | null) => {
+    if (filter) {
+      addFilter(filter);
+    } else {
+      removeFilter(field);
+    }
+  }, [addFilter, removeFilter]);
+
   return {
     filteredData,
     groupedData,
@@ -111,5 +121,6 @@ export function useDataTable<T extends Record<string, any>>(
     toggleRowSelection,
     toggleAllSelection,
     toggleGroup,
+    onFilterChange,
   };
 }

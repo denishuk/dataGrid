@@ -6,6 +6,7 @@ interface DataTableGroupHeaderProps {
   groupValue: string;
   itemCount: number;
   expanded: boolean;
+  summaries?: Map<string, number>;
   onToggle: () => void;
 }
 
@@ -13,6 +14,7 @@ export function DataTableGroupHeader({
   groupValue, 
   itemCount, 
   expanded, 
+  summaries,
   onToggle 
 }: DataTableGroupHeaderProps) {
   return (
@@ -32,6 +34,15 @@ export function DataTableGroupHeader({
         </Button>
         <span className="font-medium text-gray-900">{groupValue}</span>
         <span className="text-sm text-gray-500">({itemCount} items)</span>
+        {summaries && summaries.size > 0 && (
+          <div className="flex items-center gap-4 ml-4">
+            {Array.from(summaries.entries()).map(([field, sum]) => (
+              <span key={field} className="text-sm text-blue-600 font-medium">
+                {field}: ${sum.toLocaleString()}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </td>
   );

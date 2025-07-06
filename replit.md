@@ -37,11 +37,15 @@ This is a full-stack employee management system built with React, TypeScript, Ex
   - Status tracking (active/inactive, hire date, location)
 
 ### Advanced DataTable Component
-- **Features**: Sorting, filtering, grouping, column pinning
-- **Virtualization**: Optional virtual scrolling for large datasets
+- **Core Features**: Sorting, filtering, grouping, column pinning, virtual scrolling
+- **Inline Editing**: Double-click cells to edit values with type-specific editors
+- **Custom Renderers**: Override column headers and cell templates  
+- **Inline Column Filters**: Filter controls directly under each column header
+- **Multi-Level Grouping**: Group by multiple columns with automatic numeric summaries
+- **Column Management**: Pin left/right, show/hide, reorder columns
 - **Export**: CSV and JSON export capabilities
 - **Responsive**: Mobile-friendly design with adaptive layouts
-- **Customizable**: Configurable columns, cell renderers, and styling
+- **TypeScript**: Full type safety and customizable column definitions
 
 ### API Endpoints
 - `GET /api/employees` - List all employees
@@ -106,5 +110,11 @@ Preferred communication style: Simple, everyday language.
 
 ## Changelog
 
-Changelog:
-- July 06, 2025. Initial setup
+- July 06, 2025: Initial setup with basic DataTable component
+- July 06, 2025: Enhanced DataTable with advanced features:
+  - Added inline column filters under each header
+  - Implemented inline cell editing with double-click
+  - Added custom header and cell renderer support
+  - Implemented multi-level grouping with numeric summaries
+  - Enhanced column management with pinning and visibility controls
+  - Improved TypeScript integration with better type safety

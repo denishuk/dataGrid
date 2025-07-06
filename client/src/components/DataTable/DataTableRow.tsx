@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumn } from './types';
+import { DataTableEditableCell } from './DataTableEditableCell';
 import { cn } from '@/lib/utils';
 
 interface DataTableRowProps<T> {
@@ -13,6 +14,7 @@ interface DataTableRowProps<T> {
   onRowSelect: (row: T) => void;
   onRowEdit?: (row: T) => void;
   onRowDelete?: (row: T) => void;
+  onCellEdit?: (row: T, field: keyof T, value: any) => void;
 }
 
 export function DataTableRow<T extends Record<string, any>>({
@@ -23,15 +25,35 @@ export function DataTableRow<T extends Record<string, any>>({
   onRowSelect,
   onRowEdit,
   onRowDelete,
+  onCellEdit,
 }: DataTableRowProps<T>) {
+  const [editingCell, setEditingCell] = useState<keyof T | null>(null);
+  
   const visibleColumns = columns.filter(col => !col.hidden);
   const pinnedLeftColumns = visibleColumns.filter(col => col.pinned === 'left');
   const unpinnedColumns = visibleColumns.filter(col => !col.pinned);
   const pinnedRightColumns = visibleColumns.filter(col => col.pinned === 'right');
 
+  const handleCellDoubleClick = (column: DataTableColumn<T>) => {
+    if (column.editable && onCellEdit) {
+      setEditingCell(column.field);
+    }
+  };
+
+  const handleCellSave = (field: keyof T, value: any) => {
+    if (onCellEdit) {
+      onCellEdit(row, field, value);
+    }
+    setEditingCell(null);
+  };
+
+  const handleCellCancel = () => {
+    setEditingCell(null);
+  };
+
   const renderCell = (column: DataTableColumn<T>, isPinned: boolean = false) => {
     const value = row[column.field];
-    const displayValue = column.cellRenderer ? column.cellRenderer(value, row) : value;
+    const isEditing = editingCell === column.field;
 
     return (
       <td
@@ -40,15 +62,27 @@ export function DataTableRow<T extends Record<string, any>>({
           "px-4 py-3",
           isPinned && "sticky z-10",
           column.pinned === 'left' && "left-0 bg-primary-50 border-r border-primary-200",
-          column.pinned === 'right' && "right-0 bg-primary-50 border-l border-primary-200"
+          column.pinned === 'right' && "right-0 bg-primary-50 border-l border-primary-200",
+          column.editable && "cursor-pointer hover:bg-gray-50"
         )}
         style={{
           minWidth: column.minWidth,
           maxWidth: column.maxWidth,
           width: column.width,
         }}
+        onDoubleClick={() => handleCellDoubleClick(column)}
       >
-        {displayValue}
+        {isEditing ? (
+          <DataTableEditableCell
+            value={value}
+            row={row}
+            column={column}
+            onSave={(newValue) => handleCellSave(column.field, newValue)}
+            onCancel={handleCellCancel}
+          />
+        ) : (
+          column.cellRenderer ? column.cellRenderer(value, row) : value
+        )}
       </td>
     );
   };
