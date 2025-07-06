@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar styles */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 8px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: hsl(60, 4.8%, 95.9%);
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: hsl(25, 5.3%, 44.7%);
+  border-radius: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: hsl(20, 14.3%, 4.1%);
+}
+
+/* Sticky positioning for pinned columns */
+.sticky {
+  position: sticky;
+}
+
+/* Ensure smooth scrolling performance */
+.overflow-x-auto {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(25, 5.3%, 44.7%) hsl(60, 4.8%, 95.9%);
+}
+
+/* Table cell text overflow handling */
+.table-cell-content {
+  @apply truncate;
+  max-width: 200px;
+}
+
+/* Animation for row hover states */
+@keyframes row-hover {
+  0% { background-color: transparent; }
+  100% { background-color: hsl(60, 4.8%, 95.9%); }
+}
+
+tr:hover {
+  animation: row-hover 0.15s ease-in-out;
+}
+
+/* Custom focus styles for accessibility */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid hsl(207, 90%, 54%);
+  outline-offset: 2px;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Responsive table adjustments */
+@media (max-width: 768px) {
+  .table-mobile-responsive {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .table-mobile-responsive thead,
+  .table-mobile-responsive tbody,
+  .table-mobile-responsive th,
+  .table-mobile-responsive td,
+  .table-mobile-responsive tr {
+    display: block;
+  }
+  
+  .table-mobile-responsive thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .table-mobile-responsive tr {
+    border: 1px solid hsl(20, 5.9%, 90%);
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .table-mobile-responsive td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    white-space: normal;
+    text-align: left;
+  }
+  
+  .table-mobile-responsive td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 6px;
+    width: 45%;
+    white-space: nowrap;
+    font-weight: 600;
+    color: hsl(20, 14.3%, 4.1%);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: hsl(0, 0%, 0%);
+    --input: hsl(0, 0%, 90%);
+    --primary: hsl(207, 90%, 45%);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
