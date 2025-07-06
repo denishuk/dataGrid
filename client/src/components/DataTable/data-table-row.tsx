@@ -3,7 +3,7 @@ import { Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumn } from './types';
-import { DataTableEditableCell } from './DataTableEditableCell';
+import { DataTableEditableCell } from './data-table-editable-cell';
 import { cn } from '@/lib/utils';
 
 interface DataTableRowProps<T> {

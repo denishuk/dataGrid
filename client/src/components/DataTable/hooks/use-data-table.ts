@@ -1,29 +1,33 @@
 import { useState, useMemo, useCallback } from 'react';
 import { DataTableColumn, FilterConfig, SortConfig } from '../types';
-import { filterData, sortData, groupData } from '../utils/dataUtils';
+import { filterData, sortData, groupData } from '../utils/data-utils';
 
-export function useDataTable<T extends Record<string, any>>(
-  data: T[],
-  columns: DataTableColumn<T>[]
-) {
+interface UseDataTableProps<T> {
+  data: T[];
+  initialColumns: DataTableColumn<T>[];
+  initialGroupBy?: string | string[];
+  selectionMode?: 'single' | 'multiple' | 'none';
+  onRowSelect?: (selectedRows: T[]) => void;
+  onCellEdit?: (row: T, field: keyof T, value: any) => void;
+}
+
+export function useDataTable<T extends Record<string, any>>({
+  data,
+  initialColumns,
+  initialGroupBy,
+  selectionMode = 'none',
+  onRowSelect,
+  onCellEdit,
+}: UseDataTableProps<T>) {
+  const [columns, setColumns] = useState<DataTableColumn<T>[]>(initialColumns);
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
   const [filters, setFilters] = useState<FilterConfig[]>([]);
   const [sorts, setSorts] = useState<SortConfig[]>([]);
-  const [groupBy, setGroupBy] = useState<string | string[]>('');
+  const [groupBy, setGroupBy] = useState<string | string[]>(initialGroupBy || '');
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
-  const [searchQuery, setSearchQuery] = useState('');
 
   const filteredData = useMemo(() => {
     let result = [...data];
-
-    // Apply search
-    if (searchQuery) {
-      result = result.filter(row =>
-        Object.values(row).some(value =>
-          String(value).toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      );
-    }
 
     // Apply filters
     result = filterData(result, filters);
@@ -32,7 +36,7 @@ export function useDataTable<T extends Record<string, any>>(
     result = sortData(result, sorts);
 
     return result;
-  }, [data, filters, sorts, searchQuery]);
+  }, [data, filters, sorts]);
 
   const groupedData = useMemo(() => {
     if (!groupBy || (Array.isArray(groupBy) && groupBy.length === 0) || (typeof groupBy === 'string' && groupBy === '')) {
@@ -103,7 +107,30 @@ export function useDataTable<T extends Record<string, any>>(
     }
   }, [addFilter, removeFilter]);
 
+  // Additional methods needed by new data-table component
+  const processedData = groupedData; // Alias for backward compatibility
+  const sortBy = toggleSort;
+  const selectAllRows = toggleAllSelection;
+  const clearSelection = useCallback(() => {
+    setSelectedRows([]);
+  }, []);
+  
+  const filterByColumn = useCallback((field: string, filter: FilterConfig | null) => {
+    if (filter) {
+      addFilter(filter);
+    } else {
+      removeFilter(field);
+    }
+  }, [addFilter, removeFilter]);
+
+  const handleGroupByChange = useCallback((field: string | null) => {
+    setGroupBy(field || '');
+  }, []);
+
   return {
+    columns,
+    setColumns,
+    processedData,
     filteredData,
     groupedData,
     selectedRows,
@@ -111,16 +138,15 @@ export function useDataTable<T extends Record<string, any>>(
     sorts,
     groupBy,
     expandedGroups,
-    searchQuery,
-    setSearchQuery,
-    setGroupBy,
-    toggleSort,
+    setGroupBy: handleGroupByChange,
+    sortBy,
     addFilter,
     removeFilter,
     clearFilters,
     toggleRowSelection,
-    toggleAllSelection,
+    selectAllRows,
+    clearSelection,
     toggleGroup,
-    onFilterChange,
+    filterByColumn,
   };
 }

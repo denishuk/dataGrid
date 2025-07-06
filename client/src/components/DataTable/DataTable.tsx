@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Download, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Download, Settings, ChevronLeft, ChevronRight, Expand } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DataTableProps } from './types';
-import { DataTableHeader } from './DataTableHeader';
-import { DataTableRow } from './DataTableRow';
-import { DataTableGroupHeader } from './DataTableGroupHeader';
-import { DataTableFilters } from './DataTableFilters';
-import { DataTableColumnConfig } from './DataTableColumnConfig';
-import { useDataTable } from './hooks/useDataTable';
-import { useVirtualization } from './hooks/useVirtualization';
-import { exportToCsv, exportToJson } from './utils/exportUtils';
+import { DataTableHeader } from './data-table-header';
+import { DataTableRow } from './data-table-row';
+import { DataTableGroupHeader } from './data-table-group-header';
+import { DataTableActionBar } from './data-table-action-bar';
+import { DataTableColumnConfigModal } from './data-table-column-config-modal';
+import { DataTablePagination } from './data-table-pagination';
+import { DataTableStickyFooter } from './data-table-sticky-footer';
+import { useDataTable } from './hooks/use-data-table';
+import { useVirtualization } from './hooks/use-virtualization';
+import { exportToCsv } from './utils/export-utils';
 import { cn } from '@/lib/utils';
 
 export function DataTable<T extends Record<string, any>>({
@@ -31,7 +33,9 @@ export function DataTable<T extends Record<string, any>>({
   onCellEdit,
 }: DataTableProps<T>) {
   const [columns, setColumns] = useState(initialColumns);
-  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [showColumnConfigModal, setShowColumnConfigModal] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showStickyFooter, setShowStickyFooter] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
   const {
@@ -41,18 +45,23 @@ export function DataTable<T extends Record<string, any>>({
     filters,
     sorts,
     groupBy,
-    searchQuery,
-    setSearchQuery,
     setGroupBy,
-    toggleSort,
+    sortBy,
     addFilter,
     removeFilter,
     clearFilters,
     toggleRowSelection,
-    toggleAllSelection,
+    selectAllRows,
     toggleGroup,
-    onFilterChange,
-  } = useDataTable(data, columns);
+    filterByColumn,
+  } = useDataTable({
+    data,
+    initialColumns: columns,
+    initialGroupBy,
+    selectionMode,
+    onRowSelect,
+    onCellEdit,
+  });
 
   const totalPages = Math.ceil(filteredData.length / pageSize);
   const startIndex = (currentPage - 1) * pageSize;
