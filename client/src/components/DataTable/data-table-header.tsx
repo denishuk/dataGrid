@@ -32,7 +32,7 @@ export function DataTableHeader<T>({
   showFilters = true,
 }: DataTableHeaderProps<T>) {
   const getSortIcon = (field: string) => {
-    const sort = sorts.find(s => s.field === field);
+    const sort = sorts?.find(s => s.field === field);
     if (!sort) return <ArrowUpDown className="h-4 w-4" />;
     return sort.direction === 'asc' ? 
       <ArrowUp className="h-4 w-4 text-primary-500" /> : 
@@ -45,7 +45,7 @@ export function DataTableHeader<T>({
   const pinnedRightColumns = visibleColumns.filter(col => col.pinned === 'right');
 
   const renderHeaderCell = (column: DataTableColumn<T>, isPinned: boolean = false) => {
-    const currentFilter = filters.find(f => f.field === String(column.field));
+    const currentFilter = filters?.find(f => f.field === String(column.field));
     
     return (
       <th

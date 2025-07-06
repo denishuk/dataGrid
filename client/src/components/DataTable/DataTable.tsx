@@ -11,9 +11,11 @@ import { DataTableActionBar } from './data-table-action-bar';
 import { DataTableColumnConfigModal } from './data-table-column-config-modal';
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableStickyFooter } from './data-table-sticky-footer';
+import { DataTableFilters } from './data-table-filters';
+import { DataTableColumnConfig } from './data-table-column-config';
 import { useDataTable } from './hooks/use-data-table';
 import { useVirtualization } from './hooks/use-virtualization';
-import { exportToCsv } from './utils/export-utils';
+import { exportToCsv, exportToJson } from './utils/export-utils';
 import { cn } from '@/lib/utils';
 
 export function DataTable<T extends Record<string, any>>({
@@ -37,6 +39,8 @@ export function DataTable<T extends Record<string, any>>({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showStickyFooter, setShowStickyFooter] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   const {
     filteredData,
@@ -107,6 +111,18 @@ export function DataTable<T extends Record<string, any>>({
 
   const handleGroupByChange = (value: string) => {
     setGroupBy(value === 'none' ? '' : value);
+  };
+
+  const handleFilterChange = (field: string, filter: any) => {
+    filterByColumn(field, filter);
+  };
+
+  const toggleSort = (field: string) => {
+    sortBy(field);
+  };
+
+  const toggleAllSelection = () => {
+    selectAllRows();
   };
 
   const groupableColumns = columns.filter(col => col.groupable);
@@ -236,7 +252,7 @@ export function DataTable<T extends Record<string, any>>({
                     totalRows={filteredData.length}
                     onSort={toggleSort}
                     onSelectAll={toggleAllSelection}
-                    onFilterChange={onFilterChange}
+                    onFilterChange={handleFilterChange}
                     showSelection={showSelection}
                     showFilters={showFilters}
                   />
@@ -284,7 +300,7 @@ export function DataTable<T extends Record<string, any>>({
                 totalRows={filteredData.length}
                 onSort={toggleSort}
                 onSelectAll={toggleAllSelection}
-                onFilterChange={onFilterChange}
+                onFilterChange={handleFilterChange}
                 showSelection={showSelection}
                 showFilters={showFilters}
               />
