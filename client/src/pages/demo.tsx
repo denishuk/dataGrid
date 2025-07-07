@@ -30,6 +30,7 @@ export default function Demo() {
       sortable: true,
       filterable: true,
       editable: true,
+      minWidth: 220,
       cellRenderer: (value, row) => (
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
@@ -52,6 +53,7 @@ export default function Demo() {
       groupable: true,
       editable: true,
       type: 'select',
+      minWidth: 180,
       options: ['Engineering', 'Marketing', 'Sales', 'HR', 'Finance'],
       cellRenderer: (value) => (
         <Badge variant="secondary" className="bg-blue-100 text-blue-800">
@@ -66,6 +68,7 @@ export default function Demo() {
       filterable: true,
       editable: true,
       type: 'number',
+      minWidth: 140,
       cellRenderer: (value) => (
         <span className="font-mono text-sm text-gray-900 bg-green-50 px-2 py-1 rounded">
           ${Number(value).toLocaleString()}
@@ -79,6 +82,7 @@ export default function Demo() {
       filterable: true,
       editable: true,
       type: 'select',
+      minWidth: 150,
       options: ['Active', 'Inactive', 'On Leave'],
       cellRenderer: (value) => (
         <Badge 
@@ -101,6 +105,7 @@ export default function Demo() {
       sortable: true,
       filterable: true,
       editable: true,
+      minWidth: 160,
     },
   ];
 

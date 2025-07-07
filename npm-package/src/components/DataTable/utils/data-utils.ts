@@ -1,5 +1,18 @@
-import { FilterConfig, SortConfig } from '../types';
+import { FilterConfig, SortConfig, DataTableColumn } from '../types';
 
+// Utility function to extract unique values from data for filter options
+export function getUniqueValues<T>(data: T[], field: keyof T): string[] {
+  const values = new Set<string>();
+  data.forEach(row => {
+    const value = row[field];
+    if (value != null) {
+      values.add(String(value));
+    }
+  });
+  return Array.from(values).sort();
+}
+
+// Enhanced filter function with multiselect support
 export function filterData<T>(data: T[], filters: FilterConfig[]): T[] {
   return data.filter(row => {
     return filters.every(filter => {
@@ -26,7 +39,10 @@ export function filterData<T>(data: T[], filters: FilterConfig[]): T[] {
         case 'lte':
           return Number(value) <= Number(filterValue);
         case 'in':
-          return Array.isArray(filterValue) && filterValue.includes(value);
+          if (Array.isArray(filterValue)) {
+            return filterValue.includes(String(value));
+          }
+          return filterValue === String(value);
         default:
           return true;
       }
@@ -46,7 +62,20 @@ export function sortData<T>(data: T[], sorts: SortConfig[]): T[] {
       if (aValue == null) return 1;
       if (bValue == null) return -1;
 
-      const comparison = aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+      let comparison = 0;
+
+      // Handle numeric values
+      const aNum = Number(aValue);
+      const bNum = Number(bValue);
+      if (!isNaN(aNum) && !isNaN(bNum)) {
+        comparison = aNum - bNum;
+      } else {
+        // Handle string comparison
+        const aStr = String(aValue).toLowerCase();
+        const bStr = String(bValue).toLowerCase();
+        comparison = aStr < bStr ? -1 : aStr > bStr ? 1 : 0;
+      }
+
       if (comparison !== 0) {
         return sort.direction === 'asc' ? comparison : -comparison;
       }

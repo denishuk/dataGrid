@@ -157,7 +157,7 @@ export function DataTable<T extends Record<string, any>>({
       <div className="overflow-x-auto">
         <div
           className={cn(
-            "relative",
+            "relative overflow-x-auto",
             virtualScrolling && "overflow-y-auto"
           )}
           style={{ height: virtualScrolling ? '600px' : 'auto' }}
@@ -166,13 +166,14 @@ export function DataTable<T extends Record<string, any>>({
           {virtualScrolling && (
             <div style={{ height: virtualization.totalHeight, position: 'relative' }}>
               <div style={{ transform: `translateY(${virtualization.offsetY}px)` }}>
-                <table className="w-full text-sm border-collapse">
+                <table className="min-w-full text-sm border-collapse table-fixed">
                   <DataTableHeader
                     columns={columns}
                     sorts={sorts || []}
                     filters={filters || []}
                     selectedRows={selectedRows}
                     totalRows={filteredData.length}
+                    data={data}
                     onSort={toggleSort}
                     onSelectAll={toggleAllSelection}
                     onFilterChange={handleFilterChange}
@@ -216,13 +217,14 @@ export function DataTable<T extends Record<string, any>>({
           )}
           
           {!virtualScrolling && (
-            <table className="w-full text-sm border-collapse">
+            <table className="min-w-full text-sm border-collapse table-fixed">
               <DataTableHeader
                 columns={columns}
                 sorts={sorts || []}
                 filters={filters || []}
                 selectedRows={selectedRows}
                 totalRows={filteredData.length}
+                data={data}
                 onSort={toggleSort}
                 onSelectAll={toggleAllSelection}
                 onFilterChange={handleFilterChange}

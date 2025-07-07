@@ -1,79 +1,112 @@
-# Advanced DataTable Component
+# Advanced React DataTable
 
-A comprehensive React data table component built with TypeScript, offering advanced functionality for complex data management and visualization.
+![Advanced React DataTable](./README-screenshot.png)
 
-## Features Overview
+A comprehensive React data grid component with advanced features like pinned columns, inline editing, grouping, filtering, and export capabilities. Built with TypeScript and Tailwind CSS for maximum flexibility and performance.
 
-### 🚀 Core Features
+## ✨ Features
 
-- **Virtual Scrolling**: Handles thousands of rows efficiently with smooth performance
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-- **TypeScript Support**: Full type safety with comprehensive TypeScript integration
-- **Server-Side Compatible**: Works with both client-side and server-side data
+### Core Functionality
+- **Multi-Column Sorting** - Sort by multiple columns with visual indicators  
+- **Advanced Filtering** - Column-specific filters with various operators
+- **Multiselect Filters** - Select multiple values with checkbox interface  
+- **Grouping & Aggregation** - Multi-level grouping with automatic summaries
+- **Pagination** - Configurable page sizes and smooth navigation
+- **Row Selection** - Single, multiple, or disabled selection modes
 
-### 📊 Data Management
+### Advanced Features
+- **Pinned Columns** - Pin columns to left or right with visual separation
+- **Inline Editing** - Double-click cells to edit with type-specific editors
+- **Column Management** - Show/hide, reorder, and configure columns via modal
+- **CSV Export** - Export filtered and grouped data
+- **Sticky Headers** - Keep headers visible while scrolling
+- **Horizontal Scrolling** - Handle tables with many columns gracefully
+- **Responsive Design** - Mobile-friendly with adaptive layouts
 
-- **Advanced Sorting**: Multi-column sorting with customizable sort functions
-- **Intelligent Filtering**: Column-specific filters with various operators (contains, equals, greater than, etc.)
-- **Multi-Level Grouping**: Group data by multiple columns with automatic summaries
-- **Data Export**: Export to CSV format with customizable column selection
-- **Pagination**: Configurable page sizes with navigation controls
+### Technical Features
+- **TypeScript** - Full type safety and IntelliSense support
+- **Auto-Generated Filter Options** - Automatically collect unique values from data
+- **Custom Renderers** - Override column headers and cell templates
+- **Accessibility** - ARIA compliant with keyboard navigation
+- **Themeable** - Built with Tailwind CSS for easy customization
 
-### 🎨 User Interface
-
-- **Blue Action Bar**: Centralized control panel with all major actions
-- **Column Configuration Modal**: Drag-and-drop column reordering with visibility controls
-- **Sticky Header**: Always-visible column headers during scrolling
-- **Sticky Footer**: Configurable summary row with calculations
-- **Fullscreen Mode**: Expand table to fill entire viewport
-- **Filter Indicators**: Visual badges showing active filters with quick clear options
-
-### ✏️ Interactive Features
-
-- **Inline Cell Editing**: Double-click any editable cell to modify values
-- **Row Selection**: Single or multiple row selection modes
-- **Column Pinning**: Pin important columns to left or right with visual shadows
-- **Custom Renderers**: Override default cell and header templates
-- **Hover Effects**: Interactive feedback for better user experience
-
-### 🔧 Column Features
-
-- **Pinning**: Pin columns to left or right sides with shadow indicators
-- **Visibility Control**: Show/hide columns dynamically
-- **Resizing**: Configurable min/max widths
-- **Type-Specific Editing**: Different editors for text, number, select, and boolean types
-- **Custom Formatting**: Apply custom cell renderers for specialized display
-
-## Installation & Setup
+## 📦 Installation
 
 ```bash
-npm install
-npm run dev
+npm install advanced-react-datatable
 ```
 
-## Usage Example
+### Required Dependencies
+
+Install the peer dependencies:
+```bash
+npm install react react-dom @types/react @types/react-dom
+```
+
+Install the UI dependencies:
+```bash
+npm install @radix-ui/react-accordion @radix-ui/react-checkbox @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-label @radix-ui/react-popover @radix-ui/react-scroll-area @radix-ui/react-select @radix-ui/react-separator @radix-ui/react-slot @radix-ui/react-switch @radix-ui/react-tabs @radix-ui/react-tooltip class-variance-authority clsx lucide-react tailwind-merge
+```
+
+### Tailwind CSS Setup
+
+Add to your `tailwind.config.js`:
+```javascript
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/advanced-react-datatable/dist/**/*.{js,ts,jsx,tsx}"
+  ],
+  theme: {
+    extend: {
+      // Your custom theme
+    }
+  },
+  plugins: []
+}
+```
+
+## 🚀 Usage
+
+### Basic Example
 
 ```tsx
-import { DataTable, DataTableColumn } from '@/components/DataTable';
-import { Employee } from '@shared/schema';
+import { DataTable } from 'advanced-react-datatable';
+import type { DataTableColumn } from 'advanced-react-datatable';
+
+interface Employee {
+  id: number;
+  name: string;
+  email: string;
+  department: string;
+  salary: number;
+  active: boolean;
+}
 
 const columns: DataTableColumn<Employee>[] = [
   {
     field: 'name',
-    header: 'Name',
+    header: 'Full Name',
     sortable: true,
     filterable: true,
-    editable: true,
     pinned: 'left',
+    minWidth: 200
+  },
+  {
+    field: 'email',
+    header: 'Email',
+    sortable: true,
+    filterable: true,
+    minWidth: 250
   },
   {
     field: 'department',
     header: 'Department',
-    type: 'select',
-    options: ['Engineering', 'Marketing', 'Sales'],
+    type: 'select', // Enables multiselect filter
     sortable: true,
     filterable: true,
     groupable: true,
+    minWidth: 150
   },
   {
     field: 'salary',
@@ -81,228 +114,219 @@ const columns: DataTableColumn<Employee>[] = [
     type: 'number',
     sortable: true,
     filterable: true,
-    cellRenderer: (value) => `$${value.toLocaleString()}`,
+    minWidth: 120
   },
+  {
+    field: 'active',
+    header: 'Status',
+    type: 'boolean', // Enables multiselect filter
+    sortable: true,
+    filterable: true,
+    minWidth: 100
+  }
 ];
 
-function MyComponent() {
-  const [selectedRows, setSelectedRows] = useState<Employee[]>([]);
+const employees: Employee[] = [
+  {
+    id: 1,
+    name: 'John Doe',
+    email: 'john@example.com',
+    department: 'Engineering',
+    salary: 75000,
+    active: true
+  },
+  // ... more data
+];
 
+function App() {
   return (
     <DataTable
       data={employees}
       columns={columns}
+      pageSize={25}
       selectionMode="multiple"
-      virtualScrolling={true}
-      onRowSelect={setSelectedRows}
-      onCellEdit={(row, field, value) => {
-        // Handle cell edits
-        console.log(`Updated ${field} to ${value} for ${row.name}`);
-      }}
+      showFilters
+      showColumnConfig
+      onRowSelect={(selected) => console.log('Selected:', selected)}
+      onExport={(data, format) => console.log('Export:', format, data)}
     />
   );
 }
 ```
 
-## Column Configuration
-
-### Basic Column Properties
+### Custom Cell Renderers
 
 ```tsx
-interface DataTableColumn<T> {
-  field: keyof T;              // Data field name
-  header: string;              // Display header text
-  sortable?: boolean;          // Enable sorting
-  filterable?: boolean;        // Enable filtering
-  groupable?: boolean;         // Enable grouping
-  editable?: boolean;          // Enable inline editing
-  hidden?: boolean;            // Hide column
-  pinned?: 'left' | 'right';   // Pin column position
-  type?: 'text' | 'number' | 'date' | 'select' | 'boolean';
-  width?: number;              // Fixed width
-  minWidth?: number;           // Minimum width
-  maxWidth?: number;           // Maximum width
-  options?: string[];          // Options for select type
-}
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+
+const columns: DataTableColumn<Employee>[] = [
+  {
+    field: 'name',
+    header: 'Employee',
+    cellRenderer: (value, row) => (
+      <div className="flex items-center gap-2">
+        <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm">
+          {row.name.charAt(0)}
+        </div>
+        <span className="font-medium">{value}</span>
+      </div>
+    )
+  },
+  {
+    field: 'salary',
+    header: 'Salary',
+    type: 'number',
+    cellRenderer: (value) => `$${value.toLocaleString()}`
+  },
+  {
+    field: 'active',
+    header: 'Status',
+    type: 'boolean',
+    cellRenderer: (value) => (
+      <Badge variant={value ? 'default' : 'secondary'}>
+        {value ? 'Active' : 'Inactive'}
+      </Badge>
+    )
+  }
+];
 ```
 
-### Advanced Column Features
+### Multiselect Filters
+
+The component automatically enables multiselect filters for columns with `type: 'select'` or `type: 'boolean'`. Options are automatically collected from your data:
 
 ```tsx
-// Custom cell renderer
-{
-  field: 'status',
-  header: 'Status',
-  cellRenderer: (value, row) => (
-    <Badge variant={value === 'Active' ? 'default' : 'secondary'}>
-      {value}
-    </Badge>
-  ),
-}
-
-// Custom header renderer
-{
-  field: 'name',
-  header: 'Employee Name',
-  headerRenderer: (column) => (
-    <div className="flex items-center gap-2">
-      <UserIcon className="h-4 w-4" />
-      <span>{column.header}</span>
-    </div>
-  ),
-}
+const columns: DataTableColumn<Employee>[] = [
+  {
+    field: 'department',
+    header: 'Department',
+    type: 'select', // Automatically creates multiselect with all unique department values
+    filterable: true
+  },
+  {
+    field: 'active',
+    header: 'Status',
+    type: 'boolean', // Creates multiselect with true/false options
+    filterable: true
+  }
+];
 ```
 
-## Component Props
+Features of multiselect filters:
+- Checkbox interface for selecting multiple values
+- "X selected" indicator when multiple items are chosen
+- Clear button to reset selections
+- Badge display showing selected values
+- Auto-populated from actual data (no manual configuration needed)
+
+### Grouping and Aggregation
+
+```tsx
+<DataTable
+  data={employees}
+  columns={columns}
+  groupBy="department"
+  pageSize={100}
+  onGroupByChange={(field) => console.log('Group by:', field)}
+/>
+```
+
+### Inline Editing
+
+```tsx
+<DataTable
+  data={employees}
+  columns={columns.map(col => ({ 
+    ...col, 
+    editable: col.field !== 'id' 
+  }))}
+  onCellEdit={(row, field, value) => {
+    console.log('Edit:', { row, field, value });
+    // Update your data source
+  }}
+/>
+```
+
+## 🎯 API Reference
 
 ### DataTable Props
 
-```tsx
-interface DataTableProps<T> {
-  data: T[];                                    // Data array
-  columns: DataTableColumn<T>[];                // Column definitions
-  groupBy?: string | string[];                  // Initial grouping
-  virtualScrolling?: boolean;                   // Enable virtual scrolling
-  selectionMode?: 'single' | 'multiple' | 'none'; // Row selection mode
-  stickyHeader?: boolean;                       // Sticky header
-  showFilters?: boolean;                        // Show column filters
-  showColumnConfig?: boolean;                   // Show column config
-  pageSize?: number;                           // Rows per page
-  className?: string;                          // Custom CSS classes
-  onRowSelect?: (selectedRows: T[]) => void;   // Selection callback
-  onExport?: (data: T[], format: 'csv') => void; // Export callback
-  onColumnChange?: (columns: DataTableColumn<T>[]) => void; // Column change callback
-  onCellEdit?: (row: T, field: keyof T, value: any) => void; // Cell edit callback
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `data` | `T[]` | Required | Array of data objects |
+| `columns` | `DataTableColumn<T>[]` | Required | Column configuration |
+| `groupBy` | `string \| string[]` | - | Field(s) to group by |
+| `virtualScrolling` | `boolean` | `false` | Enable virtual scrolling |
+| `selectionMode` | `'single' \| 'multiple' \| 'none'` | `'none'` | Row selection mode |
+| `stickyHeader` | `boolean` | `true` | Keep header visible while scrolling |
+| `showFilters` | `boolean` | `true` | Show filter controls |
+| `showColumnConfig` | `boolean` | `true` | Show column configuration |
+| `pageSize` | `number` | `25` | Number of rows per page |
+| `className` | `string` | - | Additional CSS classes |
+| `onRowSelect` | `(rows: T[]) => void` | - | Row selection callback |
+| `onExport` | `(data: T[], format: 'csv') => void` | - | Export callback |
+| `onColumnChange` | `(columns: DataTableColumn<T>[]) => void` | - | Column change callback |
+| `onCellEdit` | `(row: T, field: keyof T, value: any) => void` | - | Cell edit callback |
+
+### DataTableColumn Interface
+
+```typescript
+interface DataTableColumn<T> {
+  field: keyof T;
+  header: string;
+  sortable?: boolean;
+  filterable?: boolean;
+  groupable?: boolean;
+  pinned?: 'left' | 'right' | null;
+  type?: 'text' | 'number' | 'date' | 'select' | 'boolean';
+  width?: number;
+  minWidth?: number; // Recommended for stable column widths
+  maxWidth?: number;
+  hidden?: boolean;
+  editable?: boolean;
+  cellRenderer?: (value: any, row: T) => React.ReactNode;
+  headerRenderer?: (column: DataTableColumn<T>) => React.ReactNode;
+  options?: string[]; // Manual options for select (auto-generated if not provided)
 }
 ```
 
-## Styling & Theming
+### Column Types and Filtering
 
-The component uses Tailwind CSS with a consistent design system:
+- **`text`** - Standard text filter with contains/equals/starts with/ends with operators
+- **`number`** - Range filter with min/max inputs
+- **`select`** - Multiselect filter with checkboxes (options auto-generated from data)
+- **`boolean`** - Multiselect filter for true/false values
+- **`date`** - Date range picker (coming soon)
 
-- **Primary Colors**: Blue accent (#3B82F6)
-- **Background**: Gray-50 for headers, white for content
-- **Shadows**: Subtle shadows for pinned columns
-- **Hover States**: Light gray hover effects
-- **Typography**: Clean, readable fonts with proper contrast
+## 🎨 Styling
 
-### Custom CSS Classes
+The component uses Tailwind CSS for styling. Key classes used:
 
-```css
-/* Pinned column shadows */
-.shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+- `bg-blue-600` - Action bar background
+- `border-gray-200` - Table borders
+- `hover:bg-gray-50` - Row hover states
+- `sticky` - For pinned columns and headers
+- `backdrop-blur-sm` - Pinned column backgrounds
+- `min-w-full` - Horizontal scrolling support
 
-/* Backdrop blur for sticky elements */
-.backdrop-blur-sm { backdrop-filter: blur(4px); }
-
-/* Semi-transparent backgrounds */
-.bg-white/95 { background-color: rgba(255, 255, 255, 0.95); }
-```
-
-## Advanced Features
-
-### Filtering System
-
-The component supports multiple filter types:
-
-- **Text**: Contains, equals, starts with, ends with
-- **Number**: Greater than, less than, equals, ranges
-- **Select**: Dropdown with predefined options
-- **Boolean**: True/false toggle
-- **Date**: Date range selection (future enhancement)
-
-### Grouping & Summaries
-
-When grouping is enabled:
-
-- Automatic group headers with expand/collapse
-- Numeric columns show sum and average
-- Count of items in each group
-- Configurable summary calculations
-
-### Export Functionality
-
-- **CSV Export**: Full data export with proper escaping
-- **Custom Export**: Hook for implementing additional formats
-- **Filtered Data**: Only exports currently filtered data
-- **Column Selection**: Respects hidden column settings
-
-## Performance Optimizations
-
-- **Virtual Scrolling**: Only renders visible rows
-- **Memoization**: Prevents unnecessary re-renders
-- **Efficient Filtering**: Optimized filter algorithms
-- **Lazy Loading**: Components load only when needed
-- **Debounced Input**: Prevents excessive filter operations
-
-## Browser Support
+## 🌐 Browser Support
 
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
 - Edge 90+
 
-## Architecture
+## 🤝 Contributing
 
-### File Structure
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-```
-DataTable/
-├── DataTable.tsx                    # Main component
-├── data-table-action-bar.tsx       # Blue action bar
-├── data-table-column-config.tsx    # Column configuration
-├── data-table-column-config-modal.tsx # Modal wrapper
-├── data-table-column-filter.tsx    # Column filters
-├── data-table-editable-cell.tsx    # Inline editing
-├── data-table-group-header.tsx     # Group headers
-├── data-table-header.tsx           # Table header
-├── data-table-pagination.tsx       # Pagination controls
-├── data-table-row.tsx              # Table rows
-├── data-table-sticky-footer.tsx    # Summary footer
-├── hooks/
-│   ├── use-data-table.ts           # Main data logic
-│   └── use-virtualization.ts       # Virtual scrolling
-├── utils/
-│   ├── data-utils.ts               # Data operations
-│   └── export-utils.ts             # Export functions
-├── types.ts                        # TypeScript definitions
-└── index.tsx                       # Public exports
-```
-
-### Dependencies
-
-- **React 18+**: Core framework
-- **TypeScript**: Type safety
-- **Tailwind CSS**: Styling system
-- **Radix UI**: Accessible components
-- **Lucide React**: Icon library
-- **React Beautiful DnD**: Drag and drop
-- **React Hook Form**: Form management
-
-## Contributing
-
-The component follows modern React patterns:
-
-- Functional components with hooks
-- TypeScript for type safety
-- Modular architecture
-- Reusable custom hooks
-- Proper error boundaries
-- Accessibility support
-
-## Future Enhancements
-
-- [ ] Date range filtering
-- [ ] Multi-column sorting indicators
-- [ ] Keyboard navigation
-- [ ] Column resizing handles
-- [ ] Print-friendly layouts
-- [ ] Advanced search with operators
-- [ ] Saved filter presets
-- [ ] Column templates
-- [ ] Data validation
-- [ ] Undo/redo functionality
-
-## License
+## 📄 License
 
 MIT License - see LICENSE file for details.
+
+## 🔗 Links
+
+- [NPM Package](https://www.npmjs.com/package/advanced-react-datatable)
+- [GitHub Repository](https://github.com/yourusername/advanced-react-datatable)
+- [Issues](https://github.com/yourusername/advanced-react-datatable/issues)

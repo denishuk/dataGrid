@@ -1,12 +1,15 @@
 # Advanced React DataTable
 
-A comprehensive React data grid component with advanced features like pinned columns, inline editing, grouping, filtering, and export capabilities. Built with TypeScript and Tailwind CSS.
+![Advanced React DataTable](./README-screenshot.png)
+
+A comprehensive React data grid component with advanced features like pinned columns, inline editing, grouping, filtering, and export capabilities. Built with TypeScript and Tailwind CSS for maximum flexibility and performance.
 
 ## ✨ Features
 
 ### Core Functionality
-- **Multi-Column Sorting** - Sort by multiple columns with visual indicators
+- **Multi-Column Sorting** - Sort by multiple columns with visual indicators  
 - **Advanced Filtering** - Column-specific filters with various operators
+- **Multiselect Filters** - Select multiple values with checkbox interface  
 - **Grouping & Aggregation** - Multi-level grouping with automatic summaries
 - **Pagination** - Configurable page sizes and smooth navigation
 - **Row Selection** - Single, multiple, or disabled selection modes
@@ -17,15 +20,17 @@ A comprehensive React data grid component with advanced features like pinned col
 - **Column Management** - Show/hide, reorder, and configure columns via modal
 - **CSV Export** - Export filtered and grouped data
 - **Sticky Headers** - Keep headers visible while scrolling
+- **Horizontal Scrolling** - Handle tables with many columns gracefully
 - **Responsive Design** - Mobile-friendly with adaptive layouts
 
 ### Technical Features
 - **TypeScript** - Full type safety and IntelliSense support
+- **Auto-Generated Filter Options** - Automatically collect unique values from data
 - **Custom Renderers** - Override column headers and cell templates
 - **Accessibility** - ARIA compliant with keyboard navigation
 - **Themeable** - Built with Tailwind CSS for easy customization
 
-## 🚀 Installation
+## 📦 Installation
 
 ```bash
 npm install advanced-react-datatable
@@ -61,7 +66,7 @@ module.exports = {
 }
 ```
 
-## 📖 Usage
+## 🚀 Usage
 
 ### Basic Example
 
@@ -84,34 +89,40 @@ const columns: DataTableColumn<Employee>[] = [
     header: 'Full Name',
     sortable: true,
     filterable: true,
-    pinned: 'left'
+    pinned: 'left',
+    minWidth: 200
   },
   {
     field: 'email',
     header: 'Email',
     sortable: true,
-    filterable: true
+    filterable: true,
+    minWidth: 250
   },
   {
     field: 'department',
     header: 'Department',
+    type: 'select', // Enables multiselect filter
     sortable: true,
     filterable: true,
-    groupable: true
+    groupable: true,
+    minWidth: 150
   },
   {
     field: 'salary',
     header: 'Salary',
     type: 'number',
     sortable: true,
-    filterable: true
+    filterable: true,
+    minWidth: 120
   },
   {
     field: 'active',
-    header: 'Active',
-    type: 'boolean',
+    header: 'Status',
+    type: 'boolean', // Enables multiselect filter
     sortable: true,
-    filterable: true
+    filterable: true,
+    minWidth: 100
   }
 ];
 
@@ -163,30 +174,53 @@ const columns: DataTableColumn<Employee>[] = [
     )
   },
   {
+    field: 'salary',
+    header: 'Salary',
+    type: 'number',
+    cellRenderer: (value) => `$${value.toLocaleString()}`
+  },
+  {
     field: 'active',
     header: 'Status',
+    type: 'boolean',
     cellRenderer: (value) => (
       <Badge variant={value ? 'default' : 'secondary'}>
         {value ? 'Active' : 'Inactive'}
       </Badge>
     )
-  },
-  {
-    field: 'actions',
-    header: 'Actions',
-    sortable: false,
-    filterable: false,
-    cellRenderer: (_, row) => (
-      <div className="flex gap-2">
-        <Button size="sm" variant="outline">Edit</Button>
-        <Button size="sm" variant="outline">Delete</Button>
-      </div>
-    )
   }
 ];
 ```
 
-### Grouping
+### Multiselect Filters
+
+The component automatically enables multiselect filters for columns with `type: 'select'` or `type: 'boolean'`. Options are automatically collected from your data:
+
+```tsx
+const columns: DataTableColumn<Employee>[] = [
+  {
+    field: 'department',
+    header: 'Department',
+    type: 'select', // Automatically creates multiselect with all unique department values
+    filterable: true
+  },
+  {
+    field: 'active',
+    header: 'Status',
+    type: 'boolean', // Creates multiselect with true/false options
+    filterable: true
+  }
+];
+```
+
+Features of multiselect filters:
+- Checkbox interface for selecting multiple values
+- "X selected" indicator when multiple items are chosen
+- Clear button to reset selections
+- Badge display showing selected values
+- Auto-populated from actual data (no manual configuration needed)
+
+### Grouping and Aggregation
 
 ```tsx
 <DataTable
@@ -247,15 +281,23 @@ interface DataTableColumn<T> {
   pinned?: 'left' | 'right' | null;
   type?: 'text' | 'number' | 'date' | 'select' | 'boolean';
   width?: number;
-  minWidth?: number;
+  minWidth?: number; // Recommended for stable column widths
   maxWidth?: number;
   hidden?: boolean;
   editable?: boolean;
   cellRenderer?: (value: any, row: T) => React.ReactNode;
   headerRenderer?: (column: DataTableColumn<T>) => React.ReactNode;
-  options?: string[]; // For select type
+  options?: string[]; // Manual options for select (auto-generated if not provided)
 }
 ```
+
+### Column Types and Filtering
+
+- **`text`** - Standard text filter with contains/equals/starts with/ends with operators
+- **`number`** - Range filter with min/max inputs
+- **`select`** - Multiselect filter with checkboxes (options auto-generated from data)
+- **`boolean`** - Multiselect filter for true/false values
+- **`date`** - Date range picker (coming soon)
 
 ## 🎨 Styling
 
@@ -266,6 +308,7 @@ The component uses Tailwind CSS for styling. Key classes used:
 - `hover:bg-gray-50` - Row hover states
 - `sticky` - For pinned columns and headers
 - `backdrop-blur-sm` - Pinned column backgrounds
+- `min-w-full` - Horizontal scrolling support
 
 ## 🌐 Browser Support
 
@@ -284,6 +327,6 @@ MIT License - see LICENSE file for details.
 
 ## 🔗 Links
 
+- [NPM Package](https://www.npmjs.com/package/advanced-react-datatable)
 - [GitHub Repository](https://github.com/yourusername/advanced-react-datatable)
 - [Issues](https://github.com/yourusername/advanced-react-datatable/issues)
-- [NPM Package](https://www.npmjs.com/package/advanced-react-datatable)

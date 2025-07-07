@@ -59,7 +59,7 @@ export function DataTableHeader<T>({
           column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-lg"
         )}
         style={{
-          minWidth: column.minWidth,
+          minWidth: column.minWidth || (column.filterable ? '180px' : '120px'),
           maxWidth: column.maxWidth,
           width: column.width,
         }}

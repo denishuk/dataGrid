@@ -136,3 +136,10 @@ Preferred communication style: Simple, everyday language.
   - **Table Layout**: Fixed table width issues with table-fixed layout for consistent column spacing
   - **NPM Package Guide**: Created comprehensive PACKAGE_PREPARATION.md with complete publishing instructions
   - **Component Ready**: DataTable is now production-ready and prepared for NPM registry publication
+- July 07, 2025: Multiselect filters and stability improvements:
+  - **Multiselect Filters**: Added checkbox-based multiselect filters for select and boolean column types
+  - **Auto-Generated Options**: Filter options are automatically collected from actual data
+  - **Column Width Stability**: Added automatic minWidth calculation (180px for filterable, 120px for others) to prevent column jumping
+  - **Horizontal Scrolling**: Implemented proper horizontal scrolling for tables with many columns using min-w-full and overflow-x-auto
+  - **Updated Documentation**: Comprehensive README with screenshots, installation instructions, and multiselect feature documentation
+  - **NPM Package v1.1.0**: Updated package with all new features and proper build configuration
