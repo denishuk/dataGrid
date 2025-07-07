@@ -1,6 +1,6 @@
 {
   "name": "advanced-react-datatable",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "description": "A comprehensive React data grid component with advanced features like pinned columns, inline editing, grouping, filtering, and export capabilities",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -45,8 +45,8 @@
   },
   "homepage": "https://github.com/yourusername/advanced-react-datatable#readme",
   "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
@@ -69,8 +69,8 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
+    "@types/react": ">=18.0.0",
+    "@types/react-dom": ">=18.0.0",
     "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.0",
