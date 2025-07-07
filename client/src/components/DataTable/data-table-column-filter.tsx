@@ -150,7 +150,7 @@ export function DataTableColumnFilter<T>({
             <PopoverContent className="w-56 p-2" align="start">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Filter options</span>
+                  <span className="text-sm font-normal">Filter options</span>
                   {selectedValues.length > 0 && (
                     <Button
                       variant="ghost"
@@ -247,7 +247,7 @@ export function DataTableColumnFilter<T>({
             <PopoverContent className="w-40 p-2" align="start">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Status</span>
+                  <span className="text-sm font-normal">Status</span>
                   {selectedValues.length > 0 && (
                     <Button
                       variant="ghost"

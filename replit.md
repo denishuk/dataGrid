@@ -175,4 +175,5 @@ Preferred communication style: Simple, everyday language.
   - **Enhanced Visual Hierarchy**: Added progressive background colors and borders for grouping levels
   - **Filter Styling Consistency**: Standardized all filter input fields to use text-sm for consistent font sizing
   - **Drag-and-Drop Visual Feedback**: Added opacity and scale effects when dragging grouping badges  
-  - **NPM Package v1.5.5**: Updated package with improved drag-and-drop feedback and consistent filter styling
+  - **Filter Font Weight Fix**: Changed all filter text from font-medium to font-normal for consistent light text appearance
+  - **NPM Package v1.5.6**: Updated package with consistent light font weight across all filter inputs
