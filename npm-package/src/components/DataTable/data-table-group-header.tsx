@@ -27,7 +27,7 @@ export function DataTableGroupHeader<T>({
   const visibleColumns = columns.filter(col => !col.hidden);
   
   return (
-    <>
+    <React.Fragment>
       {visibleColumns.map((column, index) => {
         // Check if this is a checkbox column (usually first column with field '__select__' or if it's the first data column)
         const isCheckboxColumn = String(column.field) === '__select__';
@@ -113,6 +113,6 @@ export function DataTableGroupHeader<T>({
           );
         }
       })}
-    </>
+    </React.Fragment>
   );
 }
