@@ -39,11 +39,33 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
   const renderSummaryCell = (column: DataTableColumn<T>, isPinned: boolean = false) => {
     const summary = calculateSummary(column);
     
+    // Don't show summary for actions column
+    if (column.field === 'actions') {
+      return (
+        <td
+          key={String(column.field)}
+          className={cn(
+            "px-4 py-2 text-sm font-medium border-t border-gray-200",
+            isPinned && "sticky z-10 bg-gray-50/90 backdrop-blur-sm",
+            column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-sm",
+            column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-sm"
+          )}
+          style={{
+            minWidth: column.minWidth,
+            maxWidth: column.maxWidth,
+            width: column.width,
+          }}
+        >
+          {/* Empty cell for actions column */}
+        </td>
+      );
+    }
+    
     return (
       <td
         key={String(column.field)}
         className={cn(
-          "px-4 py-2 text-sm font-medium border-t border-gray-200",
+          "px-4 py-2 text-sm font-medium border-t border-gray-200 text-right",
           isPinned && "sticky z-10 bg-gray-50/90 backdrop-blur-sm",
           column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-sm",
           column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-sm"
@@ -56,19 +78,19 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
       >
         {column.type === 'number' && summary.sum !== undefined ? (
           <div className="space-y-1">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center justify-end gap-1">
               <Badge variant="secondary" className="text-xs">Sum</Badge>
-              <span>{summary.sum.toLocaleString()}</span>
+              <span className="font-medium text-blue-600">{summary.sum.toLocaleString()}</span>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center justify-end gap-1">
               <Badge variant="secondary" className="text-xs">Avg</Badge>
-              <span>{summary.avg?.toFixed(2)}</span>
+              <span className="text-gray-600">{summary.avg?.toFixed(2)}</span>
             </div>
           </div>
         ) : (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center justify-end gap-1">
             <Badge variant="secondary" className="text-xs">Count</Badge>
-            <span>{summary.count}</span>
+            <span className="font-medium text-blue-600">{summary.count}</span>
           </div>
         )}
       </td>
