@@ -12,6 +12,7 @@ interface DataTableHeaderProps<T> {
   filters: FilterConfig[];
   selectedRows: T[];
   totalRows: number;
+  data: T[];
   onSort: (field: string) => void;
   onSelectAll: () => void;
   onFilterChange: (field: string, filter: FilterConfig | null) => void;
@@ -25,6 +26,7 @@ export function DataTableHeader<T>({
   filters,
   selectedRows,
   totalRows,
+  data,
   onSort,
   onSelectAll,
   onFilterChange,
@@ -91,6 +93,7 @@ export function DataTableHeader<T>({
               <DataTableColumnFilter
                 column={column}
                 filter={currentFilter}
+                data={data}
                 onFilterChange={(filter) => onFilterChange(String(column.field), filter)}
               />
             </div>

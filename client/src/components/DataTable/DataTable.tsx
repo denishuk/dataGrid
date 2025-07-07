@@ -173,6 +173,7 @@ export function DataTable<T extends Record<string, any>>({
                     filters={filters || []}
                     selectedRows={selectedRows}
                     totalRows={filteredData.length}
+                    data={data}
                     onSort={toggleSort}
                     onSelectAll={toggleAllSelection}
                     onFilterChange={handleFilterChange}
@@ -223,6 +224,7 @@ export function DataTable<T extends Record<string, any>>({
                 filters={filters || []}
                 selectedRows={selectedRows}
                 totalRows={filteredData.length}
+                data={data}
                 onSort={toggleSort}
                 onSelectAll={toggleAllSelection}
                 onFilterChange={handleFilterChange}
