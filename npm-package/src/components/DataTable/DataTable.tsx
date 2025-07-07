@@ -149,7 +149,7 @@ export function DataTable<T extends Record<string, any>>({
       {/* Grouping Area */}
       <DataTableGroupingArea
         columns={columns}
-        groupBy={typeof currentGroupBy === 'string' ? currentGroupBy : undefined}
+        groupBy={currentGroupBy}
         onGroupByChange={handleGroupByChange}
       />
 

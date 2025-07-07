@@ -149,3 +149,9 @@ Preferred communication style: Simple, everyday language.
   - **Footer Alignment**: Improved table footer to match column layout, removed count from actions column
   - **Right-Aligned Summaries**: Summary values now align to the right under their data columns for better readability
   - **NPM Package v1.2.0**: Updated package with actions column and improved layout alignment
+- July 07, 2025: Simplified grouping interface and enhanced multi-grouping:
+  - **Clean Group Headers**: Removed field prefixes from group headers (shows "Engineering (3)" instead of "department: Engineering (3 items)")
+  - **Badge-Based Grouping**: Moved grouping from blue action bar to dedicated gray area with intuitive badge interface
+  - **Multi-Group Support**: Added support for multiple grouping levels with drag-and-drop reordering
+  - **Visual Improvements**: Cleaner action bar focused on essential functions, better visual hierarchy
+  - **NPM Package v1.3.0**: Updated package with simplified grouping interface and multi-level grouping capabilities

@@ -102,7 +102,7 @@ export function groupData<T>(data: T[], groupFields: string | string[], expanded
   
   groups.forEach((items, groupKey) => {
     const groupValues = groupKey.split('|');
-    const groupDisplayValue = fields.map((field, index) => `${field}: ${groupValues[index]}`).join(', ');
+    const groupDisplayValue = groupValues.join(', ');
     
     // Calculate summaries for numeric columns
     const summaries = new Map<string, number>();
