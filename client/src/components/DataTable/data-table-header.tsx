@@ -118,11 +118,13 @@ export function DataTableHeader<T>({
             />
           </th>
         )}
-        {pinnedLeftColumns.map((column, index) => (
-          <React.Fragment key={`pinned-left-${String(column.field)}`}>
-            {/* Render checkbox with first pinned left column */}
-            {showSelection && checkboxShouldBeLeft && index === 0 && (
-              <th className={cn(
+        {pinnedLeftColumns.flatMap((column, index) => {
+          const cells = [];
+          
+          // Render checkbox with first pinned left column
+          if (showSelection && checkboxShouldBeLeft && index === 0) {
+            cells.push(
+              <th key={`checkbox-${String(column.field)}`} className={cn(
                 "w-12 px-3 py-3 text-center bg-gray-50/80 backdrop-blur-sm border-b border-gray-300",
                 "sticky left-0 z-20"
               )}>
@@ -131,10 +133,12 @@ export function DataTableHeader<T>({
                   onCheckedChange={onSelectAll}
                 />
               </th>
-            )}
-            {renderHeaderCell(column, true)}
-          </React.Fragment>
-        ))}
+            );
+          }
+          
+          cells.push(renderHeaderCell(column, true));
+          return cells;
+        })}
         {unpinnedColumns.map(column => renderHeaderCell(column))}
         {pinnedRightColumns.map(column => renderHeaderCell(column, true))}
       </tr>
