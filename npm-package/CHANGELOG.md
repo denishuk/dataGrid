@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.1] - 2025-07-07
+
+### Fixed
+- **CSS Styling**: Added comprehensive CSS styles bundle to fix unstyled appearance when used as NPM package
+- **Component Styling**: Replaced Tailwind classes with custom CSS classes for better compatibility
+- **Border Removal**: Removed default border around DataTable container for cleaner appearance
+- **Style Import**: Automatic CSS import ensures styles are included in bundle
+
+### Added
+- **Built-in Styles**: Complete CSS stylesheet (style.css) with professional table design
+- **Manual CSS Import**: Option to manually import styles if automatic loading fails
+- **Style Documentation**: Updated README with styling information and manual import instructions
+
+### Changed
+- **Container Classes**: Changed from Tailwind utilities to custom 'datatable-container' class
+- **Bundle Size**: Added 7KB CSS file to package output
+- **Side Effects**: Marked CSS files as side effects in package.json for proper bundling
+
 ## [1.6.0] - 2025-07-07
 
 ### Fixed

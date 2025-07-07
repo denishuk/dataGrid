@@ -132,8 +132,8 @@ export function DataTable<T extends Record<string, any>>({
   return (
     <div 
       className={cn(
-        "bg-white rounded-lg shadow-sm border border-gray-200",
-        isFullscreen && "fixed inset-0 z-50 rounded-none",
+        "datatable-container",
+        isFullscreen && "fullscreen",
         className
       )}
     >

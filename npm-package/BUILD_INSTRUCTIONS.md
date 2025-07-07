@@ -33,6 +33,7 @@ chmod +x build.sh
 The build creates:
 - `dist/index.es.js` - ES Module bundle (~213KB)
 - `dist/index.cjs.js` - CommonJS bundle (~139KB) 
+- `dist/style.css` - CSS styles (~7KB)
 - `dist/index.d.ts` - TypeScript definitions (~4KB)
 
 ## Package Structure
