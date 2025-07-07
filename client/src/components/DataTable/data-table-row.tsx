@@ -87,43 +87,39 @@ export function DataTableRow<T extends Record<string, any>>({
     );
   };
 
+  // Check if checkbox should be pinned based on first data column
+  const firstDataColumn = visibleColumns[0];
+  const checkboxShouldBeLeft = firstDataColumn?.pinned === 'left';
+
   return (
     <tr className="hover:bg-gray-50 transition-colors">
-      {showSelection && (
-        <td className="px-4 py-3">
+      {showSelection && !checkboxShouldBeLeft && (
+        <td className="w-12 px-3 py-3 text-center">
           <Checkbox
             checked={isSelected}
             onCheckedChange={() => onRowSelect(row)}
           />
         </td>
       )}
-      {pinnedLeftColumns.map(column => renderCell(column, true))}
+      {pinnedLeftColumns.map((column, index) => (
+        <React.Fragment key={`row-pinned-left-${String(column.field)}`}>
+          {/* Render checkbox with first pinned left column */}
+          {showSelection && checkboxShouldBeLeft && index === 0 && (
+            <td className={cn(
+              "w-12 px-3 py-3 text-center bg-white/80 backdrop-blur-sm",
+              "sticky left-0 z-10"
+            )}>
+              <Checkbox
+                checked={isSelected}
+                onCheckedChange={() => onRowSelect(row)}
+              />
+            </td>
+          )}
+          {renderCell(column, true)}
+        </React.Fragment>
+      ))}
       {unpinnedColumns.map(column => renderCell(column))}
       {pinnedRightColumns.map(column => renderCell(column, true))}
-      <td className="px-4 py-3">
-        <div className="flex items-center gap-2">
-          {onRowEdit && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="p-0 h-6 w-6"
-              onClick={() => onRowEdit(row)}
-            >
-              <Edit className="h-4 w-4" />
-            </Button>
-          )}
-          {onRowDelete && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="p-0 h-6 w-6"
-              onClick={() => onRowDelete(row)}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          )}
-        </div>
-      </td>
     </tr>
   );
 }

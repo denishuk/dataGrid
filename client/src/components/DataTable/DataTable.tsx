@@ -166,7 +166,7 @@ export function DataTable<T extends Record<string, any>>({
           {virtualScrolling && (
             <div style={{ height: virtualization.totalHeight, position: 'relative' }}>
               <div style={{ transform: `translateY(${virtualization.offsetY}px)` }}>
-                <table className="w-full text-sm table-fixed">
+                <table className="w-full text-sm border-collapse">
                   <DataTableHeader
                     columns={columns}
                     sorts={sorts || []}
@@ -216,7 +216,7 @@ export function DataTable<T extends Record<string, any>>({
           )}
           
           {!virtualScrolling && (
-            <table className="w-full text-sm table-fixed">
+            <table className="w-full text-sm border-collapse">
               <DataTableHeader
                 columns={columns}
                 sorts={sorts || []}

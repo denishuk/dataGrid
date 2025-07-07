@@ -100,18 +100,38 @@ export function DataTableHeader<T>({
     );
   };
 
+  // Check if checkbox should be pinned based on first data column
+  const firstDataColumn = visibleColumns[0];
+  const checkboxShouldBeLeft = firstDataColumn?.pinned === 'left';
+  
   return (
-    <thead className="bg-gray-50 border-b border-gray-200 sticky top-0 z-10">
+    <thead className="bg-gray-50 border-b border-gray-200 sticky top-0 z-20">
       <tr>
-        {showSelection && (
-          <th className="px-4 py-3 text-left bg-gray-50 border-b border-gray-300">
+        {showSelection && !checkboxShouldBeLeft && (
+          <th className="w-12 px-3 py-3 text-center bg-gray-50 border-b border-gray-300">
             <Checkbox
               checked={selectedRows.length === totalRows && totalRows > 0}
               onCheckedChange={onSelectAll}
             />
           </th>
         )}
-        {pinnedLeftColumns.map(column => renderHeaderCell(column, true))}
+        {pinnedLeftColumns.map((column, index) => (
+          <React.Fragment key={`pinned-left-${String(column.field)}`}>
+            {/* Render checkbox with first pinned left column */}
+            {showSelection && checkboxShouldBeLeft && index === 0 && (
+              <th className={cn(
+                "w-12 px-3 py-3 text-center bg-gray-50/80 backdrop-blur-sm border-b border-gray-300",
+                "sticky left-0 z-20"
+              )}>
+                <Checkbox
+                  checked={selectedRows.length === totalRows && totalRows > 0}
+                  onCheckedChange={onSelectAll}
+                />
+              </th>
+            )}
+            {renderHeaderCell(column, true)}
+          </React.Fragment>
+        ))}
         {unpinnedColumns.map(column => renderHeaderCell(column))}
         {pinnedRightColumns.map(column => renderHeaderCell(column, true))}
       </tr>
