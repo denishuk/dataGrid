@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     dts({
       insertTypesEntry: true,
+      exclude: ['**/*.test.ts', '**/*.test.tsx', '**/*.stories.tsx'],
     }),
   ],
   resolve: {
@@ -19,11 +20,31 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'AdvancedReactDataTable',
-      formats: ['es', 'umd'],
-      fileName: (format) => `index.${format}.js`,
+      formats: ['es', 'cjs'],
+      fileName: (format) => `index.${format === 'es' ? 'es' : 'cjs'}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: [
+        'react', 
+        'react-dom',
+        '@radix-ui/react-accordion',
+        '@radix-ui/react-checkbox',
+        '@radix-ui/react-dialog',
+        '@radix-ui/react-dropdown-menu',
+        '@radix-ui/react-label',
+        '@radix-ui/react-popover',
+        '@radix-ui/react-scroll-area',
+        '@radix-ui/react-select',
+        '@radix-ui/react-separator',
+        '@radix-ui/react-slot',
+        '@radix-ui/react-switch',
+        '@radix-ui/react-tabs',
+        '@radix-ui/react-tooltip',
+        'class-variance-authority',
+        'clsx',
+        'lucide-react',
+        'tailwind-merge'
+      ],
       output: {
         globals: {
           react: 'React',
@@ -31,5 +52,7 @@ export default defineConfig({
         },
       },
     },
+    outDir: 'dist',
+    emptyOutDir: true,
   },
 });

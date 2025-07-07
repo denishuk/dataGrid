@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0] - 2025-07-07
+
+### Fixed
+- **Build System**: Fixed NPM package build to generate proper JavaScript bundles instead of TypeScript source
+- **Module Resolution**: Package now properly exports ES and CommonJS modules with correct file extensions
+- **Production Bundle**: dist folder now contains compiled JavaScript (index.es.js, index.cjs.js) instead of TypeScript files
+- **Module Loading**: Fixed "Module not found" errors when importing the package in projects
+
+### Changed
+- **Build Configuration**: Simplified Vite config to generate reliable production bundles
+- **Package Structure**: Updated package.json with correct entry points for main and module fields
+- **File Extensions**: ES module uses .js extension and CommonJS uses .cjs.js extension
+
+### Added
+- **Type Definitions**: Added comprehensive TypeScript definitions (index.d.ts) for full type safety
+- **Build Verification**: Added package import test to verify build integrity
+
 ## [1.5.9] - 2025-07-07
 
 ### Changed

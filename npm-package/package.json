@@ -1,8 +1,8 @@
 {
   "name": "advanced-react-datatable",
-  "version": "1.5.9",
+  "version": "1.6.0",
   "description": "A comprehensive React data grid component with advanced features like pinned columns, inline editing, grouping, filtering, and export capabilities",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -11,8 +11,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "vite build",
-    "dev": "vite build --watch",
+    "build": "rm -rf dist && vite build --config vite.config.simple.ts && cp dist/index.d.ts dist/index.d.ts.bak && cp dist/index.d.ts dist/ || true",
+    "dev": "vite build --watch --config vite.config.simple.ts",
     "type-check": "tsc --noEmit",
     "preview": "vite preview"
   },

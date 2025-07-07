@@ -98,6 +98,24 @@ yarn add advanced-react-datatable
 - **Tree Shaking**: Optimized for bundle size
 - **Peer Dependencies**: Flexible version ranges
 
+## Release Notes v1.6.0
+
+### ✅ Fixed - Build System Issues
+- **Module Resolution**: Fixed "Module not found" errors when importing package
+- **Production Bundle**: Package now generates proper JavaScript bundles instead of TypeScript source files
+- **Correct File Structure**: dist folder contains index.es.js, index.cjs.js, and index.d.ts
+- **Import/Export**: Package exports work correctly with both ES modules and CommonJS
+
+### 🔧 Changed - Build Configuration
+- Simplified Vite configuration for reliable production builds
+- Updated package.json entry points (main: dist/index.cjs.js, module: dist/index.es.js)
+- Fixed file extensions and module format outputs
+
+### ✅ Verified - Package Testing
+- Added package import verification test
+- Confirmed DataTable component exports correctly
+- Tested both CommonJS and ES module imports
+
 ## Release Notes v1.5.9
 
 ### ✅ Fixed
