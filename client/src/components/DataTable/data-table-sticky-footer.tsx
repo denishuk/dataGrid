@@ -76,16 +76,26 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
   };
 
   return (
-    <div className={cn("sticky bottom-0 z-10 bg-white border-t border-gray-200", className)}>
-      <table className="w-full">
+    <div className={cn("sticky bottom-0 z-10 bg-white border-t border-gray-200 overflow-x-auto", className)}>
+      <table className="min-w-full text-sm border-collapse table-fixed">
         <tfoot>
           <tr className="bg-gray-50">
-            <td className="px-4 py-2 text-sm font-medium text-gray-700 border-t border-gray-200">
-              Summary
-            </td>
-            {pinnedLeftColumns.map(column => renderSummaryCell(column, true))}
-            {unpinnedColumns.map(column => renderSummaryCell(column))}
-            {pinnedRightColumns.map(column => renderSummaryCell(column, true))}
+            {visibleColumns.map((column, index) => {
+              if (index === 0) {
+                return (
+                  <td 
+                    key="summary-label"
+                    className="px-4 py-2 text-sm font-medium text-gray-700 border-t border-gray-200"
+                    style={{
+                      minWidth: column.minWidth || '120px',
+                    }}
+                  >
+                    Summary
+                  </td>
+                );
+              }
+              return renderSummaryCell(column, column.pinned === 'left' || column.pinned === 'right');
+            })}
           </tr>
         </tfoot>
       </table>
