@@ -90,7 +90,11 @@ export function DataTableGroupingArea<T>({
             >
               <Badge 
                 variant="secondary" 
-                className="bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200 flex items-center gap-1 cursor-move select-none"
+                className={`bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200 flex items-center gap-1 select-none transition-all duration-200 ${
+                  activeGroups.length > 1 ? 'cursor-move' : 'cursor-default'
+                } ${
+                  draggedIndex === index ? 'opacity-50 scale-95' : 'opacity-100 scale-100'
+                }`}
               >
               {activeGroups.length > 1 && (
                 <GripVertical className="h-3 w-3 cursor-move" />

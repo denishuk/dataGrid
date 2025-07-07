@@ -173,4 +173,6 @@ Preferred communication style: Simple, everyday language.
   - **Console Error Fixes**: Fixed React Fragment warnings by replacing with flatMap approach to avoid Replit metadata issues
   - **Drag-and-Drop Improvements**: Enhanced badge reordering with better event handling and debug logging
   - **Enhanced Visual Hierarchy**: Added progressive background colors and borders for grouping levels
-  - **NPM Package v1.5.4**: Updated package with console error fixes and enhanced visual hierarchy implementation
+  - **Filter Styling Consistency**: Standardized all filter input fields to use text-sm for consistent font sizing
+  - **Drag-and-Drop Visual Feedback**: Added opacity and scale effects when dragging grouping badges  
+  - **NPM Package v1.5.5**: Updated package with improved drag-and-drop feedback and consistent filter styling

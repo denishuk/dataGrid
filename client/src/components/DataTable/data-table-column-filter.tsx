@@ -135,7 +135,7 @@ export function DataTableColumnFilter<T>({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 w-full justify-between text-xs font-normal"
+                className="h-8 w-full justify-between text-sm font-normal"
               >
                 {selectedValues.length === 0 ? (
                   'All'
@@ -213,7 +213,7 @@ export function DataTableColumnFilter<T>({
               value={rangeMin}
               onChange={(e) => setRangeMin(e.target.value)}
               onBlur={handleRangeChange}
-              className="h-8 text-xs"
+              className="h-8 text-sm"
             />
             <Input
               type="number"
@@ -221,7 +221,7 @@ export function DataTableColumnFilter<T>({
               value={rangeMax}
               onChange={(e) => setRangeMax(e.target.value)}
               onBlur={handleRangeChange}
-              className="h-8 text-xs"
+              className="h-8 text-sm"
             />
           </div>
         );
@@ -232,7 +232,7 @@ export function DataTableColumnFilter<T>({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 w-full justify-between text-xs font-normal"
+                className="h-8 w-full justify-between text-sm font-normal"
               >
                 {selectedValues.length === 0 ? (
                   'All'
@@ -291,7 +291,7 @@ export function DataTableColumnFilter<T>({
             onChange={(e) => setFilterValue(e.target.value)}
             onBlur={() => handleFilterChange(filterValue)}
             onKeyDown={(e) => e.key === 'Enter' && handleFilterChange(filterValue)}
-            className="h-8 text-xs"
+            className="h-8 text-sm"
           />
         );
     }
