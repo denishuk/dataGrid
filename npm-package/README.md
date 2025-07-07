@@ -68,7 +68,7 @@ The styles include:
 
 ## Version
 
-Current version: 1.6.0
+Current version: 1.6.2
 
 ## Support
 
