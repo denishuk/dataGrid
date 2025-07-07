@@ -75,10 +75,8 @@ export function DataTableGroupingArea<T>({
         <div className="flex items-center gap-2">
           {/* Currently active grouping */}
           {activeGroups.map((field, index) => (
-            <Badge 
+            <div
               key={field}
-              variant="secondary" 
-              className="bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200 flex items-center gap-1 cursor-move select-none"
               draggable={activeGroups.length > 1}
               onDragStart={(e) => handleDragStart(e, index)}
               onDragOver={handleDragOver}
@@ -88,7 +86,12 @@ export function DataTableGroupingArea<T>({
                 console.log('Drag ended');
                 setDraggedIndex(null);
               }}
+              className="inline-block"
             >
+              <Badge 
+                variant="secondary" 
+                className="bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200 flex items-center gap-1 cursor-move select-none"
+              >
               {activeGroups.length > 1 && (
                 <GripVertical className="h-3 w-3 cursor-move" />
               )}
@@ -101,7 +104,8 @@ export function DataTableGroupingArea<T>({
               >
                 <X className="h-3 w-3" />
               </Button>
-            </Badge>
+              </Badge>
+            </div>
           ))}
           
           {/* Available grouping options */}

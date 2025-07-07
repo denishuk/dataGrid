@@ -168,5 +168,6 @@ Preferred communication style: Simple, everyday language.
   - **Hierarchical Expand/Collapse**: Each group level can be independently expanded or collapsed
   - **Field Indicators**: Group headers show which field they represent (department, location, etc.)
   - **Nested Summaries**: Numeric summaries calculate correctly at each hierarchy level
-  - **Fixed Drag-and-Drop**: Improved badge reordering with proper state updates and visual feedback
-  - **NPM Package v1.5.1**: Updated package with enhanced multi-level hierarchical grouping and drag-and-drop fixes
+  - **Fixed Drag-and-Drop**: Improved badge reordering with proper DOM structure for HTML5 drag events
+  - **Enhanced Visual Hierarchy**: Added background colors and left borders for each grouping level with increasing opacity
+  - **NPM Package v1.5.2**: Updated package with working drag-and-drop and enhanced visual hierarchy for grouping levels

@@ -72,14 +72,22 @@ export function DataTableGroupHeader<T>({
               }}
             >
               <div className="flex items-center gap-2" style={{ paddingLeft: `${indentSize}px` }}>
-                <span className="font-medium text-gray-900">
-                  {groupValue} ({itemCount})
-                </span>
-                {field && (
-                  <span className="text-xs text-gray-500 ml-1">
-                    ({field})
+                <div 
+                  className="flex items-center gap-2 py-1 px-2 rounded"
+                  style={{ 
+                    backgroundColor: level > 0 ? `rgba(59, 130, 246, ${0.1 + (level * 0.05)})` : 'transparent',
+                    borderLeft: level > 0 ? `3px solid rgba(59, 130, 246, ${0.3 + (level * 0.2)})` : 'none'
+                  }}
+                >
+                  <span className="font-medium text-gray-900">
+                    {groupValue} ({itemCount})
                   </span>
-                )}
+                  {field && (
+                    <span className="text-xs text-gray-500 ml-1">
+                      ({field})
+                    </span>
+                  )}
+                </div>
               </div>
             </td>
           );
