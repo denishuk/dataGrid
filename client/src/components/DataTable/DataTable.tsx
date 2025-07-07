@@ -186,15 +186,14 @@ export function DataTable<T extends Record<string, any>>({
                       if ((row as any).__isGroupHeader) {
                         return (
                           <tr key={`group-${(row as any).__groupKey || (row as any).__groupValue}`}>
-                            <td colSpan={columns.length + (showSelection ? 2 : 1)}>
-                              <DataTableGroupHeader
-                                groupValue={(row as any).__groupValue}
-                                itemCount={(row as any).__itemCount}
-                                expanded={(row as any).__expanded}
-                                summaries={(row as any).__summaries}
-                                onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
-                              />
-                            </td>
+                            <DataTableGroupHeader
+                              groupValue={(row as any).__groupValue}
+                              itemCount={(row as any).__itemCount}
+                              expanded={(row as any).__expanded}
+                              summaries={(row as any).__summaries}
+                              columns={showSelection ? [{ field: '__select__' as any, header: '' }, ...columns] : columns}
+                              onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
+                            />
                           </tr>
                         );
                       }
@@ -236,15 +235,14 @@ export function DataTable<T extends Record<string, any>>({
                   if ((row as any).__isGroupHeader) {
                     return (
                       <tr key={`group-${(row as any).__groupKey || (row as any).__groupValue}`}>
-                        <td colSpan={columns.length + (showSelection ? 2 : 1)}>
-                          <DataTableGroupHeader
-                            groupValue={(row as any).__groupValue}
-                            itemCount={(row as any).__itemCount}
-                            expanded={(row as any).__expanded}
-                            summaries={(row as any).__summaries}
-                            onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
-                          />
-                        </td>
+                        <DataTableGroupHeader
+                          groupValue={(row as any).__groupValue}
+                          itemCount={(row as any).__itemCount}
+                          expanded={(row as any).__expanded}
+                          summaries={(row as any).__summaries}
+                          columns={showSelection ? [{ field: '__select__' as any, header: '' }, ...columns] : columns}
+                          onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
+                        />
                       </tr>
                     );
                   }

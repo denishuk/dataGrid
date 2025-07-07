@@ -4,6 +4,9 @@ import { DataTable, DataTableColumn } from '@/components/DataTable';
 import { Employee } from '@shared/schema';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { MoreHorizontal, Eye, Edit, UserPlus, Trash2 } from 'lucide-react';
 
 export default function Demo() {
   const [selectedRows, setSelectedRows] = useState<Employee[]>([]);
@@ -106,6 +109,46 @@ export default function Demo() {
       filterable: true,
       editable: true,
       minWidth: 160,
+    },
+    {
+      field: 'actions',
+      header: 'Actions',
+      sortable: false,
+      filterable: false,
+      editable: false,
+      minWidth: 80,
+      pinned: 'right',
+      cellRenderer: (value, row) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => console.log('View', row)}>
+              <Eye className="mr-2 h-4 w-4" />
+              View
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => console.log('Edit', row)}>
+              <Edit className="mr-2 h-4 w-4" />
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => console.log('Assign', row)}>
+              <UserPlus className="mr-2 h-4 w-4" />
+              Assign
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              onClick={() => console.log('Delete', row)}
+              className="text-red-600"
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
     },
   ];
 
