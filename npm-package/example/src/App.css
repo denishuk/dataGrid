@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for the demo */
+.App {
+  text-align: center;
+}
+
+/* Ensure the table has proper spacing */
+.datatable-container {
+  min-height: 400px;
+}
+
+/* Custom scrollbar for better UX */
+.datatable-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.datatable-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.datatable-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.datatable-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
