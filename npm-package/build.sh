@@ -10,6 +10,8 @@ rm -rf dist
 
 # Build the package using the working configuration
 echo "📦 Building package with Vite..."
+# Set environment to skip PostCSS processing
+export NODE_ENV=production
 npx vite build --config vite.config.simple.ts
 
 # Check if build was successful

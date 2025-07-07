@@ -63,3 +63,14 @@ npm publish
 - **Module not found**: Ensure dist contains .js files, not .ts files
 - **Import errors**: Run test-package.js to verify exports
 - **Type errors**: TypeScript definitions are auto-generated in build script
+- **PostCSS/TailwindCSS errors**: Package build disables PostCSS processing since styles are pre-bundled
+- **Missing tailwindcss**: The npm-package directory has its own PostCSS config that skips Tailwind
+
+## Local Development Setup
+
+If building locally, you may need to install dependencies:
+```bash
+npm install --save-dev autoprefixer
+```
+
+Or disable PostCSS entirely by setting `css.postcss: false` in vite.config.simple.ts (already configured).

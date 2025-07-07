@@ -9,6 +9,9 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
+  css: {
+    postcss: false, // Disable PostCSS processing for package builds
+  },
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
