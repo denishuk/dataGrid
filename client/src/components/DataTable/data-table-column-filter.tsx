@@ -150,7 +150,7 @@ export function DataTableColumnFilter<T>({
             <PopoverContent className="w-56 p-2" align="start">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-light !font-light">Filter options</span>
+                  <span className="text-xs font-medium">Filter options</span>
                   {selectedValues.length > 0 && (
                     <Button
                       variant="ghost"
@@ -174,7 +174,7 @@ export function DataTableColumnFilter<T>({
                       />
                       <label
                         htmlFor={`${String(column.field)}-${option}`}
-                        className="text-sm font-light !font-light cursor-pointer flex-1"
+                        className="text-xs font-normal cursor-pointer flex-1"
                       >
                         {option}
                       </label>
@@ -213,7 +213,7 @@ export function DataTableColumnFilter<T>({
               value={rangeMin}
               onChange={(e) => setRangeMin(e.target.value)}
               onBlur={handleRangeChange}
-              className="h-8 text-sm"
+              className="h-8 text-sm font-light" style={{ fontWeight: 300 }}
             />
             <Input
               type="number"
@@ -221,7 +221,7 @@ export function DataTableColumnFilter<T>({
               value={rangeMax}
               onChange={(e) => setRangeMax(e.target.value)}
               onBlur={handleRangeChange}
-              className="h-8 text-sm"
+              className="h-8 text-sm font-light" style={{ fontWeight: 300 }}
             />
           </div>
         );
@@ -247,7 +247,7 @@ export function DataTableColumnFilter<T>({
             <PopoverContent className="w-40 p-2" align="start">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-light !font-light">Status</span>
+                  <span className="text-xs font-medium">Status</span>
                   {selectedValues.length > 0 && (
                     <Button
                       variant="ghost"
@@ -271,7 +271,7 @@ export function DataTableColumnFilter<T>({
                       />
                       <label
                         htmlFor={`${String(column.field)}-${option}`}
-                        className="text-sm font-light !font-light cursor-pointer flex-1"
+                        className="text-xs font-normal cursor-pointer flex-1"
                       >
                         {option}
                       </label>
@@ -291,7 +291,7 @@ export function DataTableColumnFilter<T>({
             onChange={(e) => setFilterValue(e.target.value)}
             onBlur={() => handleFilterChange(filterValue)}
             onKeyDown={(e) => e.key === 'Enter' && handleFilterChange(filterValue)}
-            className="h-8 text-sm"
+            className="h-8 text-sm font-light" style={{ fontWeight: 300 }}
           />
         );
     }
