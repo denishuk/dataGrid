@@ -4,7 +4,6 @@ import { DataTable, DataTableColumn } from '@/components/DataTable';
 import { Employee } from '@shared/schema';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Gauge, Database, MemoryStick } from 'lucide-react';
 
 export default function Demo() {
   const [selectedRows, setSelectedRows] = useState<Employee[]>([]);
@@ -31,14 +30,6 @@ export default function Demo() {
       sortable: true,
       filterable: true,
       editable: true,
-      headerRenderer: (column) => (
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
-            <span className="text-xs font-bold text-blue-600">👤</span>
-          </div>
-          <span className="font-medium text-gray-900">{column.header}</span>
-        </div>
-      ),
       cellRenderer: (value, row) => (
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
@@ -62,14 +53,6 @@ export default function Demo() {
       editable: true,
       type: 'select',
       options: ['Engineering', 'Marketing', 'Sales', 'HR', 'Finance'],
-      headerRenderer: (column) => (
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center">
-            <span className="text-xs font-bold text-purple-600">🏢</span>
-          </div>
-          <span className="font-medium text-gray-900">{column.header}</span>
-        </div>
-      ),
       cellRenderer: (value) => (
         <Badge variant="secondary" className="bg-blue-100 text-blue-800">
           {value}
@@ -83,14 +66,6 @@ export default function Demo() {
       filterable: true,
       editable: true,
       type: 'number',
-      headerRenderer: (column) => (
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
-            <span className="text-xs font-bold text-green-600">💰</span>
-          </div>
-          <span className="font-medium text-gray-900">{column.header}</span>
-        </div>
-      ),
       cellRenderer: (value) => (
         <span className="font-mono text-sm text-gray-900 bg-green-50 px-2 py-1 rounded">
           ${Number(value).toLocaleString()}
@@ -191,7 +166,7 @@ export default function Demo() {
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                  <Gauge className="h-5 w-5 text-green-600" />
+                  <span className="text-lg font-bold text-green-600">⚡</span>
                 </div>
                 <div>
                   <div className="text-sm text-gray-600">Render Time</div>
@@ -204,7 +179,7 @@ export default function Demo() {
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                  <Database className="h-5 w-5 text-blue-600" />
+                  <span className="text-lg font-bold text-blue-600">📊</span>
                 </div>
                 <div>
                   <div className="text-sm text-gray-600">Total Rows</div>
@@ -217,7 +192,7 @@ export default function Demo() {
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
-                  <MemoryStick className="h-5 w-5 text-purple-600" />
+                  <span className="text-lg font-bold text-purple-600">✓</span>
                 </div>
                 <div>
                   <div className="text-sm text-gray-600">Selected Rows</div>

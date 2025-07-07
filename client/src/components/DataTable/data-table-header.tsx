@@ -51,7 +51,7 @@ export function DataTableHeader<T>({
       <th
         key={String(column.field)}
         className={cn(
-          "px-4 py-3 text-left bg-gray-50",
+          "px-4 py-3 text-left bg-gray-50 border-b border-gray-300",
           isPinned && "sticky z-20 bg-gray-50/95 backdrop-blur-sm",
           column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-lg",
           column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-lg"
@@ -104,7 +104,7 @@ export function DataTableHeader<T>({
     <thead className="bg-gray-50 border-b border-gray-200 sticky top-0 z-10">
       <tr>
         {showSelection && (
-          <th className="px-4 py-3 text-left">
+          <th className="px-4 py-3 text-left bg-gray-50 border-b border-gray-300">
             <Checkbox
               checked={selectedRows.length === totalRows && totalRows > 0}
               onCheckedChange={onSelectAll}

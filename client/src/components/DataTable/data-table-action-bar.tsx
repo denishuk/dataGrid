@@ -33,7 +33,7 @@ export function DataTableActionBar<T>({
   const hasActiveFilters = filters.length > 0;
 
   return (
-    <div className="bg-blue-50 border-b border-blue-200 p-4">
+    <div className="bg-blue-600 text-white p-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3 flex-wrap">
           {/* Export CSV Button */}
@@ -41,9 +41,9 @@ export function DataTableActionBar<T>({
             variant="outline"
             size="sm"
             onClick={() => onExport?.('csv')}
-            className="flex items-center gap-2 bg-white hover:bg-blue-50"
+            className="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white border-blue-500"
           >
-            <Download className="h-4 w-4" />
+            <Download className="h-4 w-4 text-white" />
             Export CSV
           </Button>
 
@@ -53,7 +53,7 @@ export function DataTableActionBar<T>({
               value={groupBy || 'none'} 
               onValueChange={(value) => onGroupByChange(value === 'none' ? null : value)}
             >
-              <SelectTrigger className="w-[180px] bg-white">
+              <SelectTrigger className="w-[180px] bg-blue-700 text-white border-blue-500">
                 <SelectValue placeholder="Group by: None" />
               </SelectTrigger>
               <SelectContent>
@@ -70,17 +70,17 @@ export function DataTableActionBar<T>({
           {/* Filter Indicators */}
           {hasActiveFilters && (
             <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                <Filter className="h-3 w-3 mr-1" />
+              <Badge variant="secondary" className="bg-blue-500 text-white border-blue-400">
+                <Filter className="h-3 w-3 mr-1 text-white" />
                 {filters.length} filter{filters.length > 1 ? 's' : ''}
               </Badge>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={onClearFilters}
-                className="h-6 w-6 p-0 hover:bg-blue-100"
+                className="h-6 w-6 p-0 hover:bg-blue-700 text-white"
               >
-                <X className="h-3 w-3" />
+                <X className="h-3 w-3 text-white" />
               </Button>
             </div>
           )}
@@ -92,10 +92,10 @@ export function DataTableActionBar<T>({
             variant="ghost"
             size="sm"
             onClick={onOpenColumnConfig}
-            className="h-8 w-8 p-0 hover:bg-blue-100"
+            className="h-8 w-8 p-0 hover:bg-blue-700 text-white"
             title="Column Configuration"
           >
-            <Settings className="h-4 w-4" />
+            <Settings className="h-4 w-4 text-white" />
           </Button>
 
           {/* Fullscreen Toggle */}
@@ -104,12 +104,12 @@ export function DataTableActionBar<T>({
             size="sm"
             onClick={onToggleFullscreen}
             className={cn(
-              "h-8 w-8 p-0 hover:bg-blue-100",
-              isFullscreen && "bg-blue-100"
+              "h-8 w-8 p-0 hover:bg-blue-700 text-white",
+              isFullscreen && "bg-blue-700"
             )}
             title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
           >
-            <Maximize2 className="h-4 w-4" />
+            <Maximize2 className="h-4 w-4 text-white" />
           </Button>
         </div>
       </div>
