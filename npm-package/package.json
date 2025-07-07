@@ -11,7 +11,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "rm -rf dist && vite build --config vite.config.simple.ts && cp dist/index.d.ts dist/index.d.ts.bak && cp dist/index.d.ts dist/ || true",
+    "build": "./build.sh",
     "dev": "vite build --watch --config vite.config.simple.ts",
     "type-check": "tsc --noEmit",
     "preview": "vite preview"
