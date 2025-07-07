@@ -154,6 +154,33 @@ function App() {
 }
 ```
 
+## ☑️ Checkbox Column Configuration
+
+To enable row selection with checkboxes, configure the `selectionMode` prop:
+
+```tsx
+<DataTable 
+  data={data} 
+  columns={columns}
+  selectionMode="multiple"  // Options: 'single', 'multiple', 'none'
+  onRowSelect={(selectedRows) => {
+    console.log('Selected rows:', selectedRows);
+  }}
+/>
+```
+
+**Selection Mode Options:**
+- `"multiple"` - Shows checkbox column, allows selecting multiple rows
+- `"single"` - Shows radio buttons, allows selecting one row at a time  
+- `"none"` - No selection column (default)
+
+**Checkbox Column Features:**
+- Automatically adds a checkbox column as the first column
+- Header checkbox selects/deselects all rows
+- Individual row checkboxes for granular selection
+- Integrates with grouping - toggle buttons appear in checkbox column
+- Compact spacing optimized for selection interactions
+
 ### Custom Cell Renderers
 
 ```tsx
