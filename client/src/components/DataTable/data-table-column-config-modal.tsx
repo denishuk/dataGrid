@@ -18,14 +18,14 @@ export function DataTableColumnConfigModal<T>({
 }: DataTableColumnConfigModalProps<T>) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Column Configuration</DialogTitle>
           <DialogDescription>
             Configure column visibility, pinning, and ordering for the data table.
           </DialogDescription>
         </DialogHeader>
-        <div className="mt-4">
+        <div className="mt-4 relative">
           <DataTableColumnConfig
             columns={columns}
             onColumnChange={onColumnChange}

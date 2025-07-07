@@ -48,6 +48,7 @@ export function DataTableColumnConfig<T>({ columns, onColumnChange }: DataTableC
               {...provided.droppableProps}
               ref={provided.innerRef}
               className="space-y-2"
+              style={{ minHeight: '200px' }}
             >
               {columns.map((column, index) => (
                 <Draggable
@@ -60,14 +61,23 @@ export function DataTableColumnConfig<T>({ columns, onColumnChange }: DataTableC
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       className={cn(
-                        "flex items-center gap-3 p-3 bg-white border rounded-lg",
-                        snapshot.isDragging && "shadow-lg",
+                        "flex items-center gap-3 p-3 bg-white border rounded-lg transition-shadow",
+                        snapshot.isDragging && "shadow-xl border-blue-300 bg-blue-50 rotate-2 scale-105",
                         column.hidden && "opacity-50"
                       )}
+                      style={{
+                        ...provided.draggableProps.style,
+                        transform: snapshot.isDragging
+                          ? `${provided.draggableProps.style?.transform} rotate(2deg)`
+                          : provided.draggableProps.style?.transform,
+                      }}
                     >
                       <div
                         {...provided.dragHandleProps}
-                        className="text-gray-400 hover:text-gray-600 cursor-grab"
+                        className={cn(
+                          "text-gray-400 hover:text-gray-600 transition-colors p-1 rounded",
+                          snapshot.isDragging ? "cursor-grabbing" : "cursor-grab"
+                        )}
                       >
                         <GripVertical className="h-4 w-4" />
                       </div>

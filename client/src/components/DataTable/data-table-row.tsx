@@ -59,7 +59,7 @@ export function DataTableRow<T extends Record<string, any>>({
       <td
         key={String(column.field)}
         className={cn(
-          "px-4 py-3",
+          "px-4 py-3 border-b border-gray-200",
           isPinned && "sticky z-10 bg-white/95 backdrop-blur-sm",
           column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-lg",
           column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-lg",
@@ -94,7 +94,7 @@ export function DataTableRow<T extends Record<string, any>>({
   return (
     <tr className="hover:bg-gray-50 transition-colors">
       {showSelection && !checkboxShouldBeLeft && (
-        <td className="w-12 px-3 py-3 text-center">
+        <td className="w-12 px-3 py-3 text-center border-b border-gray-200">
           <Checkbox
             checked={isSelected}
             onCheckedChange={() => onRowSelect(row)}
@@ -106,7 +106,7 @@ export function DataTableRow<T extends Record<string, any>>({
           {/* Render checkbox with first pinned left column */}
           {showSelection && checkboxShouldBeLeft && index === 0 && (
             <td className={cn(
-              "w-12 px-3 py-3 text-center bg-white/80 backdrop-blur-sm",
+              "w-12 px-3 py-3 text-center bg-white/80 backdrop-blur-sm border-b border-gray-200",
               "sticky left-0 z-10"
             )}>
               <Checkbox
