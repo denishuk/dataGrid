@@ -27,8 +27,9 @@ export interface DataTableProps<T = any> {
   showColumnConfig?: boolean;
   pageSize?: number;
   className?: string;
+  enablePdfExport?: boolean;
   onRowSelect?: (selectedRows: T[]) => void;
-  onExport?: (data: T[], format: 'csv' | 'json') => void;
+  onExport?: (data: T[], format: 'csv' | 'pdf') => void;
   onColumnChange?: (columns: DataTableColumn<T>[]) => void;
   onCellEdit?: (row: T, field: keyof T, value: any) => void;
 }

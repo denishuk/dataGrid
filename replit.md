@@ -155,3 +155,10 @@ Preferred communication style: Simple, everyday language.
   - **Multi-Group Support**: Added support for multiple grouping levels with drag-and-drop reordering
   - **Visual Improvements**: Cleaner action bar focused on essential functions, better visual hierarchy
   - **NPM Package v1.3.0**: Updated package with simplified grouping interface and multi-level grouping capabilities
+- July 07, 2025: Export improvements and location grouping:
+  - **Fixed Export CSV Button**: Improved hover styling to maintain white text on blue background
+  - **Added PDF Export**: Added optional PDF export button controlled by enablePdfExport property
+  - **Functional CSV Export**: Fixed CSV export functionality to properly generate and download files
+  - **Location Grouping**: Made location field groupable in demo data for better grouping examples
+  - **Compact Checkbox Column**: Reduced spacing in checkbox column during grouping for better layout
+  - **NPM Package v1.4.0**: Updated package with export improvements and location grouping support

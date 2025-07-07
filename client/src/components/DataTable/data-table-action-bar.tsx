@@ -10,13 +10,14 @@ interface DataTableActionBarProps<T> {
   columns: DataTableColumn<T>[];
   filters: FilterConfig[];
   groupBy?: string;
-  onExport?: (format: 'csv') => void;
+  onExport?: (format: 'csv' | 'pdf') => void;
   onClearFilters: () => void;
   onOpenColumnConfig: () => void;
   onToggleFullscreen: () => void;
   onGroupByChange: (field: string | null) => void;
   groupByFields: string[];
   isFullscreen: boolean;
+  enablePdfExport?: boolean;
 }
 
 export function DataTableActionBar<T>({
@@ -30,6 +31,7 @@ export function DataTableActionBar<T>({
   onGroupByChange,
   groupByFields,
   isFullscreen,
+  enablePdfExport = false,
 }: DataTableActionBarProps<T>) {
   const groupableColumns = columns.filter(col => col.groupable);
   const hasActiveFilters = filters.length > 0;
@@ -38,16 +40,30 @@ export function DataTableActionBar<T>({
     <div className="bg-blue-600 text-white p-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3 flex-wrap">
-          {/* Export CSV Button */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onExport?.('csv')}
-            className="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white border-blue-500"
-          >
-            <Download className="h-4 w-4 text-white" />
-            Export CSV
-          </Button>
+          {/* Export Buttons */}
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onExport?.('csv')}
+              className="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white border-blue-500 hover:border-blue-400"
+            >
+              <Download className="h-4 w-4 text-white" />
+              Export CSV
+            </Button>
+            
+            {enablePdfExport && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onExport?.('pdf')}
+                className="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white border-blue-500 hover:border-blue-400"
+              >
+                <Download className="h-4 w-4 text-white" />
+                Export PDF
+              </Button>
+            )}
+          </div>
 
           {/* Group by functionality moved to separate area */}
 

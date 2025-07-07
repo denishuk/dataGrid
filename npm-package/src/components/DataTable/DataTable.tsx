@@ -24,6 +24,7 @@ export function DataTable<T extends Record<string, any>>({
   showColumnConfig = true,
   pageSize: initialPageSize = 50,
   className,
+  enablePdfExport = false,
   onRowSelect,
   onExport,
   onColumnChange,
@@ -94,11 +95,14 @@ export function DataTable<T extends Record<string, any>>({
     }
   }, [initialGroupBy, setGroupBy]);
 
-  const handleExport = (format: 'csv') => {
+  const handleExport = (format: 'csv' | 'pdf') => {
     if (onExport) {
       onExport(filteredData, format);
-    } else {
+    } else if (format === 'csv') {
       exportToCsv(filteredData, columns);
+    } else if (format === 'pdf') {
+      // PDF export functionality - could be implemented with libraries like jsPDF
+      console.log('PDF export not implemented yet');
     }
   };
 
@@ -144,6 +148,7 @@ export function DataTable<T extends Record<string, any>>({
         onToggleFullscreen={() => setIsFullscreen(!isFullscreen)}
         onGroupByChange={handleGroupByChange}
         isFullscreen={isFullscreen}
+        enablePdfExport={enablePdfExport}
       />
 
       {/* Grouping Area */}

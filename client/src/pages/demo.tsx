@@ -107,6 +107,7 @@ export default function Demo() {
       header: 'Location',
       sortable: true,
       filterable: true,
+      groupable: true,
       editable: true,
       minWidth: 160,
     },
@@ -203,8 +204,11 @@ export default function Demo() {
           virtualScrolling={true}
           selectionMode="multiple"
           stickyHeader={true}
+          enablePdfExport={true}
           onRowSelect={handleRowSelect}
-          onExport={handleExport}
+          onExport={(data, format) => {
+            console.log(`Exporting ${data.length} rows as ${format}`);
+          }}
           onCellEdit={handleCellEdit}
         />
 
