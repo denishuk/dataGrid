@@ -135,7 +135,7 @@ export function DataTableColumnFilter<T>({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 w-full justify-between text-sm font-normal"
+                className="h-8 w-full justify-between text-sm font-light !font-light"
               >
                 {selectedValues.length === 0 ? (
                   'All'
@@ -150,7 +150,7 @@ export function DataTableColumnFilter<T>({
             <PopoverContent className="w-56 p-2" align="start">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-normal">Filter options</span>
+                  <span className="text-sm font-light !font-light">Filter options</span>
                   {selectedValues.length > 0 && (
                     <Button
                       variant="ghost"
@@ -174,7 +174,7 @@ export function DataTableColumnFilter<T>({
                       />
                       <label
                         htmlFor={`${String(column.field)}-${option}`}
-                        className="text-sm font-normal cursor-pointer flex-1"
+                        className="text-sm font-light !font-light cursor-pointer flex-1"
                       >
                         {option}
                       </label>
@@ -232,7 +232,7 @@ export function DataTableColumnFilter<T>({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 w-full justify-between text-sm font-normal"
+                className="h-8 w-full justify-between text-sm font-light !font-light"
               >
                 {selectedValues.length === 0 ? (
                   'All'
@@ -247,7 +247,7 @@ export function DataTableColumnFilter<T>({
             <PopoverContent className="w-40 p-2" align="start">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-normal">Status</span>
+                  <span className="text-sm font-light !font-light">Status</span>
                   {selectedValues.length > 0 && (
                     <Button
                       variant="ghost"
@@ -271,7 +271,7 @@ export function DataTableColumnFilter<T>({
                       />
                       <label
                         htmlFor={`${String(column.field)}-${option}`}
-                        className="text-sm font-normal cursor-pointer flex-1"
+                        className="text-sm font-light !font-light cursor-pointer flex-1"
                       >
                         {option}
                       </label>

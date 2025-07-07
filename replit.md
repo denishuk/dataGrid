@@ -176,4 +176,5 @@ Preferred communication style: Simple, everyday language.
   - **Filter Styling Consistency**: Standardized all filter input fields to use text-sm for consistent font sizing
   - **Drag-and-Drop Visual Feedback**: Added opacity and scale effects when dragging grouping badges  
   - **Filter Font Weight Fix**: Changed all filter text from font-medium to font-normal for consistent light text appearance
-  - **NPM Package v1.5.6**: Updated package with consistent light font weight across all filter inputs
+  - **Fixed Button Font Weight Override**: Used !font-light to override button component's default font-medium styling
+  - **NPM Package v1.5.7**: Updated package with properly overridden button font weights for consistent light text
