@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { DataTableColumnConfig } from './data-table-column-config';
 import { DataTableColumn } from './types';
@@ -16,6 +16,27 @@ export function DataTableColumnConfigModal<T>({
   columns,
   onColumnChange,
 }: DataTableColumnConfigModalProps<T>) {
+  useEffect(() => {
+    // Create portal container for drag elements to fix positioning
+    if (open) {
+      const portalContainer = document.createElement('div');
+      portalContainer.id = 'drag-portal';
+      portalContainer.style.position = 'fixed';
+      portalContainer.style.top = '0';
+      portalContainer.style.left = '0';
+      portalContainer.style.zIndex = '9999';
+      portalContainer.style.pointerEvents = 'none';
+      document.body.appendChild(portalContainer);
+
+      return () => {
+        const portal = document.getElementById('drag-portal');
+        if (portal) {
+          document.body.removeChild(portal);
+        }
+      };
+    }
+  }, [open]);
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
