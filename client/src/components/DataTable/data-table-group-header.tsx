@@ -62,7 +62,7 @@ export function DataTableGroupHeader<T>({
           );
         } else if (isFirstDataColumn) {
           // First data column (Email): show the group text with indentation based on level
-          const indentSize = level * 20; // 20px per level
+          const indentSize = level * 30; // 30px per level for better hierarchy visualization
           return (
             <td 
               key={String(column.field)} 

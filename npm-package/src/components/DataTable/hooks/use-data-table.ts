@@ -123,9 +123,11 @@ export function useDataTable<T extends Record<string, any>>({
     }
   }, [addFilter, removeFilter]);
 
-  const handleGroupByChange = useCallback((field: string | null) => {
+  const handleGroupByChange = useCallback((field: string | string[] | null) => {
+    console.log('GroupBy change:', groupBy, '->', field);
     setGroupBy(field || '');
-  }, []);
+    setExpandedGroups(new Set()); // Reset expanded groups when grouping changes
+  }, [groupBy]);
 
   return {
     columns,

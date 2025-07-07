@@ -35,6 +35,7 @@ export function DataTableGroupingArea<T>({
   const handleDragStart = (e: React.DragEvent, index: number) => {
     setDraggedIndex(index);
     e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', index.toString());
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -44,13 +45,14 @@ export function DataTableGroupingArea<T>({
 
   const handleDrop = (e: React.DragEvent, dropIndex: number) => {
     e.preventDefault();
-    if (draggedIndex === null) return;
+    if (draggedIndex === null || draggedIndex === dropIndex) return;
 
     const newGroups = [...activeGroups];
     const draggedItem = newGroups[draggedIndex];
     newGroups.splice(draggedIndex, 1);
     newGroups.splice(dropIndex, 0, draggedItem);
     
+    console.log('Reordering groups:', activeGroups, '->', newGroups);
     onGroupByChange(newGroups);
     setDraggedIndex(null);
   };
@@ -66,11 +68,12 @@ export function DataTableGroupingArea<T>({
             <Badge 
               key={field}
               variant="secondary" 
-              className="bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200 flex items-center gap-1"
+              className="bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200 flex items-center gap-1 cursor-move"
               draggable={activeGroups.length > 1}
               onDragStart={(e) => handleDragStart(e, index)}
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, index)}
+              onDragEnd={() => setDraggedIndex(null)}
             >
               {activeGroups.length > 1 && (
                 <GripVertical className="h-3 w-3 cursor-move" />

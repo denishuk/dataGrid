@@ -164,8 +164,9 @@ Preferred communication style: Simple, everyday language.
   - **NPM Package v1.4.0**: Updated package with export improvements and location grouping support
 - July 07, 2025: Hierarchical multi-level grouping implementation:
   - **Multi-Level Tree Grouping**: Implemented nested hierarchical grouping where multiple columns create tree structure
-  - **Level-Based Indentation**: Each grouping level shows proper visual indentation (20px per level)
+  - **Level-Based Indentation**: Each grouping level shows proper visual indentation (30px per level for better hierarchy)
   - **Hierarchical Expand/Collapse**: Each group level can be independently expanded or collapsed
   - **Field Indicators**: Group headers show which field they represent (department, location, etc.)
   - **Nested Summaries**: Numeric summaries calculate correctly at each hierarchy level
-  - **NPM Package v1.5.0**: Updated package with complete multi-level hierarchical grouping system
+  - **Fixed Drag-and-Drop**: Improved badge reordering with proper state updates and visual feedback
+  - **NPM Package v1.5.1**: Updated package with enhanced multi-level hierarchical grouping and drag-and-drop fixes
