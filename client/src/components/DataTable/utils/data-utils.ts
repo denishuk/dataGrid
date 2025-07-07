@@ -88,50 +88,77 @@ export function groupData<T>(data: T[], groupFields: string | string[], expanded
   const fields = Array.isArray(groupFields) ? groupFields : [groupFields];
   if (fields.length === 0 || fields[0] === '') return data;
   
-  const groups = new Map<string, T[]>();
-  
-  data.forEach(item => {
-    const groupKey = fields.map(field => String((item as any)[field])).join('|');
-    if (!groups.has(groupKey)) {
-      groups.set(groupKey, []);
+  // Helper function to build hierarchical group structure
+  function buildHierarchy(items: T[], fieldIndex: number, parentPath: string = ''): any[] {
+    if (fieldIndex >= fields.length) {
+      return items;
     }
-    groups.get(groupKey)!.push(item);
-  });
-
-  const result: T[] = [];
-  
-  groups.forEach((items, groupKey) => {
-    const groupValues = groupKey.split('|');
-    const groupDisplayValue = groupValues.join(', ');
     
-    // Calculate summaries for numeric columns
-    const summaries = new Map<string, number>();
-    columns.forEach(column => {
-      if (column.type === 'number') {
-        const sum = items.reduce((acc, item) => {
-          const value = Number((item as any)[column.field]);
-          return acc + (isNaN(value) ? 0 : value);
-        }, 0);
-        summaries.set(String(column.field), sum);
+    const currentField = fields[fieldIndex];
+    const groups = new Map<string, T[]>();
+    
+    // Group items by current field
+    items.forEach(item => {
+      const value = String((item as any)[currentField] || 'Ungrouped');
+      if (!groups.has(value)) {
+        groups.set(value, []);
+      }
+      groups.get(value)!.push(item);
+    });
+    
+    const result: any[] = [];
+    
+    groups.forEach((groupItems, groupValue) => {
+      const groupPath = parentPath ? `${parentPath}|${groupValue}` : groupValue;
+      const isExpanded = expandedGroups.has(groupPath);
+      
+      // Calculate total count for this group (including nested items)
+      function getTotalCount(items: T[]): number {
+        return items.length;
+      }
+      
+      // Calculate summaries for numeric columns
+      const summaries = new Map<string, number>();
+      columns.forEach(column => {
+        if (column.type === 'number') {
+          const sum = groupItems.reduce((acc, item) => {
+            const value = Number((item as any)[column.field]);
+            return acc + (isNaN(value) ? 0 : value);
+          }, 0);
+          summaries.set(String(column.field), sum);
+        }
+      });
+      
+      // Create group header with level information
+      const groupHeader = {
+        __isGroupHeader: true,
+        __groupFields: [currentField],
+        __groupValue: groupValue,
+        __groupKey: groupPath,
+        __itemCount: getTotalCount(groupItems),
+        __expanded: isExpanded,
+        __summaries: summaries,
+        __level: fieldIndex,
+        __field: currentField
+      } as any;
+      
+      result.push(groupHeader);
+      
+      // Add nested content if expanded
+      if (isExpanded) {
+        if (fieldIndex === fields.length - 1) {
+          // Last level - add actual data rows
+          result.push(...groupItems);
+        } else {
+          // Intermediate level - recursively add nested groups
+          const nestedGroups = buildHierarchy(groupItems, fieldIndex + 1, groupPath);
+          result.push(...nestedGroups);
+        }
       }
     });
     
-    // Add group header
-    result.push({
-      __isGroupHeader: true,
-      __groupFields: fields,
-      __groupValue: groupDisplayValue,
-      __groupKey: groupKey,
-      __itemCount: items.length,
-      __expanded: expandedGroups.has(groupKey),
-      __summaries: summaries,
-    } as any);
-
-    // Add items if expanded
-    if (expandedGroups.has(groupKey)) {
-      result.push(...items);
-    }
-  });
-
-  return result;
+    return result;
+  }
+  
+  return buildHierarchy(data, 0);
 }

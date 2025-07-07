@@ -162,3 +162,10 @@ Preferred communication style: Simple, everyday language.
   - **Location Grouping**: Made location field groupable in demo data for better grouping examples
   - **Compact Checkbox Column**: Reduced spacing in checkbox column during grouping for better layout
   - **NPM Package v1.4.0**: Updated package with export improvements and location grouping support
+- July 07, 2025: Hierarchical multi-level grouping implementation:
+  - **Multi-Level Tree Grouping**: Implemented nested hierarchical grouping where multiple columns create tree structure
+  - **Level-Based Indentation**: Each grouping level shows proper visual indentation (20px per level)
+  - **Hierarchical Expand/Collapse**: Each group level can be independently expanded or collapsed
+  - **Field Indicators**: Group headers show which field they represent (department, location, etc.)
+  - **Nested Summaries**: Numeric summaries calculate correctly at each hierarchy level
+  - **NPM Package v1.5.0**: Updated package with complete multi-level hierarchical grouping system

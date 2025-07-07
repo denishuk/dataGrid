@@ -10,6 +10,8 @@ interface DataTableGroupHeaderProps<T = any> {
   summaries?: Map<string, number>;
   columns: DataTableColumn<T>[];
   onToggle: () => void;
+  level?: number;
+  field?: string;
 }
 
 export function DataTableGroupHeader<T>({ 
@@ -18,7 +20,9 @@ export function DataTableGroupHeader<T>({
   expanded, 
   summaries,
   columns,
-  onToggle 
+  onToggle,
+  level = 0,
+  field
 }: DataTableGroupHeaderProps<T>) {
   const visibleColumns = columns.filter(col => !col.hidden);
   
@@ -57,7 +61,8 @@ export function DataTableGroupHeader<T>({
             </td>
           );
         } else if (isFirstDataColumn) {
-          // First data column (Email): show the group text
+          // First data column (Email): show the group text with indentation based on level
+          const indentSize = level * 20; // 20px per level
           return (
             <td 
               key={String(column.field)} 
@@ -66,10 +71,15 @@ export function DataTableGroupHeader<T>({
                 minWidth: column.minWidth || '120px',
               }}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2" style={{ paddingLeft: `${indentSize}px` }}>
                 <span className="font-medium text-gray-900">
                   {groupValue} ({itemCount})
                 </span>
+                {field && (
+                  <span className="text-xs text-gray-500 ml-1">
+                    ({field})
+                  </span>
+                )}
               </div>
             </td>
           );

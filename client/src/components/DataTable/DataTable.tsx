@@ -255,6 +255,8 @@ export function DataTable<T extends Record<string, any>>({
                           summaries={(row as any).__summaries}
                           columns={showSelection ? [{ field: '__select__' as any, header: '' }, ...columns] : columns}
                           onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
+                          level={(row as any).__level || 0}
+                          field={(row as any).__field}
                         />
                       </tr>
                     );
