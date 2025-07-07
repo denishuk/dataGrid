@@ -25,8 +25,12 @@ export function DataTableGroupHeader<T>({
   return (
     <>
       {visibleColumns.map((column, index) => {
-        if (index === 0) {
-          // First column: show the toggle and group info
+        // Check if this is a checkbox column (usually first column with field '__select__' or if it's the first data column)
+        const isCheckboxColumn = String(column.field) === '__select__';
+        const isFirstDataColumn = !isCheckboxColumn && index === (visibleColumns.some(col => String(col.field) === '__select__') ? 1 : 0);
+        
+        if (isCheckboxColumn) {
+          // Checkbox column: part of the group header spanning
           return (
             <td 
               key={String(column.field)} 
@@ -35,7 +39,7 @@ export function DataTableGroupHeader<T>({
                 minWidth: column.minWidth || '120px',
               }}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -48,6 +52,20 @@ export function DataTableGroupHeader<T>({
                     <ChevronRight className="h-4 w-4" />
                   )}
                 </Button>
+              </div>
+            </td>
+          );
+        } else if (isFirstDataColumn) {
+          // First data column (Email): show the group text
+          return (
+            <td 
+              key={String(column.field)} 
+              className="px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200"
+              style={{
+                minWidth: column.minWidth || '120px',
+              }}
+            >
+              <div className="flex items-center gap-2">
                 <span className="font-medium text-gray-900">
                   {groupValue} ({itemCount})
                 </span>
