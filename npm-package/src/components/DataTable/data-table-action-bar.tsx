@@ -15,6 +15,7 @@ interface DataTableActionBarProps<T> {
   onOpenColumnConfig: () => void;
   onToggleFullscreen: () => void;
   onGroupByChange: (field: string | null) => void;
+  groupByFields: string[];
   isFullscreen: boolean;
 }
 
@@ -27,6 +28,7 @@ export function DataTableActionBar<T>({
   onOpenColumnConfig,
   onToggleFullscreen,
   onGroupByChange,
+  groupByFields,
   isFullscreen,
 }: DataTableActionBarProps<T>) {
   const groupableColumns = columns.filter(col => col.groupable);
@@ -47,25 +49,7 @@ export function DataTableActionBar<T>({
             Export CSV
           </Button>
 
-          {/* Group By Dropdown */}
-          {groupableColumns.length > 0 && (
-            <Select 
-              value={groupBy || 'none'} 
-              onValueChange={(value) => onGroupByChange(value === 'none' ? null : value)}
-            >
-              <SelectTrigger className="w-[180px] bg-blue-700 text-white border-blue-500">
-                <SelectValue placeholder="Group by: None" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">Group by: None</SelectItem>
-                {groupableColumns.map(col => (
-                  <SelectItem key={String(col.field)} value={String(col.field)}>
-                    Group by: {col.header}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
+          {/* Group by functionality moved to separate area */}
 
           {/* Filter Indicators */}
           {hasActiveFilters && (

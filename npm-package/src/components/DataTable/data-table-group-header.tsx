@@ -49,7 +49,7 @@ export function DataTableGroupHeader<T>({
                   )}
                 </Button>
                 <span className="font-medium text-gray-900">
-                  {groupValue} ({itemCount} items)
+                  {groupValue} ({itemCount})
                 </span>
               </div>
             </td>

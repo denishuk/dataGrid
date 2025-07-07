@@ -4,6 +4,7 @@ import { DataTableHeader } from './data-table-header';
 import { DataTableRow } from './data-table-row';
 import { DataTableGroupHeader } from './data-table-group-header';
 import { DataTableActionBar } from './data-table-action-bar';
+import { DataTableGroupingArea } from './data-table-grouping-area';
 import { DataTableColumnConfigModal } from './data-table-column-config-modal';
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableStickyFooter } from './data-table-sticky-footer';
@@ -143,6 +144,13 @@ export function DataTable<T extends Record<string, any>>({
         onToggleFullscreen={() => setIsFullscreen(!isFullscreen)}
         onGroupByChange={handleGroupByChange}
         isFullscreen={isFullscreen}
+      />
+
+      {/* Grouping Area */}
+      <DataTableGroupingArea
+        columns={columns}
+        groupBy={typeof currentGroupBy === 'string' ? currentGroupBy : undefined}
+        onGroupByChange={handleGroupByChange}
       />
 
       {/* Column Configuration Modal */}
