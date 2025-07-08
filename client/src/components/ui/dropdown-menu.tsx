@@ -15,7 +15,7 @@ const DropdownMenu: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   
   return (
     <DropdownMenuContext.Provider value={{ isOpen, setIsOpen }}>
-      <div className="relative inline-block text-left">
+      <div className="relative inline-block text-left w-full">
         {children}
       </div>
     </DropdownMenuContext.Provider>

@@ -13,7 +13,7 @@ const Popover: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   
   return (
     <PopoverContext.Provider value={{ isOpen, setIsOpen }}>
-      <div className="relative inline-block">
+      <div className="relative inline-block w-full">
         {children}
       </div>
     </PopoverContext.Provider>

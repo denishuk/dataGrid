@@ -36,7 +36,7 @@ const Select: React.FC<SelectProps> = ({ children, value, onValueChange, default
   
   return (
     <SelectContext.Provider value={{ isOpen, setIsOpen, value: currentValue, onValueChange: handleValueChange }}>
-      <div className="relative">
+      <div className="relative w-full">
         {children}
       </div>
     </SelectContext.Provider>
