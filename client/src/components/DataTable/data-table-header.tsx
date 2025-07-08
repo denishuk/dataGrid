@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { ArrowDown, ArrowUp, ArrowUpDown, Pin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -29,7 +29,7 @@ export function DataTableHeader<T>({
   onSort,
   onSelectAll,
   onFilterChange,
-  showSelection,
+  // showSelection,
   showFilters = true,
 }: DataTableHeaderProps<T>) {
   const getSortIcon = (field: string) => {

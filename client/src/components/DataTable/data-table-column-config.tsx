@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Eye, EyeOff, GripVertical, Pin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -13,7 +13,7 @@ interface DataTableColumnConfigProps<T> {
 export function DataTableColumnConfig<T>({ columns, onColumnChange }: DataTableColumnConfigProps<T>) {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [draggedOverIndex, setDraggedOverIndex] = useState<number | null>(null);
-  const dragRef = useRef<HTMLDivElement>(null);
+  // const dragRef = useRef<HTMLDivElement>(null); // TODO: Implement drag and drop
 
   const handleDragStart = (index: number) => (e: React.DragEvent) => {
     setDraggedIndex(index);

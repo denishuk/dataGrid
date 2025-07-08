@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DataTableColumn } from './types';

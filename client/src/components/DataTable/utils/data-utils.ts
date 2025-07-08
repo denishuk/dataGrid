@@ -1,4 +1,4 @@
-import { FilterConfig, SortConfig, DataTableColumn } from '../types';
+import { FilterConfig, SortConfig } from '../types';
 
 // Utility function to extract unique values from data for filter options
 export function getUniqueValues<T>(data: T[], field: keyof T): string[] {

@@ -1,0 +1,115 @@
+src/components/DataTable/data-table-action-bar.tsx:1:1 - error TS6133: 'React' is declared but its value is never read.
+
+1 import React from 'react';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/components/DataTable/data-table-column-config-modal.tsx:1:8 - error TS6133: 'React' is declared but its value is never read.
+
+1 import React, { useEffect } from 'react';
+         ~~~~~
+src/components/DataTable/data-table-column-config.tsx:16:9 - error TS6133: 'dragRef' is declared but its value is never read.
+
+16   const dragRef = useRef<HTMLDivElement>(null);
+           ~~~~~~~
+src/components/DataTable/data-table-column-filter.tsx:1:8 - error TS6133: 'React' is declared but its value is never read.
+
+1 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+         ~~~~~
+src/components/DataTable/data-table-filters.tsx:1:8 - error TS6133: 'React' is declared but its value is never read.
+
+1 import React, { useState } from 'react';
+         ~~~~~
+src/components/DataTable/data-table-group-header.tsx:1:1 - error TS6133: 'React' is declared but its value is never read.
+
+1 import React from 'react';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/components/DataTable/data-table-header.tsx:1:1 - error TS6133: 'React' is declared but its value is never read.
+
+1 import React from 'react';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/components/DataTable/data-table-header.tsx:32:3 - error TS2339: Property 'showSelection' does not exist on type 'DataTableHeaderProps<T>'.
+
+32   showSelection,
+     ~~~~~~~~~~~~~
+src/components/DataTable/data-table-pagination.tsx:1:1 - error TS6133: 'React' is declared but its value is never read.
+
+1 import React from 'react';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/components/DataTable/data-table-row.tsx:1:8 - error TS6133: 'React' is declared but its value is never read.
+
+1 import React, { useState } from 'react';
+         ~~~~~
+src/components/DataTable/data-table-row.tsx:21:3 - error TS2339: Property 'showSelection' does not exist on type 'DataTableRowProps<T>'.
+
+21   showSelection,
+     ~~~~~~~~~~~~~
+src/components/DataTable/data-table-sticky-footer.tsx:1:1 - error TS6133: 'React' is declared but its value is never read.
+
+1 import React from 'react';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/components/DataTable/data-table-sticky-footer.tsx:22:9 - error TS6133: 'pinnedLeftColumns' is declared but its value is never read.
+
+22   const pinnedLeftColumns = visibleColumns.filter(col => col.pinned === 'left');
+           ~~~~~~~~~~~~~~~~~
+src/components/DataTable/data-table-sticky-footer.tsx:23:9 - error TS6133: 'unpinnedColumns' is declared but its value is never read.
+
+23   const unpinnedColumns = visibleColumns.filter(col => !col.pinned);
+           ~~~~~~~~~~~~~~~
+src/components/DataTable/data-table-sticky-footer.tsx:24:9 - error TS6133: 'pinnedRightColumns' is declared but its value is never read.
+
+24   const pinnedRightColumns = visibleColumns.filter(col => col.pinned === 'right');
+           ~~~~~~~~~~~~~~~~~~
+src/components/DataTable/DataTable.tsx:1:8 - error TS6133: 'React' is declared but its value is never read.
+
+1 import React, { useEffect, useState } from 'react';
+         ~~~~~
+src/components/DataTable/DataTable.tsx:49:5 - error TS6133: 'addFilter' is declared but its value is never read.
+
+49     addFilter,
+       ~~~~~~~~~
+src/components/DataTable/DataTable.tsx:50:5 - error TS6133: 'removeFilter' is declared but its value is never read.
+
+50     removeFilter,
+       ~~~~~~~~~~~~
+src/components/DataTable/DataTable.tsx:154:9 - error TS2322: Type '(value: string | null) => void' is not assignable to type '(fields: string[] | null) => void'.
+  Types of parameters 'value' and 'fields' are incompatible.
+    Type 'string[] | null' is not assignable to type 'string | null'.
+      Type 'string[]' is not assignable to type 'string'.
+
+154         onGroupByChange={handleGroupByChange}
+            ~~~~~~~~~~~~~~~
+
+  src/components/DataTable/data-table-grouping-area.tsx:10:3
+    10   onGroupByChange: (fields: string[] | null) => void;
+         ~~~~~~~~~~~~~~~
+    The expected type comes from property 'onGroupByChange' which is declared here on type 'IntrinsicAttributes & DataTableGroupingAreaProps<T>'
+src/components/DataTable/hooks/use-data-table.ts:102:9 - error TS6133: 'onFilterChange' is declared but its value is never read.
+
+102   const onFilterChange = useCallback((field: string, filter: FilterConfig | null) => {
+            ~~~~~~~~~~~~~~
+src/components/DataTable/hooks/use-virtualization.ts:1:20 - error TS6133: 'useEffect' is declared but its value is never read.
+
+1 import { useState, useEffect, useCallback, useMemo } from 'react';
+                     ~~~~~~~~~
+src/components/DataTable/utils/data-utils.ts:1:36 - error TS6133: 'DataTableColumn' is declared but its value is never read.
+
+1 import { FilterConfig, SortConfig, DataTableColumn } from '../types';
+                                     ~~~~~~~~~~~~~~~
+src/components/ui/dropdown-menu.tsx:33:7 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Object literal may only specify known properties, and 'onClick' does not exist in type 'Partial<unknown> & Attributes'.
+
+33       onClick: () => context?.setIsOpen(!context.isOpen)
+         ~~~~~~~
+
+  node_modules/@types/react/index.d.ts:524:14
+    524     function cloneElement<P>(
+                     ~~~~~~~~~~~~
+    The last overload is declared here.
+src/components/ui/popover.tsx:31:7 - error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Object literal may only specify known properties, and 'onClick' does not exist in type 'Partial<unknown> & Attributes'.
+
+31       onClick: () => context?.setIsOpen(!context.isOpen)
+         ~~~~~~~
+
+  node_modules/@types/react/index.d.ts:524:14

@@ -7,7 +7,7 @@ import { DataTableColumn } from './types';
 interface DataTableGroupingAreaProps<T> {
   columns: DataTableColumn<T>[];
   groupBy?: string | string[];
-  onGroupByChange: (fields: string[] | null) => void;
+  onGroupByChange: (fields: string | null) => void;
 }
 
 export function DataTableGroupingArea<T>({
@@ -24,12 +24,12 @@ export function DataTableGroupingArea<T>({
 
   const handleAddGroup = (field: string) => {
     const newGroups = [...activeGroups, field];
-    onGroupByChange(newGroups);
+    onGroupByChange(newGroups[0] || null);
   };
 
   const handleRemoveGroup = (field: string) => {
     const newGroups = activeGroups.filter(g => g !== field);
-    onGroupByChange(newGroups.length > 0 ? newGroups : null);
+    onGroupByChange(newGroups.length > 0 ? newGroups[0] : null);
   };
 
   const handleDragStart = (e: React.DragEvent, index: number) => {
@@ -59,7 +59,7 @@ export function DataTableGroupingArea<T>({
     newGroups.splice(draggedIndex, 1);
     newGroups.splice(dropIndex, 0, draggedItem);
 
-    onGroupByChange(newGroups);
+    onGroupByChange(newGroups[0] || null);
     setDraggedIndex(null);
   };
 

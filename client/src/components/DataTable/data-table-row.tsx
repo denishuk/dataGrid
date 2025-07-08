@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { DataTableColumn } from './types';
 import { DataTableEditableCell } from './data-table-editable-cell';
@@ -19,8 +19,8 @@ export function DataTableRow<T extends Record<string, any>>({
   columns,
   isSelected,
   onRowSelect,
-  onRowEdit,
-  onRowDelete,
+  // onRowEdit,
+  // onRowDelete,
   onCellEdit,
 }: DataTableRowProps<T>) {
   const [editingCell, setEditingCell] = useState<keyof T | null>(null);

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Badge } from '@/components/ui/badge';
 import { DataTableColumn } from './types';
 import { cn } from '@/lib/utils';
@@ -19,9 +19,9 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
   if (!visible) return null;
 
   const visibleColumns = columns.filter(col => !col.hidden);
-  const pinnedLeftColumns = visibleColumns.filter(col => col.pinned === 'left');
-  const unpinnedColumns = visibleColumns.filter(col => !col.pinned);
-  const pinnedRightColumns = visibleColumns.filter(col => col.pinned === 'right');
+  // const pinnedLeftColumns = visibleColumns.filter(col => col.pinned === 'left');
+  // const unpinnedColumns = visibleColumns.filter(col => !col.pinned);
+  // const pinnedRightColumns = visibleColumns.filter(col => col.pinned === 'right');
 
   const calculateSummary = (column: DataTableColumn<T>) => {
     if (!column.aggregation) return null;
@@ -87,7 +87,7 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
       <table className="min-w-full text-sm border-collapse table-fixed">
         <tfoot>
           <tr className="bg-gray-50">
-            {visibleColumns.map((column, index) => {
+            {visibleColumns.map((column, _index) => {
               return renderSummaryCell(column, column.pinned === 'left' || column.pinned === 'right');
             })}
           </tr>

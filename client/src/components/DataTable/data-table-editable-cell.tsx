@@ -15,7 +15,7 @@ interface DataTableEditableCellProps<T> {
 
 export function DataTableEditableCell<T>({
   value,
-  row,
+  // row,
   column,
   onSave,
   onCancel,

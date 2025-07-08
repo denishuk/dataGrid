@@ -1,11 +1,11 @@
-import React from 'react';
+
 import { Download, Filter, Maximize2, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { FilterConfig } from './types';
 import { cn } from '@/lib/utils';
 
-interface DataTableActionBarProps<T> {
+interface DataTableActionBarProps {
   filters: FilterConfig[];
   onExport?: (format: 'csv' | 'pdf') => void;
   onClearFilters: () => void;
@@ -15,7 +15,7 @@ interface DataTableActionBarProps<T> {
   enablePdfExport?: boolean;
 }
 
-export function DataTableActionBar<T>({
+export function DataTableActionBar({
   filters,
   onExport,
   onClearFilters,
@@ -23,7 +23,7 @@ export function DataTableActionBar<T>({
   onToggleFullscreen,
   isFullscreen,
   enablePdfExport = false,
-}: DataTableActionBarProps<T>) {
+}: DataTableActionBarProps) {
   const hasActiveFilters = filters.length > 0;
 
   return (

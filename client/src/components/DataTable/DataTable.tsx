@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DataTableProps } from './types';
 import { DataTableHeader } from './data-table-header';
 import { DataTableRow } from './data-table-row';
@@ -18,10 +18,10 @@ export function DataTable<T extends Record<string, any>>({
   columns: initialColumns,
   groupBy: initialGroupBy,
   virtualScrolling = false,
-  stickyHeader = true,
+  // stickyHeader = true,
   stickyFooter = false,
   showFilters = true,
-  showColumnConfig = true,
+  // showColumnConfig = true,
   pageSize: initialPageSize = 50,
   className,
   enablePdfExport = false,
@@ -47,8 +47,8 @@ export function DataTable<T extends Record<string, any>>({
     groupBy: currentGroupBy,
     setGroupBy,
     sortBy,
-    addFilter,
-    removeFilter,
+    // addFilter,
+    // removeFilter,
     clearFilters,
     toggleRowSelection,
     selectAllRows,
