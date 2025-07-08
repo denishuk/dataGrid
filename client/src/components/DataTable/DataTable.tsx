@@ -33,6 +33,7 @@ export function DataTable<T extends Record<string, any>>({
   const [columns, setColumns] = useState(initialColumns);
   const [showColumnConfigModal, setShowColumnConfigModal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isSorting, setIsSorting] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageSize, setCurrentPageSize] = useState(initialPageSize);
@@ -115,7 +116,10 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   const toggleSort = (field: string) => {
+    setIsSorting(true);
     sortBy(field);
+    // Reset sorting animation after a short delay
+    setTimeout(() => setIsSorting(false), 300);
   };
 
   const toggleAllSelection = () => {
@@ -167,11 +171,21 @@ export function DataTable<T extends Record<string, any>>({
         <div
           className={cn(
             "relative overflow-x-auto",
-            virtualScrolling && "overflow-y-auto"
+            virtualScrolling && "overflow-y-auto",
+            isSorting && "opacity-80"
           )}
           style={{ height: virtualScrolling ? '600px' : 'auto' }}
           onScroll={virtualScrolling ? virtualization.handleScroll : undefined}
         >
+          {/* Sorting Indicator */}
+          {isSorting && (
+            <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center z-30">
+              <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow-md">
+                <div className="w-4 h-4 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+                <span className="text-sm text-gray-600">Sorting...</span>
+              </div>
+            </div>
+          )}
           {virtualScrolling && (
             <div style={{ height: virtualization.totalHeight, position: 'relative' }}>
               <div style={{ transform: `translateY(${virtualization.offsetY}px)` }}>
@@ -188,7 +202,7 @@ export function DataTable<T extends Record<string, any>>({
                     onFilterChange={handleFilterChange}
                     showFilters={showFilters}
                   />
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white divide-y divide-gray-200 transition-all duration-300 ease-in-out">
                     {virtualization.visibleItems.map(index => {
                       const row = groupedData[index];
                       if ((row as any).__isGroupHeader) {
@@ -236,7 +250,7 @@ export function DataTable<T extends Record<string, any>>({
                 onFilterChange={handleFilterChange}
                 showFilters={showFilters}
               />
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-200 transition-all duration-300 ease-in-out">
                 {paginatedData.map((row, index) => {
                   if ((row as any).__isGroupHeader) {
                     return (

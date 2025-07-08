@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DataTableColumn } from './types';
+import { cn } from '@/lib/utils';
 
 interface DataTableGroupHeaderProps<T = any> {
   groupValue: string;
@@ -49,13 +50,20 @@ export function DataTableGroupHeader<T>({
                   variant="ghost"
                   size="sm"
                   onClick={onToggle}
-                  className="h-6 w-6 p-0"
-                >
-                  {expanded ? (
-                    <ChevronDown className="h-4 w-4" />
-                  ) : (
-                    <ChevronRight className="h-4 w-4" />
+                  className={cn(
+                    "h-6 w-6 p-0",
+                    "transition-all duration-200 ease-in-out",
+                    "hover:scale-110 active:scale-95",
+                    "hover:bg-gray-200 focus:ring-2 focus:ring-indigo-500"
                   )}
+                >
+                  <div className="transition-transform duration-200 ease-in-out">
+                    {expanded ? (
+                      <ChevronDown className="h-4 w-4" />
+                    ) : (
+                      <ChevronRight className="h-4 w-4" />
+                    )}
+                  </div>
                 </Button>
               </div>
             </td>

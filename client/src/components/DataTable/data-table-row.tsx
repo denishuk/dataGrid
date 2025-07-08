@@ -18,7 +18,6 @@ export function DataTableRow<T extends Record<string, any>>({
   row,
   columns,
   isSelected,
-  showSelection,
   onRowSelect,
   onRowEdit,
   onRowDelete,
@@ -73,8 +72,16 @@ export function DataTableRow<T extends Record<string, any>>({
             <input
               type="checkbox"
               checked={isSelected}
-              onChange={() => onRowSelect(row)}
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+              onChange={(e) => {
+                e.stopPropagation();
+                onRowSelect(row);
+              }}
+              className={cn(
+                "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
+                "transition-all duration-150 ease-in-out",
+                "hover:scale-110 focus:scale-110",
+                isSelected && "animate-pulse"
+              )}
             />
           </div>
         </td>
@@ -86,10 +93,12 @@ export function DataTableRow<T extends Record<string, any>>({
         key={String(column.field)}
         className={cn(
           "px-4 py-2.5 border-b border-gray-200",
+          "transition-all duration-200 ease-in-out",
           isPinned && "bg-white sticky z-10",
           column.pinned === 'left' && "left-0 border-r",
           column.pinned === 'right' && "right-0 border-l",
-          column.editable && "cursor-pointer hover:bg-gray-50"
+          column.editable && "cursor-pointer hover:bg-gray-50 hover:scale-[1.02]",
+          editingCell === column.field && "bg-blue-50 ring-2 ring-indigo-500 ring-inset"
         )}
         style={{
           minWidth: column.minWidth,
@@ -114,7 +123,16 @@ export function DataTableRow<T extends Record<string, any>>({
   };
 
   return (
-    <tr className="hover:bg-gray-50 transition-colors">
+    <tr 
+      className={cn(
+        'group relative border-b border-gray-200 dark:border-gray-700',
+        'transition-all duration-200 ease-in-out',
+        'hover:bg-gray-50 dark:hover:bg-gray-800/50',
+        isSelected && 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 shadow-sm transform scale-[1.001]',
+        'hover:shadow-md hover:z-10'
+      )}
+      onClick={() => onRowSelect(row)}
+    >
       {pinnedLeftColumns.map(column => renderCell(column, true))}
       {unpinnedColumns.map(column => renderCell(column))}
       {pinnedRightColumns.map(column => renderCell(column, true))}

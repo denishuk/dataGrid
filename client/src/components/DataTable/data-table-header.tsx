@@ -71,7 +71,12 @@ export function DataTableHeader<T>({
               type="checkbox"
               checked={selectedRows.length === totalRows && totalRows > 0}
               onChange={onSelectAll}
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+              className={cn(
+                "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
+                "transition-all duration-150 ease-in-out",
+                "hover:scale-110 focus:scale-110",
+                selectedRows.length === totalRows && totalRows > 0 && "animate-pulse"
+              )}
             />
           </div>
         </th>
@@ -106,10 +111,18 @@ export function DataTableHeader<T>({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="p-0 h-4 w-4"
+                    className={cn(
+                      "p-0 h-4 w-4",
+                      "transition-all duration-200 ease-in-out",
+                      "hover:scale-110 hover:bg-gray-100 hover:shadow-sm",
+                      "active:scale-95",
+                      "focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
+                    )}
                     onClick={() => onSort(String(column.field))}
                   >
-                    {getSortIcon(String(column.field))}
+                    <div className="transition-transform duration-200 ease-in-out hover:rotate-[5deg]">
+                      {getSortIcon(String(column.field))}
+                    </div>
                   </Button>
                 )}
               </>
