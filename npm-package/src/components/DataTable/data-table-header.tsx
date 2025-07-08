@@ -1,7 +1,6 @@
 import React from 'react';
 import { ArrowUp, ArrowDown, ArrowUpDown, Pin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Button, Checkbox } from '@/components/ui/headless-ui';
 import { DataTableColumn, SortConfig, FilterConfig } from './types';
 import { DataTableColumnFilter } from './data-table-column-filter';
 import { cn } from '@/lib/utils';

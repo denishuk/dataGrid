@@ -153,7 +153,7 @@ export function groupData<T>(data: T[], groupFields: string | string[], expanded
         __summaries: summaries,
         __level: fieldIndex,
         __field: currentField,
-        __groupRows: groupItems // Add the group rows for custom rendering
+        __groupRows: groupItems.filter(item => !item.__isGroupHeader) // Add the group rows for custom rendering
       } as any;
       
       result.push(groupHeader);

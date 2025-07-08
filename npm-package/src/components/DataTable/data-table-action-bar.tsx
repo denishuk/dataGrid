@@ -1,8 +1,6 @@
 import React from 'react';
 import { Download, Settings, Maximize2, X, Filter } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
+import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Badge } from '@/components/ui/headless-ui';
 import { DataTableColumn, FilterConfig } from './types';
 import { cn } from '@/lib/utils';
 

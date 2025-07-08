@@ -213,3 +213,11 @@ Preferred communication style: Simple, everyday language.
   - **CSS Optimization**: Cleaned up styles with hex colors and improved performance, resolved sticky header issues
   - **Comprehensive Documentation**: Added styling customization guide and valueGetter usage examples
   - **NPM Package v1.7.0**: Major enhancement with valueGetter support and improved styling system
+- July 08, 2025: Major dependency reduction and Headless UI migration:
+  - **Replaced Radix UI with Headless UI**: Migrated from 13 Radix UI packages to 1 Headless UI package
+  - **Removed clsx Dependency**: Consolidated with tailwind-merge for utility merging
+  - **40% Dependency Reduction**: Dramatically reduced bundle size and peer dependency requirements
+  - **valueGetterOnGroup Implementation**: Completed custom group rendering with group rows parameter
+  - **Performance Optimization**: Faster loading and parsing with fewer dependencies
+  - **Better Browser Support**: Improved compatibility with reduced dependency overhead
+  - **NPM Package v1.8.0**: Major dependency reduction release with Headless UI integration

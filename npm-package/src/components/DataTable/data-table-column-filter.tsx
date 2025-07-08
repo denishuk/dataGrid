@@ -1,10 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Badge } from '@/components/ui/badge';
+import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Checkbox, Button, HeadlessPopover as Popover, PopoverContent, PopoverTrigger, Badge } from '@/components/ui/headless-ui';
 import { X, ChevronDown } from 'lucide-react';
 import { DataTableColumn, FilterConfig } from './types';
 import { getUniqueValues } from './utils/data-utils';

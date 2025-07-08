@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge, Button } from '@/components/ui/headless-ui';
 import { X, GripVertical } from 'lucide-react';
 import { DataTableColumn } from './types';
 

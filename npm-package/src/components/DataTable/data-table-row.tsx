@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Edit, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Edit, Trash2, MoreHorizontal, Eye, UserPlus } from 'lucide-react';
+import { Button, Checkbox, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/headless-ui';
 import { DataTableColumn } from './types';
 import { DataTableEditableCell } from './data-table-editable-cell';
 import { cn } from '@/lib/utils';

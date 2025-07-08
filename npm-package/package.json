@@ -1,6 +1,6 @@
 {
   "name": "advanced-react-datatable",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "A comprehensive React data grid component with advanced features like pinned columns, inline editing, grouping, filtering, and export capabilities",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -52,21 +52,8 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "@radix-ui/react-accordion": "^1.1.2",
-    "@radix-ui/react-checkbox": "^1.0.4",
-    "@radix-ui/react-dialog": "^1.0.5",
-    "@radix-ui/react-dropdown-menu": "^2.0.6",
-    "@radix-ui/react-label": "^2.0.2",
-    "@radix-ui/react-popover": "^1.0.7",
-    "@radix-ui/react-scroll-area": "^1.0.5",
-    "@radix-ui/react-select": "^2.0.0",
-    "@radix-ui/react-separator": "^1.0.3",
-    "@radix-ui/react-slot": "^1.0.2",
-    "@radix-ui/react-switch": "^1.0.3",
-    "@radix-ui/react-tabs": "^1.0.4",
-    "@radix-ui/react-tooltip": "^1.0.7",
+    "@headlessui/react": "^1.7.17",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.0.0",
     "lucide-react": "^0.400.0",
     "tailwind-merge": "^2.0.0"
   },

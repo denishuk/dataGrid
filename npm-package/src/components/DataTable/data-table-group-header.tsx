@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/headless-ui';
 import { DataTableColumn } from './types';
 
 interface DataTableGroupHeaderProps<T = any> {
@@ -12,6 +12,7 @@ interface DataTableGroupHeaderProps<T = any> {
   onToggle: () => void;
   level?: number;
   field?: string;
+  groupRows?: T[]; // Add group rows for valueGetterOnGroup
 }
 
 export function DataTableGroupHeader<T>({ 

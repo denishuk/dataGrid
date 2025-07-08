@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { HeadlessDialog as Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/headless-ui';
 import { DataTableColumnConfig } from './data-table-column-config';
 import { DataTableColumn } from './types';
 
@@ -38,8 +38,8 @@ export function DataTableColumnConfigModal<T>({
   }, [open]);
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+    <Dialog open={open} onClose={onClose}>
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Column Configuration</DialogTitle>
           <DialogDescription>
