@@ -77,7 +77,7 @@ function App() {
 
 ## Styling
 
-The component uses Tailwind CSS classes for styling and does not require any additional CSS files.
+The component uses Tailwind CSS classes for styling and does not require any additional CSS files. All UI components are built with Headless UI primitives instead of @radix-ui for better performance and smaller bundle size.
 
 ### Custom Styling
 

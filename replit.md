@@ -43,10 +43,11 @@ The core component provides:
 - **Aggregation functions** (count, sum, avg, min, max) in footer when defined in column properties
 
 ### UI Components
-- **Headless UI primitives** for accessibility
+- **Headless UI primitives** for accessibility (completely replaced @radix-ui)
 - **Custom components** built with Tailwind CSS
 - **Pure Tailwind CSS** implementation without external CSS files
 - **Consistent theming** with CSS custom properties
+- **Reduced bundle size** by removing @radix-ui dependencies
 
 ### Testing Infrastructure
 - **Vitest** with jsdom environment
@@ -106,6 +107,8 @@ The core component provides:
 - July 08, 2025. Implemented footer visibility based on property with aggregation functions (count, avg, sum, min, max) applied only when defined in column properties
 - July 08, 2025. Updated checkbox implementation to use Tailwind-based design tied to column definition with "useSelection" property
 - July 08, 2025. Updated README files with comprehensive documentation of new features
+- July 08, 2025. Removed ALL @radix-ui dependencies and replaced with Headless UI components for button, dialog, label, separator, and switch
+- July 08, 2025. Reduced bundle size from 130KB to 84KB (ES) and 86KB to 56KB (CommonJS) by removing @radix-ui dependencies
 
 ## User Preferences
 
