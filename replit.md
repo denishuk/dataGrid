@@ -40,9 +40,9 @@ The core component provides:
 - **Responsive design** with mobile support
 
 ### UI Components
-- **Radix UI primitives** for accessibility
+- **Headless UI primitives** for accessibility
 - **Custom components** built with Tailwind CSS
-- **Shadcn/ui** component library integration
+- **Pure Tailwind CSS** implementation without external CSS files
 - **Consistent theming** with CSS custom properties
 
 ### Testing Infrastructure
@@ -63,7 +63,7 @@ The core component provides:
 
 ### Core Dependencies
 - **React ecosystem**: react, react-dom, react-query
-- **UI libraries**: @radix-ui/*, lucide-react, tailwind-merge
+- **UI libraries**: @headlessui/react, lucide-react, tailwind-merge
 - **Development tools**: typescript, vite, vitest
 - **Backend**: express, drizzle-orm, zod
 
@@ -93,6 +93,9 @@ The core component provides:
 ## Changelog
 
 - July 08, 2025. Initial setup
+- July 08, 2025. Removed all CSS files and converted to pure Tailwind CSS classes
+- July 08, 2025. Replaced Radix UI components with Headless UI for toast component
+- July 08, 2025. Cleaned up all Radix UI dependencies from package.json
 
 ## User Preferences
 

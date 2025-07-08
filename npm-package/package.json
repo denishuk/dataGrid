@@ -10,9 +10,7 @@
     "README.md",
     "LICENSE"
   ],
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": false,
   "scripts": {
     "build": "./build.sh",
     "dev": "vite build --watch --config vite.config.simple.ts",
@@ -26,7 +24,7 @@
     "table",
     "typescript",
     "tailwind",
-    "radix-ui",
+    "headlessui",
     "sorting",
     "filtering",
     "grouping",
@@ -52,7 +50,7 @@
     "react-dom": ">=18.0.0"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
+    "@headlessui/react": "^2.2.4",
     "class-variance-authority": "^0.7.0",
     "lucide-react": "^0.400.0",
     "tailwind-merge": "^2.0.0"
