@@ -1,6 +1,6 @@
 // Main export for the Advanced React DataTable package
 // Import styles to ensure they are included in the bundle
-import './styles.css';
+
 
 export { DataTable } from './components/DataTable/DataTable';
 export { useDataTable } from './components/DataTable/hooks/use-data-table';

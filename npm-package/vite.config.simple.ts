@@ -20,7 +20,7 @@ export default defineConfig({
       fileName: (format) => `index.${format === 'es' ? 'es' : 'cjs'}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'lucide-react', 'clsx', 'tailwind-merge'],
+      external: ['react', 'react-dom', '@headlessui/react', 'lucide-react', 'clsx', 'tailwind-merge'],
       output: {
         globals: {
           react: 'React',

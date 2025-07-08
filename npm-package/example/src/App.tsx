@@ -1,6 +1,6 @@
 import { DataTable } from 'advanced-react-datatable';
 import type { DataTableColumn } from 'advanced-react-datatable';
-import './App.css';
+
 
 interface Employee {
   id: number;

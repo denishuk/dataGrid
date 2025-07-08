@@ -12,8 +12,6 @@ npm install advanced-react-datatable
 
 ```tsx
 import { DataTable } from 'advanced-react-datatable';
-// Styles are automatically imported, but you can also import them manually if needed:
-// import 'advanced-react-datatable/dist/style.css';
 
 const data = [
   { id: 1, name: 'John Doe', email: 'john@example.com', department: 'Engineering' },
@@ -59,62 +57,34 @@ function App() {
 
 ## Styling
 
-The component comes with built-in CSS styles that are automatically included when you import the component.
-
-### Default Styles
-
-**Important**: If styles are not applying correctly, you may need to manually import the CSS file:
-
-```tsx
-import 'advanced-react-datatable/dist/style.css';
-```
+The component uses Tailwind CSS classes for styling and does not require any additional CSS files.
 
 ### Custom Styling
 
-You can customize the DataTable appearance by overriding the CSS classes:
+You can customize the DataTable appearance by overriding the Tailwind classes or using the `className` prop:
 
-```css
-/* Override action bar color */
-.datatable-action-bar {
-  background-color: #your-color !important;
-}
-
-/* Override header styling */
-.datatable-header th {
-  background-color: #your-header-color !important;
-  color: #your-text-color !important;
-}
-
-/* Override row hover effect */
-.datatable-row:hover {
-  background-color: #your-hover-color !important;
-}
-
-/* Override filter input styling */
-.datatable-filter {
-  border-color: #your-border-color !important;
-}
-
-/* Override pagination styling */
-.datatable-pagination {
-  background-color: #your-bg-color !important;
-}
+```tsx
+<DataTable
+  data={data}
+  columns={columns}
+  className="border-2 border-gray-300 rounded-lg"
+/>
 ```
 
-### Available CSS Classes
+### Tailwind CSS Classes Used
 
-- `.datatable-container` - Main container
-- `.datatable-action-bar` - Top action bar
-- `.datatable-header` - Table header
-- `.datatable-row` - Table rows
-- `.datatable-filter` - Filter inputs
-- `.datatable-pagination` - Pagination controls
-- `.datatable-dropdown-menu` - Dropdown menus
-- `.datatable-group-header` - Group headers
+The component uses standard Tailwind CSS classes for styling:
 
-### Minimal Styling
+- **Container**: `bg-white rounded-lg overflow-hidden`
+- **Action Bar**: `bg-gradient-to-r from-blue-600 to-blue-500 p-4 flex items-center justify-between`
+- **Header**: `bg-gray-50 sticky top-0 z-30`
+- **Rows**: `transition-colors hover:bg-gray-50`
+- **Filters**: `px-3 py-2 border border-gray-300 rounded-md text-sm`
+- **Pagination**: `flex items-center justify-between p-4 bg-gray-50 border-t`
 
-For projects that prefer minimal styling, you can use your own CSS by not importing the default styles and creating your own based on the class names above.
+### Theme Customization
+
+You can customize colors and styling by modifying your Tailwind configuration or using CSS custom properties.
 
 ## Column Configuration
 
