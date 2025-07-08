@@ -1,11 +1,10 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
-import { X, ChevronDown } from 'lucide-react';
+import { ChevronDown, X } from 'lucide-react';
 import { DataTableColumn, FilterConfig } from './types';
 import { getUniqueValues } from './utils/data-utils';
 

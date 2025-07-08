@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Edit, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 import { DataTableColumn } from './types';
 import { DataTableEditableCell } from './data-table-editable-cell';

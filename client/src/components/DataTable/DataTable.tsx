@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataTableProps } from './types';
 import { DataTableHeader } from './data-table-header';
 import { DataTableRow } from './data-table-row';

@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { Eye, EyeOff, GripVertical, Pin, PinOff } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Eye, EyeOff, GripVertical, Pin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { DataTableColumn } from './types';
 import { cn } from '@/lib/utils';

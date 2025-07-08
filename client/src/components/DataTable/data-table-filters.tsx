@@ -4,9 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-import { Filter, X } from 'lucide-react';
+import { Filter } from 'lucide-react';
 import { DataTableColumn, FilterConfig } from './types';
-import { cn } from '@/lib/utils';
 
 interface DataTableFiltersProps<T> {
   columns: DataTableColumn<T>[];
@@ -130,7 +129,7 @@ export function DataTableFilters<T>({
                       <input
                         type="checkbox"
                         checked={tempFilters[`${String(column.field)}_true`] || false}
-                        onChange={(e) => 
+                        onChange={(e) =>
                           handleFilterChange(`${String(column.field)}_true`, e.target.checked, column.type!)
                         }
                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
@@ -141,7 +140,7 @@ export function DataTableFilters<T>({
                       <input
                         type="checkbox"
                         checked={tempFilters[`${String(column.field)}_false`] || false}
-                        onChange={(e) => 
+                        onChange={(e) =>
                           handleFilterChange(`${String(column.field)}_false`, e.target.checked, column.type!)
                         }
                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"

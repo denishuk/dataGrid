@@ -2,7 +2,7 @@ import React from 'react';
 import { Download, Filter, Maximize2, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { DataTableColumn, FilterConfig } from './types';
+import { FilterConfig } from './types';
 import { cn } from '@/lib/utils';
 
 interface DataTableActionBarProps<T> {

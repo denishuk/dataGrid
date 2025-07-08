@@ -1,8 +1,8 @@
 import React from 'react';
-import { ArrowUp, ArrowDown, ArrowUpDown, Pin } from 'lucide-react';
+import { ArrowDown, ArrowUp, ArrowUpDown, Pin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-import { DataTableColumn, SortConfig, FilterConfig } from './types';
+import { DataTableColumn, FilterConfig, SortConfig } from './types';
 import { DataTableColumnFilter } from './data-table-column-filter';
 import { cn } from '@/lib/utils';
 
@@ -35,8 +35,8 @@ export function DataTableHeader<T>({
   const getSortIcon = (field: string) => {
     const sort = sorts?.find(s => s.field === field);
     if (!sort) return <ArrowUpDown className="h-4 w-4" />;
-    return sort.direction === 'asc' ? 
-      <ArrowUp className="h-4 w-4 text-primary-500" /> : 
+    return sort.direction === 'asc' ?
+      <ArrowUp className="h-4 w-4 text-primary-500" /> :
       <ArrowDown className="h-4 w-4 text-primary-500" />;
   };
 
@@ -47,7 +47,7 @@ export function DataTableHeader<T>({
 
   const renderHeaderCell = (column: DataTableColumn<T>, isPinned: boolean = false) => {
     const currentFilter = filters?.find(f => f.field === String(column.field));
-    
+
     // Render checkbox header for selection column
     if (column.useSelection) {
       return (
@@ -77,7 +77,7 @@ export function DataTableHeader<T>({
         </th>
       );
     }
-    
+
     return (
       <th
         key={String(column.field)}
@@ -115,7 +115,7 @@ export function DataTableHeader<T>({
               </>
             )}
           </div>
-          
+
           {/* Column Filter */}
           {showFilters && (
             <div className="w-full min-w-0">
