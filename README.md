@@ -102,35 +102,87 @@ Current test coverage includes:
 
 ### DataTable Props
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `data` | `T[]` | Array of data objects |
-| `columns` | `DataTableColumn<T>[]` | Column definitions |
-| `groupBy` | `string \| string[]` | Fields to group by |
-| `selectionMode` | `'single' \| 'multiple' \| 'none'` | Row selection mode |
-| `showFilters` | `boolean` | Show column filters |
-| `showColumnConfig` | `boolean` | Show column configuration |
-| `pageSize` | `number` | Number of rows per page |
-| `enablePdfExport` | `boolean` | Enable PDF export button |
-| `onRowSelect` | `(rows: T[]) => void` | Row selection callback |
-| `onExport` | `(data: T[], format: string) => void` | Export callback |
-| `onCellEdit` | `(row: T, field: keyof T, value: any) => void` | Cell edit callback |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `data` | `T[]` | **Required** | Array of data objects to display |
+| `columns` | `DataTableColumn<T>[]` | **Required** | Column definitions array |
+| `groupBy` | `string \| string[]` | `undefined` | Fields to group by (supports multi-level grouping) |
+| `virtualScrolling` | `boolean` | `false` | Enable virtual scrolling for large datasets |
+| `selectionMode` | `'single' \| 'multiple' \| 'none'` | `'none'` | Row selection mode |
+| `stickyHeader` | `boolean` | `true` | Keep header visible during scrolling |
+| `showFilters` | `boolean` | `true` | Show column filters in header |
+| `showColumnConfig` | `boolean` | `true` | Show column configuration modal |
+| `pageSize` | `number` | `10` | Number of rows per page |
+| `className` | `string` | `undefined` | Additional CSS classes for container |
+| `enablePdfExport` | `boolean` | `false` | Enable PDF export button (requires PDF library) |
+| `onRowSelect` | `(rows: T[]) => void` | `undefined` | Callback when rows are selected |
+| `onExport` | `(data: T[], format: 'csv' \| 'pdf') => void` | `undefined` | Callback for export actions |
+| `onColumnChange` | `(columns: DataTableColumn<T>[]) => void` | `undefined` | Callback when columns are reordered/configured |
+| `onCellEdit` | `(row: T, field: keyof T, value: any) => void` | `undefined` | Callback when cell is edited |
 
 ### Column Definition
 
 ```tsx
 interface DataTableColumn<T> {
-  field: keyof T
-  header: string
-  sortable?: boolean
-  filterable?: boolean
-  groupable?: boolean
-  pinned?: 'left' | 'right' | null
-  type?: 'text' | 'number' | 'date' | 'select' | 'boolean'
-  width?: number
-  editable?: boolean
-  cellRenderer?: (value: any, row: T) => React.ReactNode
-  options?: string[] // For select type
+  field: keyof T                                    // Field name from data object
+  header: string                                    // Display name for column header
+  sortable?: boolean                               // Enable sorting (default: false)
+  filterable?: boolean                             // Enable filtering (default: false)
+  groupable?: boolean                              // Enable grouping (default: false)
+  pinned?: 'left' | 'right' | null                // Pin column to side (default: null)
+  type?: 'text' | 'number' | 'date' | 'select' | 'boolean'  // Data type for filtering/editing
+  width?: number                                   // Fixed column width in pixels
+  minWidth?: number                                // Minimum column width in pixels
+  maxWidth?: number                                // Maximum column width in pixels
+  hidden?: boolean                                 // Hide column (default: false)
+  editable?: boolean                               // Enable inline editing (default: false)
+  cellRenderer?: (value: any, row: T) => React.ReactNode  // Custom cell renderer
+  headerRenderer?: (column: DataTableColumn<T>) => React.ReactNode  // Custom header renderer
+  valueGetter?: (row: T) => any                    // Custom value extraction for sorting/filtering
+  valueGetterOnGroup?: (groupRows: T[], groupValue: string) => React.ReactNode  // Custom group header rendering
+  options?: string[]                               // Options for select type columns
+}
+```
+
+### Filter Configuration
+
+```tsx
+interface FilterConfig {
+  field: string                                    // Field to filter
+  operator: 'contains' | 'equals' | 'startsWith' | 'endsWith' | 'gt' | 'lt' | 'gte' | 'lte' | 'in'
+  value: any                                       // Filter value
+  type: 'text' | 'number' | 'date' | 'select' | 'boolean'  // Filter type
+}
+```
+
+### Sort Configuration
+
+```tsx
+interface SortConfig {
+  field: string                                    // Field to sort by
+  direction: 'asc' | 'desc'                       // Sort direction
+}
+```
+
+### Group Configuration
+
+```tsx
+interface GroupConfig {
+  field: string                                    // Field to group by
+  expanded: boolean                                // Group expansion state
+}
+```
+
+### Group Summary
+
+```tsx
+interface GroupSummary {
+  field: string                                    // Field being summarized
+  count: number                                    // Number of items in group
+  sum?: number                                     // Sum of numeric values
+  avg?: number                                     // Average of numeric values
+  min?: number                                     // Minimum value
+  max?: number                                     // Maximum value
 }
 ```
 
