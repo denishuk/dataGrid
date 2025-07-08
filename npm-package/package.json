@@ -41,12 +41,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/advanced-react-datatable.git"
+    "url": "git+https://github.com/denishuk/dataGrid.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/advanced-react-datatable/issues"
+    "url": "https://github.com/denishuk/dataGrid"
   },
-  "homepage": "https://github.com/yourusername/advanced-react-datatable#readme",
+  "homepage": "https://github.com/denishuk/dataGrid#readme",
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
