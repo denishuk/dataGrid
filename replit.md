@@ -115,6 +115,9 @@ The core component provides:
 - July 08, 2025. Completely resolved React dispatcher error by improving Vite externalization configuration
 - July 08, 2025. Updated build process to properly externalize React, react-dom, and scheduler dependencies
 - July 08, 2025. Package now works correctly in external Next.js applications without React context issues
+- July 08, 2025. Removed unnecessary hooks folder (use-toast, use-mobile) from NPM package build
+- July 08, 2025. Excluded toast-related components (toast.tsx, toaster.tsx) from NPM package to reduce bundle size
+- July 08, 2025. Optimized package build process to include only DataTable-specific dependencies
 
 ## User Preferences
 

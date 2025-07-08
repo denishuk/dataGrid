@@ -12,11 +12,13 @@ rm -rf dist src
 echo "📁 Copying DataTable components from main folder..."
 mkdir -p src/components/DataTable
 mkdir -p src/components/ui
-mkdir -p src/hooks
 cp -r ../client/src/components/DataTable/* src/components/DataTable/
+# Copy UI components excluding toast-related components
 cp -r ../client/src/components/ui/* src/components/ui/
+rm -f src/components/ui/toaster.tsx
+rm -f src/components/ui/toast.tsx
 cp -r ../client/src/lib src/
-cp -r ../client/src/hooks src/
+# Skip copying hooks folder - DataTable doesn't use toast or mobile hooks
 
 # Create index.ts file for exports
 echo "📝 Creating index.ts..."
