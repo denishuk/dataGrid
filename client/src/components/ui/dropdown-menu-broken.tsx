@@ -3,89 +3,13 @@ import { Check, ChevronRight, Circle } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-interface DropdownMenuContextType {
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-}
+const DropdownMenu: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="relative inline-block text-left">{children}</div>
+);
 
-const DropdownMenuContext = React.createContext<DropdownMenuContextType | null>(null);
-
-const DropdownMenu: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  
-  return (
-    <DropdownMenuContext.Provider value={{ isOpen, setIsOpen }}>
-      <div className="relative inline-block text-left">
-        {children}
-      </div>
-    </DropdownMenuContext.Provider>
-  );
-};
-
-const DropdownMenuTrigger: React.FC<{ 
-  children: React.ReactNode; 
-  asChild?: boolean;
-}> = ({ children, asChild }) => {
-  const context = React.useContext(DropdownMenuContext);
-  
-  if (asChild) {
-    return React.cloneElement(children as React.ReactElement, {
-      onClick: () => context?.setIsOpen(!context.isOpen)
-    });
-  }
-  
-  return (
-    <div onClick={() => context?.setIsOpen(!context.isOpen)}>
-      {children}
-    </div>
-  );
-};
-
-const DropdownMenuContent = React.forwardRef<HTMLDivElement, { 
-  children: React.ReactNode; 
-  className?: string; 
-  sideOffset?: number;
-  align?: 'start' | 'center' | 'end';
-}>(({ className, children, sideOffset = 4, align = 'start', ...props }, ref) => {
-  const context = React.useContext(DropdownMenuContext);
-  const contentRef = React.useRef<HTMLDivElement>(null);
-  
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (contentRef.current && !contentRef.current.contains(event.target as Node)) {
-        context?.setIsOpen(false);
-      }
-    };
-
-    if (context?.isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [context?.isOpen, context]);
-
-  if (!context?.isOpen) return null;
-
-  const alignmentClass = align === 'end' ? 'right-0' : align === 'center' ? 'left-1/2 -translate-x-1/2' : 'left-0';
-
-  return (
-    <div
-      ref={contentRef}
-      className={cn(
-        "absolute top-full z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
-        alignmentClass,
-        className
-      )}
-      style={{ marginTop: sideOffset }}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-});
-DropdownMenuContent.displayName = "DropdownMenuContent";
+const DropdownMenuTrigger: React.FC<{ children: React.ReactNode; asChild?: boolean }> = ({ children }) => (
+  <div>{children}</div>
+);
 
 const DropdownMenuGroup: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div>{children}</div>
@@ -140,32 +64,43 @@ const DropdownMenuSubContent = React.forwardRef<HTMLDivElement, {
 ));
 DropdownMenuSubContent.displayName = "DropdownMenuSubContent";
 
+const DropdownMenuContent = React.forwardRef<HTMLDivElement, { 
+  children: React.ReactNode; 
+  className?: string; 
+  sideOffset?: number;
+}>(({ className, children, sideOffset = 4, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md",
+      className
+    )}
+    {...props}
+  >
+    {children}
+  </div>
+));
+DropdownMenuContent.displayName = "DropdownMenuContent";
+
 const DropdownMenuItem = React.forwardRef<HTMLDivElement, { 
   children: React.ReactNode; 
   className?: string; 
   inset?: boolean;
   onClick?: () => void;
-}>(({ className, inset, children, onClick, ...props }, ref) => {
-  const context = React.useContext(DropdownMenuContext);
-  
-  return (
-    <div
-      ref={ref}
-      className={cn(
-        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        inset && "pl-8",
-        className
-      )}
-      onClick={() => {
-        onClick?.();
-        context?.setIsOpen(false);
-      }}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-});
+}>(({ className, inset, children, onClick, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      inset && "pl-8",
+      className
+    )}
+    onClick={onClick}
+    {...props}
+  >
+    {children}
+  </div>
+));
 DropdownMenuItem.displayName = "DropdownMenuItem";
 
 const DropdownMenuCheckboxItem = React.forwardRef<HTMLDivElement, { 

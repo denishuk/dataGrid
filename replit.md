@@ -1,223 +1,99 @@
-# Employee Management System
+# Advanced React DataTable
 
 ## Overview
 
-This is a full-stack employee management system built with React, TypeScript, Express, and Drizzle ORM. The application provides a comprehensive interface for managing employee data with advanced filtering, sorting, and data visualization capabilities.
+This is a comprehensive React application featuring an advanced DataTable component with TypeScript support. The application demonstrates sophisticated data grid functionality including sorting, filtering, grouping, pagination, and export capabilities. The project includes both a client-side implementation and preparation for NPM package distribution.
 
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: React with TypeScript
-- **UI Library**: Shadcn/ui components built on Radix UI primitives
-- **Styling**: Tailwind CSS with custom design tokens
-- **State Management**: React Query for server state, local React state for UI
-- **Routing**: Wouter for client-side routing
-- **Build Tool**: Vite for development and production builds
+- **React 18+** with TypeScript for type safety
+- **Vite** as the build tool and development server
+- **Tailwind CSS** for styling with custom CSS variables
+- **Radix UI** components for accessible UI primitives
+- **TanStack React Query** for data fetching and state management
+- **Wouter** for lightweight client-side routing
 
 ### Backend Architecture
-- **Runtime**: Node.js with Express.js
-- **Language**: TypeScript with ESM modules
-- **Database**: PostgreSQL with Drizzle ORM
-- **Session Management**: Express sessions with PostgreSQL store
-- **API Pattern**: RESTful endpoints under `/api` prefix
+- **Express.js** server with TypeScript
+- **Session-based** state management with express-session
+- **RESTful API** endpoints for employee data management
+- **In-memory storage** implementation for demonstration
 
-### Data Layer
-- **ORM**: Drizzle ORM with PostgreSQL dialect
-- **Database Provider**: Neon Database (serverless PostgreSQL)
-- **Schema**: Type-safe database schema with Zod validation
-- **Migrations**: Drizzle Kit for database migrations
+### Database Integration
+- **Drizzle ORM** configured for PostgreSQL
+- **Zod** schema validation for type-safe data operations
+- **Neon Database** integration ready (requires DATABASE_URL)
 
 ## Key Components
 
-### Database Schema
-- **Users Table**: Authentication with username/password
-- **Employees Table**: Comprehensive employee data including:
-  - Personal information (name, email)
-  - Employment details (department, title, salary)
-  - Status tracking (active/inactive, hire date, location)
+### DataTable Component
+The core component provides:
+- **Multi-column sorting** with visual indicators
+- **Advanced filtering** with column-specific operators
+- **Hierarchical grouping** with drag-and-drop reordering
+- **Pinned columns** (left/right) with shadow effects
+- **Inline editing** with type-specific editors
+- **Pagination** with configurable page sizes
+- **Export functionality** (CSV and optional PDF)
+- **Column management** (show/hide, reorder, resize)
+- **Responsive design** with mobile support
 
-### Advanced DataTable Component
-- **Core Features**: Sorting, filtering, grouping, column pinning, virtual scrolling
-- **Inline Editing**: Double-click cells to edit values with type-specific editors
-- **Custom Renderers**: Override column headers and cell templates  
-- **Inline Column Filters**: Filter controls directly under each column header
-- **Multi-Level Grouping**: Group by multiple columns with automatic numeric summaries
-- **Column Management**: Pin left/right, show/hide, reorder columns
-- **Export**: CSV and JSON export capabilities
-- **Responsive**: Mobile-friendly design with adaptive layouts
-- **TypeScript**: Full type safety and customizable column definitions
+### UI Components
+- **Radix UI primitives** for accessibility
+- **Custom components** built with Tailwind CSS
+- **Shadcn/ui** component library integration
+- **Consistent theming** with CSS custom properties
 
-### API Endpoints
-- `GET /api/employees` - List all employees
-- `GET /api/employees/:id` - Get specific employee
-- `POST /api/employees` - Create new employee
-- `PUT /api/employees/:id` - Update employee
-- `DELETE /api/employees/:id` - Delete employee
-
-### Storage Layer
-- **Interface**: IStorage abstraction for data operations
-- **Implementation**: MemStorage for development with sample data
-- **Production**: Database-backed storage (ready for PostgreSQL)
+### Testing Infrastructure
+- **Vitest** with jsdom environment
+- **React Testing Library** for component testing
+- **V8 coverage** provider with multiple report formats
+- **Comprehensive test suite** with 70%+ coverage targets
 
 ## Data Flow
 
-1. **Client Requests**: React components use React Query for API calls
-2. **API Layer**: Express routes handle HTTP requests with validation
-3. **Business Logic**: Storage interface abstracts data operations
-4. **Database**: Drizzle ORM manages PostgreSQL interactions
-5. **Response**: JSON responses with proper error handling
+1. **Server-side**: Express server provides RESTful API endpoints
+2. **Client-side**: React Query manages data fetching and caching
+3. **Component State**: useDataTable hook manages table state
+4. **Rendering**: Virtual scrolling for large datasets (optional)
+5. **Interactions**: Real-time filtering, sorting, and grouping
 
 ## External Dependencies
 
-### UI Libraries
-- **Radix UI**: Headless UI primitives for accessibility
-- **Lucide React**: Icon library for consistent iconography
-- **Tailwind CSS**: Utility-first CSS framework
-- **Class Variance Authority**: Component variant management
+### Core Dependencies
+- **React ecosystem**: react, react-dom, react-query
+- **UI libraries**: @radix-ui/*, lucide-react, tailwind-merge
+- **Development tools**: typescript, vite, vitest
+- **Backend**: express, drizzle-orm, zod
 
-### Data Management
-- **React Query**: Server state management and caching
-- **Drizzle ORM**: Type-safe database operations
-- **Zod**: Runtime type validation and schema parsing
-- **React Hook Form**: Form state management with validation
-
-### Development Tools
-- **Vite**: Fast build tool with HMR
-- **ESBuild**: Fast JavaScript bundler for production
-- **TypeScript**: Type safety and developer experience
-- **Replit Integration**: Development environment optimization
+### NPM Package Dependencies
+- **Peer dependencies**: React 18+ with flexible version support
+- **Build tools**: Vite with custom configuration
+- **Type definitions**: Complete TypeScript support
 
 ## Deployment Strategy
 
 ### Development
-- **Hot Reload**: Vite middleware for instant updates
-- **Error Handling**: Runtime error overlay for debugging
-- **Logging**: Request/response logging with performance metrics
+- **Vite dev server** with hot module replacement
+- **Express server** with middleware integration
+- **Replit integration** with runtime error overlay
 
 ### Production Build
-- **Frontend**: Vite builds optimized static assets
-- **Backend**: ESBuild bundles server code with external packages
-- **Assets**: Static files served from Express with proper caching
+- **Client build**: Vite builds to `dist/public`
+- **Server build**: esbuild bundles to `dist/index.js`
+- **NPM package**: Separate build process for package distribution
 
-### Environment Configuration
-- **Database**: PostgreSQL connection via DATABASE_URL
-- **Sessions**: Secure session management with PostgreSQL store
-- **CORS**: Configured for production deployment
+### Package Distribution
+- **NPM package** ready for publication
+- **Multiple formats**: ES modules and CommonJS
+- **Complete documentation** and examples
+- **Automated build process** with shell scripts
+
+## Changelog
+
+- July 08, 2025. Initial setup
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
-
-## Changelog
-
-- July 06, 2025: Initial setup with basic DataTable component
-- July 06, 2025: Enhanced DataTable with advanced features:
-  - Added inline column filters under each header
-  - Implemented inline cell editing with double-click
-  - Added custom header and cell renderer support
-  - Implemented multi-level grouping with numeric summaries
-  - Enhanced column management with pinning and visibility controls
-  - Improved TypeScript integration with better type safety
-- July 06, 2025: Major UI overhaul and architecture improvements:
-  - **Blue Action Bar**: Created centralized control panel with export, filter indicators, and settings
-  - **Modal Configuration**: Moved column configuration to modal with drag-and-drop reordering
-  - **Improved Pinning**: Added shadow effects for pinned columns with semi-transparent backgrounds
-  - **Fullscreen Mode**: Added expand/collapse functionality for maximum data visibility
-  - **Sticky Footer**: Implemented configurable summary calculations with show/hide toggle
-  - **Enhanced Pagination**: Moved pagination below table with improved controls and page size selection
-  - **Removed Features**: Eliminated JSON export, advanced filters section, and global search as requested
-  - **File Structure**: All components now use kebab-case naming convention
-  - **Performance**: Fixed opacity issues with pinned columns using backdrop-blur for better text visibility
-  - **Documentation**: Created comprehensive README with full feature documentation and usage examples
-- July 07, 2025: Final polish and NPM preparation:
-  - **Clean Demo**: Removed icon-based headers from demo template for cleaner appearance
-  - **Primary Colors**: Updated action bar to use Tailwind primary blue (blue-600) with white text and icons
-  - **Header Borders**: Added border-bottom to table headers instead of first body row for better visibility
-  - **Table Layout**: Fixed table width issues with table-fixed layout for consistent column spacing
-  - **NPM Package Guide**: Created comprehensive PACKAGE_PREPARATION.md with complete publishing instructions
-  - **Component Ready**: DataTable is now production-ready and prepared for NPM registry publication
-- July 07, 2025: Multiselect filters and stability improvements:
-  - **Multiselect Filters**: Added checkbox-based multiselect filters for select and boolean column types
-  - **Auto-Generated Options**: Filter options are automatically collected from actual data
-  - **Column Width Stability**: Added automatic minWidth calculation (180px for filterable, 120px for others) to prevent column jumping
-  - **Horizontal Scrolling**: Implemented proper horizontal scrolling for tables with many columns using min-w-full and overflow-x-auto
-  - **Updated Documentation**: Comprehensive README with screenshots, installation instructions, and multiselect feature documentation
-  - **NPM Package v1.1.0**: Updated package with all new features and proper build configuration
-- July 07, 2025: Actions column and footer alignment improvements:
-  - **Actions Column**: Added professional dropdown menu with View, Edit, Assign, Delete options pinned to right
-  - **Group Header Layout**: Fixed grouping to span full table width with summaries under respective columns
-  - **Footer Alignment**: Improved table footer to match column layout, removed count from actions column
-  - **Right-Aligned Summaries**: Summary values now align to the right under their data columns for better readability
-  - **NPM Package v1.2.0**: Updated package with actions column and improved layout alignment
-- July 07, 2025: Simplified grouping interface and enhanced multi-grouping:
-  - **Clean Group Headers**: Removed field prefixes from group headers (shows "Engineering (3)" instead of "department: Engineering (3 items)")
-  - **Badge-Based Grouping**: Moved grouping from blue action bar to dedicated gray area with intuitive badge interface
-  - **Multi-Group Support**: Added support for multiple grouping levels with drag-and-drop reordering
-  - **Visual Improvements**: Cleaner action bar focused on essential functions, better visual hierarchy
-  - **NPM Package v1.3.0**: Updated package with simplified grouping interface and multi-level grouping capabilities
-- July 07, 2025: Export improvements and location grouping:
-  - **Fixed Export CSV Button**: Improved hover styling to maintain white text on blue background
-  - **Added PDF Export**: Added optional PDF export button controlled by enablePdfExport property
-  - **Functional CSV Export**: Fixed CSV export functionality to properly generate and download files
-  - **Location Grouping**: Made location field groupable in demo data for better grouping examples
-  - **Compact Checkbox Column**: Reduced spacing in checkbox column during grouping for better layout
-  - **NPM Package v1.4.0**: Updated package with export improvements and location grouping support
-- July 07, 2025: Hierarchical multi-level grouping implementation:
-  - **Multi-Level Tree Grouping**: Implemented nested hierarchical grouping where multiple columns create tree structure
-  - **Level-Based Indentation**: Each grouping level shows proper visual indentation (30px per level for better hierarchy)
-  - **Hierarchical Expand/Collapse**: Each group level can be independently expanded or collapsed
-  - **Field Indicators**: Group headers show which field they represent (department, location, etc.)
-  - **Nested Summaries**: Numeric summaries calculate correctly at each hierarchy level
-  - **Fixed Drag-and-Drop**: Improved badge reordering with proper DOM structure for HTML5 drag events
-  - **Enhanced Visual Hierarchy**: Added background colors and left borders for each grouping level with increasing opacity
-  - **Console Error Fixes**: Fixed React Fragment warnings by replacing with flatMap approach to avoid Replit metadata issues
-  - **Drag-and-Drop Improvements**: Enhanced badge reordering with better event handling and debug logging
-  - **Enhanced Visual Hierarchy**: Added progressive background colors and borders for grouping levels
-  - **Filter Styling Consistency**: Standardized all filter input fields to use text-sm for consistent font sizing
-  - **Drag-and-Drop Visual Feedback**: Added opacity and scale effects when dragging grouping badges  
-  - **Filter Font Weight Fix**: Changed all filter text from font-medium to font-normal for consistent light text appearance
-  - **Fixed Button Font Weight Override**: Used !font-light to override button component's default font-medium styling
-  - **NPM Package v1.5.7**: Updated package with properly overridden button font weights for consistent light text
-- July 07, 2025: Comprehensive testing infrastructure and coverage reporting:
-  - **Testing Framework**: Set up Vitest with jsdom environment for React component testing
-  - **Test Coverage**: Implemented comprehensive test suite covering core DataTable functionality
-  - **Coverage Reports**: Added HTML, LCOV, and text coverage reporting with v8 provider
-  - **GitHub Actions**: Created CI/CD pipeline with automated testing on push and pull requests
-  - **Code Coverage Badges**: Added testing and coverage status badges for git repository
-  - **Test Categories**: Unit tests for utilities, integration tests for components, and core functionality tests
-  - **Coverage Metrics**: Current baseline coverage established with room for expansion
-  - **Development Tools**: Added test scripts for watch mode, UI mode, and coverage generation
-- July 07, 2025: React version compatibility enhancement:
-  - **React 19.x Support**: Updated peer dependencies from `^18.0.0` to `>=18.0.0` for broader compatibility
-  - **Future-Proof**: Package now supports React 18.x, 19.x, and future versions
-  - **NPM Package v1.5.9**: Fixed installation errors for users with React 19.x
-  - **Enhanced Documentation**: Added React compatibility matrix and installation troubleshooting
-  - **Build Improvements**: Updated build configuration and dependencies for better compatibility
-- July 07, 2025: NPM package build system overhaul:
-  - **Fixed Module Resolution**: Solved "Module not found" errors by generating proper JavaScript bundles
-  - **Production Build**: Package now outputs compiled JavaScript (index.es.js, index.cjs.js) instead of TypeScript source
-  - **Build Configuration**: Simplified Vite config to reliably generate production bundles with correct file extensions
-  - **Package Testing**: Added verification test confirming DataTable component exports correctly
-  - **NPM Package v1.6.0**: Complete build system fix for proper module loading and distribution
-- July 07, 2025: CSS styling fix and border removal:
-  - **CSS Bundle Fix**: Added comprehensive CSS styles bundle to resolve unstyled appearance in NPM package usage
-  - **Border Removal**: Removed default border around DataTable container for cleaner appearance
-  - **Style Import**: Automatic CSS import ensures styles are properly bundled and loaded
-  - **Custom CSS Classes**: Replaced Tailwind utilities with custom CSS classes for better compatibility
-  - **Manual Import Option**: Added fallback option to manually import styles if automatic loading fails
-  - **NPM Package v1.6.1**: Fixed styling issues and removed borders for production-ready component
-- July 08, 2025: Enhanced column flexibility and styling customization:
-  - **valueGetter Property**: Added new column property for custom value extraction with priority over field property
-  - **Enhanced Data Processing**: valueGetter support integrated into sorting, filtering, and grouping operations
-  - **GitHub Links Update**: Updated README with correct repository links (https://github.com/denishuk/dataGrid)
-  - **CSS Optimization**: Cleaned up styles with hex colors and improved performance, resolved sticky header issues
-  - **Comprehensive Documentation**: Added styling customization guide and valueGetter usage examples
-  - **NPM Package v1.7.0**: Major enhancement with valueGetter support and improved styling system
-- July 08, 2025: Major dependency reduction and Headless UI migration:
-  - **Replaced Radix UI with Headless UI**: Migrated from 13 Radix UI packages to 1 Headless UI package
-  - **Removed clsx Dependency**: Consolidated with tailwind-merge for utility merging
-  - **40% Dependency Reduction**: Dramatically reduced bundle size and peer dependency requirements
-  - **valueGetterOnGroup Implementation**: Completed custom group rendering with group rows parameter
-  - **Performance Optimization**: Faster loading and parsing with fewer dependencies
-  - **Better Browser Support**: Improved compatibility with reduced dependency overhead
-  - **NPM Package v1.8.0**: Major dependency reduction release with Headless UI integration
