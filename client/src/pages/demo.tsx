@@ -24,7 +24,7 @@ export default function Demo() {
       filterable: true,
       editable: true,
       cellRenderer: (value) => (
-        <div className="font-mono text-sm text-gray-900">{value}</div>
+        <div className="font-medium text-gray-900">{value}</div>
       ),
     },
     {

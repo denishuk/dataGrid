@@ -89,7 +89,7 @@ export function DataTableHeader<T>({
           
           {/* Column Filter */}
           {showFilters && (
-            <div className="w-full">
+            <div className="w-full min-w-0">
               <DataTableColumnFilter
                 column={column}
                 filter={currentFilter}

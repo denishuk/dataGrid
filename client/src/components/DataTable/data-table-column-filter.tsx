@@ -135,16 +135,18 @@ export function DataTableColumnFilter<T>({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 w-full justify-between text-sm font-light !font-light"
+                className="h-8 w-full justify-between text-sm font-light !font-light min-w-0"
               >
-                {selectedValues.length === 0 ? (
-                  'All'
-                ) : selectedValues.length === 1 ? (
-                  selectedValues[0]
-                ) : (
-                  `${selectedValues.length} selected`
-                )}
-                <ChevronDown className="h-3 w-3 opacity-50" />
+                <span className="truncate">
+                  {selectedValues.length === 0 ? (
+                    'All'
+                  ) : selectedValues.length === 1 ? (
+                    selectedValues[0]
+                  ) : (
+                    `${selectedValues.length} selected`
+                  )}
+                </span>
+                <ChevronDown className="h-3 w-3 opacity-50 flex-shrink-0" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-56 p-2" align="start">
@@ -232,16 +234,18 @@ export function DataTableColumnFilter<T>({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 w-full justify-between text-sm font-light !font-light"
+                className="h-8 w-full justify-between text-sm font-light !font-light min-w-0"
               >
-                {selectedValues.length === 0 ? (
-                  'All'
-                ) : selectedValues.length === 1 ? (
-                  selectedValues[0]
-                ) : (
-                  `${selectedValues.length} selected`
-                )}
-                <ChevronDown className="h-3 w-3 opacity-50" />
+                <span className="truncate">
+                  {selectedValues.length === 0 ? (
+                    'All'
+                  ) : selectedValues.length === 1 ? (
+                    selectedValues[0]
+                  ) : (
+                    `${selectedValues.length} selected`
+                  )}
+                </span>
+                <ChevronDown className="h-3 w-3 opacity-50 flex-shrink-0" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-40 p-2" align="start">
@@ -291,22 +295,22 @@ export function DataTableColumnFilter<T>({
             onChange={(e) => setFilterValue(e.target.value)}
             onBlur={() => handleFilterChange(filterValue)}
             onKeyDown={(e) => e.key === 'Enter' && handleFilterChange(filterValue)}
-            className="h-8 text-sm font-light" style={{ fontWeight: 300 }}
+            className="h-8 text-sm font-light w-full min-w-0" style={{ fontWeight: 300 }}
           />
         );
     }
   };
 
   return (
-    <div className="flex items-center gap-1">
-      <div className="flex-1">
+    <div className="flex items-center gap-1 w-full">
+      <div className="flex-1 min-w-0">
         {renderFilter()}
       </div>
       {filter && (
         <Button
           variant="ghost"
           size="sm"
-          className="h-6 w-6 p-0"
+          className="h-6 w-6 p-0 flex-shrink-0"
           onClick={clearFilter}
         >
           <X className="h-3 w-3" />
