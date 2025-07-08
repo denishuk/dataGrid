@@ -96,6 +96,7 @@ The core component provides:
 - July 08, 2025. Removed all CSS files and converted to pure Tailwind CSS classes
 - July 08, 2025. Replaced Radix UI components with Headless UI for toast component
 - July 08, 2025. Cleaned up all Radix UI dependencies from package.json
+- July 08, 2025. Removed 20+ unnecessary dependencies from root package.json to optimize bundle size
 
 ## User Preferences
 
