@@ -1,39 +1,29 @@
 import React from 'react';
-import { Download, Settings, Maximize2, X, Filter } from 'lucide-react';
+import { Download, Filter, Maximize2, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { DataTableColumn, FilterConfig } from './types';
 import { cn } from '@/lib/utils';
 
 interface DataTableActionBarProps<T> {
-  columns: DataTableColumn<T>[];
   filters: FilterConfig[];
-  groupBy?: string;
   onExport?: (format: 'csv' | 'pdf') => void;
   onClearFilters: () => void;
   onOpenColumnConfig: () => void;
   onToggleFullscreen: () => void;
-  onGroupByChange: (field: string | null) => void;
-  groupByFields: string[];
   isFullscreen: boolean;
   enablePdfExport?: boolean;
 }
 
 export function DataTableActionBar<T>({
-  columns,
   filters,
-  groupBy,
   onExport,
   onClearFilters,
   onOpenColumnConfig,
   onToggleFullscreen,
-  onGroupByChange,
-  groupByFields,
   isFullscreen,
   enablePdfExport = false,
 }: DataTableActionBarProps<T>) {
-  const groupableColumns = columns.filter(col => col.groupable);
   const hasActiveFilters = filters.length > 0;
 
   return (
@@ -51,7 +41,7 @@ export function DataTableActionBar<T>({
               <Download className="h-4 w-4 text-white" />
               Export CSV
             </Button>
-            
+
             {enablePdfExport && (
               <Button
                 variant="outline"
@@ -64,8 +54,6 @@ export function DataTableActionBar<T>({
               </Button>
             )}
           </div>
-
-          {/* Group by functionality moved to separate area */}
 
           {/* Filter Indicators */}
           {hasActiveFilters && (

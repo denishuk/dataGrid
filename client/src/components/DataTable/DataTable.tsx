@@ -130,23 +130,19 @@ export function DataTable<T extends Record<string, any>>({
   const showSelection = selectionMode !== 'none';
 
   return (
-    <div 
+    <div
       className={cn(
-        "bg-white rounded-lg shadow-sm border border-gray-200",
-        isFullscreen && "fixed inset-0 z-50 rounded-none",
+        isFullscreen && "fixed inset-0 z-50",
         className
       )}
     >
       {/* Blue Action Bar */}
       <DataTableActionBar
-        columns={columns}
         filters={filters}
-        groupBy={typeof currentGroupBy === 'string' ? currentGroupBy : undefined}
         onExport={handleExport}
         onClearFilters={clearFilters}
         onOpenColumnConfig={() => setShowColumnConfigModal(true)}
         onToggleFullscreen={() => setIsFullscreen(!isFullscreen)}
-        onGroupByChange={handleGroupByChange}
         isFullscreen={isFullscreen}
         enablePdfExport={enablePdfExport}
       />
@@ -227,7 +223,7 @@ export function DataTable<T extends Record<string, any>>({
               </div>
             </div>
           )}
-          
+
           {!virtualScrolling && (
             <table className="min-w-full text-sm border-collapse table-fixed">
               <DataTableHeader

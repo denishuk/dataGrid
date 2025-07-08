@@ -71,15 +71,15 @@ export function DataTableColumnFilter<T>({
   // Handler for multiselect filters
   const handleMultiSelectChange = useCallback((value: string, checked: boolean) => {
     setSelectedValues(prev => {
-      const newValues = checked 
+      const newValues = checked
         ? [...prev, value]
         : prev.filter(v => v !== value);
-      
+
       if (newValues.length === 0) {
         onFilterChange(null);
         return [];
       }
-      
+
       const newFilter: FilterConfig = {
         field: String(column.field),
         operator: 'in',
@@ -135,7 +135,7 @@ export function DataTableColumnFilter<T>({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 w-full justify-between text-sm font-light !font-light min-w-0"
+                className="h-8 w-full border-0 bg-gray-200 rounded-sm justify-between text-sm font-light min-w-0"
               >
                 <span className="truncate">
                   {selectedValues.length === 0 ? (
@@ -149,7 +149,7 @@ export function DataTableColumnFilter<T>({
                 <ChevronDown className="h-3 w-3 opacity-50 flex-shrink-0" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-56 p-2" align="start">
+            <PopoverContent className="w-56 p-2 bg-white ring-1 ring-gray-900/5" align="start">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-medium">Filter options</span>
@@ -170,13 +170,13 @@ export function DataTableColumnFilter<T>({
                       <Checkbox
                         id={`${String(column.field)}-${option}`}
                         checked={selectedValues.includes(option)}
-                        onCheckedChange={(checked) => 
+                        onCheckedChange={(checked) =>
                           handleMultiSelectChange(option, checked as boolean)
                         }
                       />
                       <label
                         htmlFor={`${String(column.field)}-${option}`}
-                        className="text-xs font-normal cursor-pointer flex-1"
+                        className="text-sm font-normal cursor-pointer flex-1"
                       >
                         {option}
                       </label>
@@ -215,7 +215,7 @@ export function DataTableColumnFilter<T>({
               value={rangeMin}
               onChange={(e) => setRangeMin(e.target.value)}
               onBlur={handleRangeChange}
-              className="h-8 text-sm font-light" style={{ fontWeight: 300 }}
+              className="h-8 text-sm font-light border-0 bg-gray-200 rounded-sm"
             />
             <Input
               type="number"
@@ -223,7 +223,7 @@ export function DataTableColumnFilter<T>({
               value={rangeMax}
               onChange={(e) => setRangeMax(e.target.value)}
               onBlur={handleRangeChange}
-              className="h-8 text-sm font-light" style={{ fontWeight: 300 }}
+              className="h-8 text-sm font-light border-0 bg-gray-200 rounded-sm"
             />
           </div>
         );
@@ -234,7 +234,7 @@ export function DataTableColumnFilter<T>({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 w-full justify-between text-sm font-light !font-light min-w-0"
+                className="h-8 w-full justify-between text-sm font-light border-0 bg-gray-200 rounded-sm min-w-0"
               >
                 <span className="truncate">
                   {selectedValues.length === 0 ? (
@@ -269,7 +269,7 @@ export function DataTableColumnFilter<T>({
                       <Checkbox
                         id={`${String(column.field)}-${option}`}
                         checked={selectedValues.includes(option)}
-                        onCheckedChange={(checked) => 
+                        onCheckedChange={(checked) =>
                           handleMultiSelectChange(option, checked as boolean)
                         }
                       />
@@ -295,7 +295,7 @@ export function DataTableColumnFilter<T>({
             onChange={(e) => setFilterValue(e.target.value)}
             onBlur={() => handleFilterChange(filterValue)}
             onKeyDown={(e) => e.key === 'Enter' && handleFilterChange(filterValue)}
-            className="h-8 text-sm font-light w-full min-w-0" style={{ fontWeight: 300 }}
+            className="h-8 text-sm font-light w-full min-w-0 border-0 bg-gray-200 rounded-sm"
           />
         );
     }

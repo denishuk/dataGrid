@@ -17,7 +17,7 @@ export function DataTableGroupingArea<T>({
 }: DataTableGroupingAreaProps<T>) {
   const groupableColumns = columns.filter(col => col.groupable);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  
+
   if (groupableColumns.length === 0) return null;
 
   const activeGroups = Array.isArray(groupBy) ? groupBy : (groupBy ? [groupBy] : []);
@@ -33,7 +33,6 @@ export function DataTableGroupingArea<T>({
   };
 
   const handleDragStart = (e: React.DragEvent, index: number) => {
-    console.log('Drag start for index:', index, 'field:', activeGroups[index]);
     setDraggedIndex(index);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', index.toString());
@@ -50,10 +49,8 @@ export function DataTableGroupingArea<T>({
 
   const handleDrop = (e: React.DragEvent, dropIndex: number) => {
     e.preventDefault();
-    console.log('Drop event - draggedIndex:', draggedIndex, 'dropIndex:', dropIndex);
-    
+
     if (draggedIndex === null || draggedIndex === dropIndex) {
-      console.log('Drop cancelled - same position or no drag');
       return;
     }
 
@@ -61,8 +58,7 @@ export function DataTableGroupingArea<T>({
     const draggedItem = newGroups[draggedIndex];
     newGroups.splice(draggedIndex, 1);
     newGroups.splice(dropIndex, 0, draggedItem);
-    
-    console.log('Reordering groups:', activeGroups, '->', newGroups);
+
     onGroupByChange(newGroups);
     setDraggedIndex(null);
   };
@@ -71,7 +67,7 @@ export function DataTableGroupingArea<T>({
     <div className="bg-gray-100 border-b border-gray-200 px-4 py-2">
       <div className="flex items-center gap-3">
         <span className="text-xs font-medium text-gray-700">Group by</span>
-        
+
         <div className="flex items-center gap-2">
           {/* Currently active grouping */}
           {activeGroups.map((field, index) => (
@@ -83,14 +79,13 @@ export function DataTableGroupingArea<T>({
               onDragEnter={handleDragEnter}
               onDrop={(e) => handleDrop(e, index)}
               onDragEnd={() => {
-                console.log('Drag ended');
                 setDraggedIndex(null);
               }}
               className="inline-block"
             >
-              <Badge 
-                variant="secondary" 
-                className={`bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200 flex items-center gap-1 select-none transition-all duration-200 ${
+              <Badge
+                variant="default"
+                className={`flex items-center gap-1 select-none transition-all duration-200 ${
                   activeGroups.length > 1 ? 'cursor-move' : 'cursor-default'
                 } ${
                   draggedIndex === index ? 'opacity-50 scale-95' : 'opacity-100 scale-100'
@@ -111,14 +106,14 @@ export function DataTableGroupingArea<T>({
               </Badge>
             </div>
           ))}
-          
+
           {/* Available grouping options */}
           {groupableColumns
             .filter(col => !activeGroups.includes(String(col.field)))
             .map(col => (
-              <Badge 
+              <Badge
                 key={String(col.field)}
-                variant="outline"
+                variant="secondary"
                 className="cursor-pointer hover:bg-gray-200 border-gray-300"
                 onClick={() => handleAddGroup(String(col.field))}
               >

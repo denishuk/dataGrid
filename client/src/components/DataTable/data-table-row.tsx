@@ -28,7 +28,7 @@ export function DataTableRow<T extends Record<string, any>>({
   onCellEdit,
 }: DataTableRowProps<T>) {
   const [editingCell, setEditingCell] = useState<keyof T | null>(null);
-  
+
   const visibleColumns = columns.filter(col => !col.hidden);
   const pinnedLeftColumns = visibleColumns.filter(col => col.pinned === 'left');
   const unpinnedColumns = visibleColumns.filter(col => !col.pinned);
@@ -59,10 +59,10 @@ export function DataTableRow<T extends Record<string, any>>({
       <td
         key={String(column.field)}
         className={cn(
-          "px-4 py-3 border-b border-gray-200",
-          isPinned && "sticky z-10 bg-white/95 backdrop-blur-sm",
-          column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-lg",
-          column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-lg",
+          "px-4 py-2.5 border-b border-gray-200",
+          isPinned && "bg-white sticky z-10",
+          column.pinned === 'left' && "left-0 border-r",
+          column.pinned === 'right' && "right-0 border-l",
           column.editable && "cursor-pointer hover:bg-gray-50"
         )}
         style={{
@@ -103,12 +103,12 @@ export function DataTableRow<T extends Record<string, any>>({
       )}
       {pinnedLeftColumns.flatMap((column, index) => {
         const cells = [];
-        
+
         // Render checkbox with first pinned left column
         if (showSelection && checkboxShouldBeLeft && index === 0) {
           cells.push(
             <td key={`checkbox-${String(column.field)}`} className={cn(
-              "w-12 px-3 py-3 text-center bg-white/80 backdrop-blur-sm border-b border-gray-200",
+              "w-12 px-3 py-3 text-center bg-white border-b border-gray-200",
               "sticky left-0 z-10"
             )}>
               <Checkbox
@@ -118,7 +118,7 @@ export function DataTableRow<T extends Record<string, any>>({
             </td>
           );
         }
-        
+
         cells.push(renderCell(column, true));
         return cells;
       })}

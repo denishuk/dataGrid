@@ -34,7 +34,7 @@ export function DataTableColumnConfig<T>({ columns, onColumnChange }: DataTableC
       newColumns.splice(draggedOverIndex, 0, reorderedColumn);
       onColumnChange(newColumns);
     }
-    
+
     setDraggedIndex(null);
     setDraggedOverIndex(null);
   };
@@ -71,7 +71,7 @@ export function DataTableColumnConfig<T>({ columns, onColumnChange }: DataTableC
             onDragEnd={handleDragEnd}
             onDragLeave={handleDragLeave}
             className={cn(
-              "flex items-center gap-3 p-3 bg-white border rounded-lg transition-all duration-200",
+              "flex items-center gap-3 p-3 bg-white ring-1 ring-gray-900/15 rounded-lg transition-all duration-200",
               draggedIndex === index && "opacity-50 scale-95",
               draggedOverIndex === index && draggedIndex !== index && "border-blue-300 bg-blue-50 transform translate-y-1",
               column.hidden && "opacity-50"

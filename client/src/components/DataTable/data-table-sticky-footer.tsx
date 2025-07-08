@@ -30,7 +30,7 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
       const avg = values.length > 0 ? sum / values.length : 0;
       const min = Math.min(...values);
       const max = Math.max(...values);
-      
+
       return { sum, avg, min, max, count: values.length };
     }
     return { count: data.length };
@@ -38,17 +38,17 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
 
   const renderSummaryCell = (column: DataTableColumn<T>, isPinned: boolean = false) => {
     const summary = calculateSummary(column);
-    
+
     // Don't show summary for actions column
     if (column.field === 'actions') {
       return (
         <td
           key={String(column.field)}
           className={cn(
-            "px-4 py-2 text-sm font-medium border-t border-gray-200",
-            isPinned && "sticky z-10 bg-gray-50/90 backdrop-blur-sm",
-            column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-sm",
-            column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-sm"
+            "px-4 py-2.5 text-sm font-medium",
+            isPinned && "sticky z-10",
+            column.pinned === 'left' && "left-0 border-r border-gray-200",
+            column.pinned === 'right' && "right-0 border-l border-gray-200"
           )}
           style={{
             minWidth: column.minWidth,
@@ -60,15 +60,15 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
         </td>
       );
     }
-    
+
     return (
       <td
         key={String(column.field)}
         className={cn(
-          "px-4 py-2 text-sm font-medium border-t border-gray-200 text-right",
-          isPinned && "sticky z-10 bg-gray-50/90 backdrop-blur-sm",
-          column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-sm",
-          column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-sm"
+          "px-4 py-2 text-sm font-medium text-right",
+          isPinned && "sticky z-10 bg-gray-50",
+          column.pinned === 'left' && "left-0 border-r",
+          column.pinned === 'right' && "right-0 border-l"
         )}
         style={{
           minWidth: column.minWidth,
@@ -98,24 +98,11 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
   };
 
   return (
-    <div className={cn("sticky bottom-0 z-10 bg-white border-t border-gray-200 overflow-x-auto", className)}>
+    <div className={cn("sticky bottom-0 z-10 bg-white overflow-x-auto", className)}>
       <table className="min-w-full text-sm border-collapse table-fixed">
         <tfoot>
           <tr className="bg-gray-50">
             {visibleColumns.map((column, index) => {
-              if (index === 0) {
-                return (
-                  <td 
-                    key="summary-label"
-                    className="px-4 py-2 text-sm font-medium text-gray-700 border-t border-gray-200"
-                    style={{
-                      minWidth: column.minWidth || '120px',
-                    }}
-                  >
-                    Summary
-                  </td>
-                );
-              }
               return renderSummaryCell(column, column.pinned === 'left' || column.pinned === 'right');
             })}
           </tr>

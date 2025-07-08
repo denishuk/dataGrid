@@ -39,7 +39,7 @@ export function DataTableColumnConfigModal<T>({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="bg-white max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Column Configuration</DialogTitle>
           <DialogDescription>

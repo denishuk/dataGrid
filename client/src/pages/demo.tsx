@@ -88,11 +88,11 @@ export default function Demo() {
       minWidth: 150,
       options: ['Active', 'Inactive', 'On Leave'],
       cellRenderer: (value) => (
-        <Badge 
+        <Badge
           variant={value === 'Active' ? 'default' : value === 'On Leave' ? 'secondary' : 'destructive'}
           className={
-            value === 'Active' 
-              ? 'bg-green-100 text-green-800' 
+            value === 'Active'
+              ? 'bg-green-100 text-green-800'
               : value === 'On Leave'
               ? 'bg-yellow-100 text-yellow-800'
               : 'bg-red-100 text-red-800'
@@ -140,7 +140,7 @@ export default function Demo() {
               Assign
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem 
+            <DropdownMenuItem
               onClick={() => console.log('Delete', row)}
               className="text-red-600"
             >
@@ -182,7 +182,7 @@ export default function Demo() {
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       {/* Header Section */}
       <div className="max-w-7xl mx-auto mb-6">
-        <Card>
+        <Card className="bg-white border-0 shadow-sm">
           <CardHeader>
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
@@ -199,6 +199,7 @@ export default function Demo() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto space-y-6">
         <DataTable
+          className="bg-white rounded shadow-sm"
           data={employees as Employee[]}
           columns={columns}
           virtualScrolling={true}
@@ -214,7 +215,7 @@ export default function Demo() {
 
         {/* Performance Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card>
+          <Card className="bg-white border-0 shadow-sm">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
@@ -227,7 +228,7 @@ export default function Demo() {
               </div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-white border-0 shadow-sm">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
@@ -240,7 +241,7 @@ export default function Demo() {
               </div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-white border-0 shadow-sm">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
@@ -256,7 +257,7 @@ export default function Demo() {
         </div>
 
         {/* Feature Showcase */}
-        <Card>
+        <Card className="bg-white border-0 shadow-sm">
           <CardHeader>
             <CardTitle>Component Features</CardTitle>
           </CardHeader>
