@@ -11,6 +11,8 @@ export interface DataTableColumn<T = any> {
   maxWidth?: number;
   hidden?: boolean;
   editable?: boolean;
+  useSelection?: boolean; // Enable checkbox selection for this column
+  aggregation?: 'count' | 'sum' | 'avg' | 'min' | 'max'; // Aggregation function for footer
   cellRenderer?: (value: any, row: T) => React.ReactNode;
   headerRenderer?: (column: DataTableColumn<T>) => React.ReactNode;
   valueGetter?: (row: T) => any; // Custom value extraction for sorting, filtering, grouping
@@ -24,6 +26,7 @@ export interface DataTableProps<T = any> {
   virtualScrolling?: boolean;
   selectionMode?: 'single' | 'multiple' | 'none';
   stickyHeader?: boolean;
+  stickyFooter?: boolean; // Enable sticky footer
   showFilters?: boolean;
   showColumnConfig?: boolean;
   pageSize?: number;

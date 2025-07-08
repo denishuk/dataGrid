@@ -52,8 +52,37 @@ export function DataTableRow<T extends Record<string, any>>({
   };
 
   const renderCell = (column: DataTableColumn<T>, isPinned: boolean = false) => {
-    const value = row[column.field];
+    const value = column.valueGetter ? column.valueGetter(row) : row[column.field];
     const isEditing = editingCell === column.field;
+
+    // Handle checkbox selection column
+    if (column.useSelection) {
+      return (
+        <td
+          key={String(column.field)}
+          className={cn(
+            "px-4 py-2.5 text-center border-b border-gray-200",
+            isPinned && "bg-white sticky z-10",
+            column.pinned === 'left' && "left-0 border-r",
+            column.pinned === 'right' && "right-0 border-l"
+          )}
+          style={{
+            minWidth: column.minWidth || 50,
+            maxWidth: column.maxWidth || 50,
+            width: column.width || 50,
+          }}
+        >
+          <div className="flex items-center justify-center">
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={() => onRowSelect(row)}
+              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            />
+          </div>
+        </td>
+      );
+    }
 
     return (
       <td

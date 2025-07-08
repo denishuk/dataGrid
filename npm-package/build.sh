@@ -8,6 +8,32 @@ echo "🔧 Building advanced-react-datatable package..."
 echo "🧹 Cleaning previous build..."
 rm -rf dist
 
+# Copy DataTable components from main folder
+echo "📁 Copying DataTable components from main folder..."
+mkdir -p src/components/DataTable
+mkdir -p src/components/ui
+mkdir -p src/hooks
+cp -r ../client/src/components/DataTable/* src/components/DataTable/
+cp -r ../client/src/components/ui/* src/components/ui/
+cp -r ../client/src/lib src/
+cp -r ../client/src/hooks src/
+
+# Create index.ts file for exports
+echo "📝 Creating index.ts..."
+cat > src/index.ts << 'EOF'
+export { DataTable } from './components/DataTable/DataTable';
+export { useDataTable } from './components/DataTable/DataTable';
+export { cn } from './lib/utils';
+export type {
+  DataTableColumn,
+  DataTableProps,
+  FilterConfig,
+  SortConfig,
+  GroupConfig,
+  GroupSummary
+} from './components/DataTable/types';
+EOF
+
 # Build the package using the working configuration
 echo "📦 Building package with Vite..."
 # Set environment to skip PostCSS processing
@@ -37,8 +63,11 @@ export interface DataTableColumn<T = any> {
   maxWidth?: number;
   hidden?: boolean;
   editable?: boolean;
+  useSelection?: boolean;
+  aggregation?: 'count' | 'sum' | 'avg' | 'min' | 'max';
   cellRenderer?: (value: any, row: T) => React.ReactNode;
   headerRenderer?: (column: DataTableColumn<T>) => React.ReactNode;
+  valueGetter?: (row: T) => any;
   options?: string[];
 }
 
@@ -49,6 +78,7 @@ export interface DataTableProps<T = any> {
   virtualScrolling?: boolean;
   selectionMode?: 'single' | 'multiple' | 'none';
   stickyHeader?: boolean;
+  stickyFooter?: boolean;
   showFilters?: boolean;
   showColumnConfig?: boolean;
   pageSize?: number;
@@ -129,6 +159,10 @@ EOF
         echo "ES Module: $(du -h dist/index.es.js | cut -f1)"
         echo "CommonJS: $(du -h dist/index.cjs.js | cut -f1)"
         echo "TypeScript: $(du -h dist/index.d.ts | cut -f1)"
+        
+        # Clean up temporary src folder after successful build
+        echo "🧹 Cleaning up temporary files..."
+        rm -rf src
     else
         echo "❌ Package import test failed!"
         exit 1

@@ -32,12 +32,15 @@ The core component provides:
 - **Multi-column sorting** with visual indicators
 - **Advanced filtering** with column-specific operators
 - **Hierarchical grouping** with drag-and-drop reordering
-- **Pinned columns** (left/right) with shadow effects
+- **Pinned columns** (left/right) with modern grid layout and shadow effects
 - **Inline editing** with type-specific editors
 - **Pagination** with configurable page sizes
 - **Export functionality** (CSV and optional PDF)
 - **Column management** (show/hide, reorder, resize)
 - **Responsive design** with mobile support
+- **Selection system** with Tailwind-based checkboxes tied to column definitions
+- **Sticky headers/footers** with configurable positioning
+- **Aggregation functions** (count, sum, avg, min, max) in footer when defined in column properties
 
 ### UI Components
 - **Headless UI primitives** for accessibility
@@ -69,8 +72,9 @@ The core component provides:
 
 ### NPM Package Dependencies
 - **Peer dependencies**: React 18+ with flexible version support
-- **Build tools**: Vite with custom configuration
-- **Type definitions**: Complete TypeScript support
+- **Build tools**: Vite with custom configuration copying from main folder
+- **Type definitions**: Complete TypeScript support with updated interfaces
+- **No src folder**: Build process copies components from main folder dynamically
 
 ## Deployment Strategy
 
@@ -97,6 +101,11 @@ The core component provides:
 - July 08, 2025. Replaced Radix UI components with Headless UI for toast component
 - July 08, 2025. Cleaned up all Radix UI dependencies from package.json
 - July 08, 2025. Removed 20+ unnecessary dependencies from root package.json to optimize bundle size
+- July 08, 2025. Restructured build process - npm-package now gets DataTable from main folder and builds dist without src folder
+- July 08, 2025. Updated to modern grid layout with pinned column alignments and sticky header/footer support
+- July 08, 2025. Implemented footer visibility based on property with aggregation functions (count, avg, sum, min, max) applied only when defined in column properties
+- July 08, 2025. Updated checkbox implementation to use Tailwind-based design tied to column definition with "useSelection" property
+- July 08, 2025. Updated README files with comprehensive documentation of new features
 
 ## User Preferences
 

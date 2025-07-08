@@ -20,6 +20,7 @@ export function DataTable<T extends Record<string, any>>({
   virtualScrolling = false,
   selectionMode = 'multiple',
   stickyHeader = true,
+  stickyFooter = false,
   showFilters = true,
   showColumnConfig = true,
   pageSize: initialPageSize = 50,
@@ -33,7 +34,7 @@ export function DataTable<T extends Record<string, any>>({
   const [columns, setColumns] = useState(initialColumns);
   const [showColumnConfigModal, setShowColumnConfigModal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [showStickyFooter, setShowStickyFooter] = useState(true);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageSize, setCurrentPageSize] = useState(initialPageSize);
 
@@ -276,11 +277,13 @@ export function DataTable<T extends Record<string, any>>({
       </div>
 
       {/* Sticky Footer */}
-      <DataTableStickyFooter
-        columns={columns}
-        data={filteredData}
-        visible={showStickyFooter}
-      />
+      {stickyFooter && (
+        <DataTableStickyFooter
+          columns={columns}
+          data={filteredData}
+          visible={true}
+        />
+      )}
 
       {/* Pagination */}
       <DataTablePagination
@@ -294,3 +297,6 @@ export function DataTable<T extends Record<string, any>>({
     </div>
   );
 }
+
+// Export the useDataTable hook for external use
+export { useDataTable } from './hooks/use-data-table';

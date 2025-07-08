@@ -17,6 +17,15 @@ export default function Demo() {
 
   const columns: DataTableColumn<Employee>[] = [
     {
+      field: 'selected',
+      header: 'Select',
+      useSelection: true,
+      pinned: 'left',
+      width: 50,
+      minWidth: 50,
+      maxWidth: 50,
+    },
+    {
       field: 'email',
       header: 'Email',
       pinned: 'left',
@@ -72,6 +81,7 @@ export default function Demo() {
       editable: true,
       type: 'number',
       minWidth: 140,
+      aggregation: 'sum',
       cellRenderer: (value) => (
         <span className="font-mono text-sm text-gray-900 bg-green-50 px-2 py-1 rounded">
           ${Number(value).toLocaleString()}
@@ -205,6 +215,7 @@ export default function Demo() {
           virtualScrolling={true}
           selectionMode="multiple"
           stickyHeader={true}
+          stickyFooter={true}
           enablePdfExport={true}
           onRowSelect={handleRowSelect}
           onExport={(data, format) => {

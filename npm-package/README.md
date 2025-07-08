@@ -19,17 +19,30 @@ const data = [
 ];
 
 const columns = [
+  { 
+    field: 'selected', 
+    header: 'Select', 
+    useSelection: true, 
+    pinned: 'left', 
+    width: 50 
+  },
   { field: 'name', header: 'Name', sortable: true, filterable: true },
   { field: 'email', header: 'Email', sortable: true, filterable: true },
-  { field: 'department', header: 'Department', sortable: true, filterable: true, groupable: true },
-  // Example with valueGetter for custom value extraction
   { 
-    field: 'fullName', 
-    header: 'Full Name', 
+    field: 'department', 
+    header: 'Department', 
     sortable: true, 
-    filterable: true,
-    valueGetter: (row) => `${row.firstName} ${row.lastName}` // Custom value for sorting/filtering
+    filterable: true, 
+    groupable: true 
   },
+  {
+    field: 'salary',
+    header: 'Salary',
+    type: 'number',
+    sortable: true,
+    filterable: true,
+    aggregation: 'sum' // Show sum in footer
+  }
 ];
 
 function App() {
@@ -40,6 +53,8 @@ function App() {
       pageSize={10}
       showFilters={true}
       selectionMode="multiple"
+      stickyHeader={true}
+      stickyFooter={true}
     />
   );
 }
@@ -47,6 +62,11 @@ function App() {
 
 ## Features
 
+- **Selection System**: Tailwind-based checkbox selection tied to column definitions with `useSelection` property
+- **Sticky Headers/Footers**: Configurable sticky positioning for headers and footers
+- **Aggregation Functions**: Built-in aggregation functions (count, sum, avg, min, max) applied only when defined in column properties
+- **Modern Grid Layout**: CSS Grid-based layout with proper column alignment and pinned column support
+- **Pure Tailwind CSS**: No external CSS dependencies for maximum customization flexibility
 - **Advanced Filtering**: Column-specific filters with operators (contains, equals, etc.)
 - **Multi-Level Grouping**: Group by multiple columns with hierarchical display
 - **Pinned Columns**: Pin columns to left or right side
@@ -87,6 +107,44 @@ The component uses standard Tailwind CSS classes for styling:
 You can customize colors and styling by modifying your Tailwind configuration or using CSS custom properties.
 
 ## Column Configuration
+
+### Column Properties
+
+#### useSelection
+Enable checkbox selection for a column:
+
+```tsx
+{
+  field: 'selected',
+  header: 'Select',
+  useSelection: true,
+  pinned: 'left',
+  width: 50
+}
+```
+
+#### aggregation
+Define aggregation functions for footer calculations:
+
+```tsx
+{
+  field: 'salary',
+  header: 'Salary',
+  type: 'number',
+  aggregation: 'sum' // Options: 'count', 'sum', 'avg', 'min', 'max'
+}
+```
+
+#### stickyFooter
+Enable sticky footer for the DataTable:
+
+```tsx
+<DataTable
+  data={data}
+  columns={columns}
+  stickyFooter={true}
+/>
+```
 
 ### valueGetter Property
 

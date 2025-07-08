@@ -24,48 +24,39 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
   const pinnedRightColumns = visibleColumns.filter(col => col.pinned === 'right');
 
   const calculateSummary = (column: DataTableColumn<T>) => {
-    if (column.type === 'number') {
-      const values = data.map(row => Number(row[column.field])).filter(val => !isNaN(val));
-      const sum = values.reduce((acc, val) => acc + val, 0);
-      const avg = values.length > 0 ? sum / values.length : 0;
-      const min = Math.min(...values);
-      const max = Math.max(...values);
-
-      return { sum, avg, min, max, count: values.length };
+    if (!column.aggregation) return null;
+    
+    const values = data.map(row => {
+      const value = column.valueGetter ? column.valueGetter(row) : row[column.field];
+      return column.type === 'number' ? Number(value) : value;
+    });
+    
+    const numericValues = values.filter(val => !isNaN(val as number)) as number[];
+    
+    switch (column.aggregation) {
+      case 'count':
+        return { label: 'Count', value: data.length };
+      case 'sum':
+        return { label: 'Sum', value: numericValues.reduce((acc, val) => acc + val, 0) };
+      case 'avg':
+        return { label: 'Avg', value: numericValues.length > 0 ? numericValues.reduce((acc, val) => acc + val, 0) / numericValues.length : 0 };
+      case 'min':
+        return { label: 'Min', value: Math.min(...numericValues) };
+      case 'max':
+        return { label: 'Max', value: Math.max(...numericValues) };
+      default:
+        return null;
     }
-    return { count: data.length };
   };
 
   const renderSummaryCell = (column: DataTableColumn<T>, isPinned: boolean = false) => {
     const summary = calculateSummary(column);
 
-    // Don't show summary for actions column
-    if (column.field === 'actions') {
-      return (
-        <td
-          key={String(column.field)}
-          className={cn(
-            "px-4 py-2.5 text-sm font-medium",
-            isPinned && "sticky z-10",
-            column.pinned === 'left' && "left-0 border-r border-gray-200",
-            column.pinned === 'right' && "right-0 border-l border-gray-200"
-          )}
-          style={{
-            minWidth: column.minWidth,
-            maxWidth: column.maxWidth,
-            width: column.width,
-          }}
-        >
-          {/* Empty cell for actions column */}
-        </td>
-      );
-    }
-
     return (
       <td
         key={String(column.field)}
         className={cn(
-          "px-4 py-2 text-sm font-medium text-right",
+          "px-4 py-2 text-sm font-medium text-right border-t border-gray-200",
           isPinned && "sticky z-10 bg-gray-50",
           column.pinned === 'left' && "left-0 border-r",
           column.pinned === 'right' && "right-0 border-l"
@@ -76,23 +67,17 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
           width: column.width,
         }}
       >
-        {column.type === 'number' && summary.sum !== undefined ? (
-          <div className="space-y-1">
-            <div className="flex items-center justify-end gap-1">
-              <Badge variant="secondary" className="text-xs">Sum</Badge>
-              <span className="font-medium text-blue-600">{summary.sum.toLocaleString()}</span>
-            </div>
-            <div className="flex items-center justify-end gap-1">
-              <Badge variant="secondary" className="text-xs">Avg</Badge>
-              <span className="text-gray-600">{summary.avg?.toFixed(2)}</span>
-            </div>
-          </div>
-        ) : (
+        {summary ? (
           <div className="flex items-center justify-end gap-1">
-            <Badge variant="secondary" className="text-xs">Count</Badge>
-            <span className="font-medium text-blue-600">{summary.count}</span>
+            <Badge variant="secondary" className="text-xs">{summary.label}</Badge>
+            <span className="font-medium text-blue-600">
+              {typeof summary.value === 'number' ? 
+                (summary.label === 'Avg' ? summary.value.toFixed(2) : summary.value.toLocaleString()) : 
+                summary.value
+              }
+            </span>
           </div>
-        )}
+        ) : null}
       </td>
     );
   };

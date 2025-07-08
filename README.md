@@ -10,14 +10,18 @@ A comprehensive React data grid component with advanced features like hierarchic
 ## Features
 
 - **Advanced Grouping**: Multi-level hierarchical grouping with drag-and-drop reordering
-- **Pinned Columns**: Pin columns to left or right with proper shadow effects
+- **Pinned Columns**: Pin columns to left or right with modern grid layout and proper shadows
 - **Inline Editing**: Double-click cells to edit values with type-specific editors
 - **Multiselect Filters**: Checkbox-based filters for select and boolean columns
 - **Export Functionality**: CSV and optional PDF export
 - **Column Management**: Show/hide, reorder, and configure columns
 - **Responsive Design**: Mobile-friendly with horizontal scrolling
 - **TypeScript Support**: Full type safety with customizable column definitions
-- **Sticky Headers/Footers**: Persistent headers and configurable summary footers
+- **Sticky Headers/Footers**: Configurable sticky positioning for headers and footers
+- **Selection System**: Tailwind-based checkbox selection tied to column definitions with `useSelection` property
+- **Aggregation Functions**: Built-in aggregation functions (count, sum, avg, min, max) applied only when defined in column properties
+- **Modern Grid Layout**: CSS Grid-based layout with proper column alignment and pinned column support
+- **Pure Tailwind CSS**: No external CSS dependencies for maximum customization flexibility
 
 ## Installation
 
