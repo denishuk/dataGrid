@@ -36,6 +36,7 @@
     "react-hook-form": "^7.55.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.4",
     "wouter": "^3.3.5",
     "ws": "^8.18.0",

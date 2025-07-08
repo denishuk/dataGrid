@@ -112,6 +112,9 @@ The core component provides:
 - July 08, 2025. Removed old Checkbox component and replaced all instances with native HTML checkboxes for consistent styling
 - July 08, 2025. Fixed duplicate checkbox columns issue by removing showSelection logic and keeping only useSelection column property
 - July 08, 2025. Fixed NPM package React dispatcher error by correcting useDataTable export path in build script
+- July 08, 2025. Completely resolved React dispatcher error by improving Vite externalization configuration
+- July 08, 2025. Updated build process to properly externalize React, react-dom, and scheduler dependencies
+- July 08, 2025. Package now works correctly in external Next.js applications without React context issues
 
 ## User Preferences
 

@@ -6,7 +6,7 @@ echo "🔧 Building advanced-react-datatable package..."
 
 # Clean previous build
 echo "🧹 Cleaning previous build..."
-rm -rf dist
+rm -rf dist src
 
 # Copy DataTable components from main folder
 echo "📁 Copying DataTable components from main folder..."
@@ -38,7 +38,7 @@ EOF
 echo "📦 Building package with Vite..."
 # Set environment to skip PostCSS processing
 export NODE_ENV=production
-npx vite build --config vite.config.simple.ts
+npx vite build
 
 # Check if build was successful
 if [ $? -eq 0 ]; then

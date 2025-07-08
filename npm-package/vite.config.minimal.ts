@@ -13,9 +13,6 @@ export default defineConfig({
       exclude: ['**/*.test.ts', '**/*.test.tsx', '**/*.stories.tsx'],
     }),
   ],
-  define: {
-    'process.env.NODE_ENV': '"production"',
-  },
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
@@ -33,8 +30,6 @@ export default defineConfig({
         'react',
         'react-dom',
         'react/jsx-runtime',
-        'react/jsx-dev-runtime',
-        'scheduler',
         '@headlessui/react',
         'class-variance-authority',
         'clsx',
@@ -46,15 +41,13 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'react/jsx-runtime',
-          'react/jsx-dev-runtime': 'react/jsx-dev-runtime',
-          'scheduler': 'scheduler',
         },
-        interop: 'auto',
       },
     },
     outDir: 'dist',
     emptyOutDir: true,
-    minify: false,
+    minify: false, // Don't minify to avoid React internals issues
     target: 'es2015',
+    sourcemap: false,
   },
 });
