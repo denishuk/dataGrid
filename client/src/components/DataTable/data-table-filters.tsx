@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
+
 import { Filter, X } from 'lucide-react';
 import { DataTableColumn, FilterConfig } from './types';
 import { cn } from '@/lib/utils';
@@ -127,20 +127,24 @@ export function DataTableFilters<T>({
                 ) : column.type === 'boolean' ? (
                   <div className="flex flex-wrap gap-2">
                     <label className="flex items-center">
-                      <Checkbox
+                      <input
+                        type="checkbox"
                         checked={tempFilters[`${String(column.field)}_true`] || false}
-                        onCheckedChange={(checked) => 
-                          handleFilterChange(`${String(column.field)}_true`, checked, column.type!)
+                        onChange={(e) => 
+                          handleFilterChange(`${String(column.field)}_true`, e.target.checked, column.type!)
                         }
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       />
                       <span className="ml-2 text-sm">True</span>
                     </label>
                     <label className="flex items-center">
-                      <Checkbox
+                      <input
+                        type="checkbox"
                         checked={tempFilters[`${String(column.field)}_false`] || false}
-                        onCheckedChange={(checked) => 
-                          handleFilterChange(`${String(column.field)}_false`, checked, column.type!)
+                        onChange={(e) => 
+                          handleFilterChange(`${String(column.field)}_false`, e.target.checked, column.type!)
                         }
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       />
                       <span className="ml-2 text-sm">False</span>
                     </label>

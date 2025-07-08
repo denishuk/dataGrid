@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+
 import { DataTableColumn } from './types';
 import { DataTableEditableCell } from './data-table-editable-cell';
 import { cn } from '@/lib/utils';
@@ -124,9 +124,11 @@ export function DataTableRow<T extends Record<string, any>>({
     <tr className="hover:bg-gray-50 transition-colors">
       {showSelection && !checkboxShouldBeLeft && (
         <td className="w-12 px-3 py-3 text-center border-b border-gray-200">
-          <Checkbox
+          <input
+            type="checkbox"
             checked={isSelected}
-            onCheckedChange={() => onRowSelect(row)}
+            onChange={() => onRowSelect(row)}
+            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
           />
         </td>
       )}
@@ -140,9 +142,11 @@ export function DataTableRow<T extends Record<string, any>>({
               "w-12 px-3 py-3 text-center bg-white border-b border-gray-200",
               "sticky left-0 z-10"
             )}>
-              <Checkbox
+              <input
+                type="checkbox"
                 checked={isSelected}
-                onCheckedChange={() => onRowSelect(row)}
+                onChange={() => onRowSelect(row)}
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
               />
             </td>
           );

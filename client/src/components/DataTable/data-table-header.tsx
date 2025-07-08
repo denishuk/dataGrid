@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowUp, ArrowDown, ArrowUpDown, Pin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+
 import { DataTableColumn, SortConfig, FilterConfig } from './types';
 import { DataTableColumnFilter } from './data-table-column-filter';
 import { cn } from '@/lib/utils';
@@ -142,9 +142,11 @@ export function DataTableHeader<T>({
       <tr>
         {showSelection && !checkboxShouldBeLeft && (
           <th className="w-12 px-3 py-3 text-center bg-gray-50 border-b border-gray-300">
-            <Checkbox
+            <input
+              type="checkbox"
               checked={selectedRows.length === totalRows && totalRows > 0}
-              onCheckedChange={onSelectAll}
+              onChange={onSelectAll}
+              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
             />
           </th>
         )}
@@ -158,9 +160,11 @@ export function DataTableHeader<T>({
                 "w-12 px-3 py-3 text-center bg-gray-50/80 backdrop-blur-sm border-b border-gray-300",
                 "sticky left-0 z-20"
               )}>
-                <Checkbox
+                <input
+                  type="checkbox"
                   checked={selectedRows.length === totalRows && totalRows > 0}
-                  onCheckedChange={onSelectAll}
+                  onChange={onSelectAll}
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                 />
               </th>
             );

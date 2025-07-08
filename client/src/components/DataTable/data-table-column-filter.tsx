@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
+
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
@@ -167,12 +167,14 @@ export function DataTableColumnFilter<T>({
                 <div className="max-h-48 overflow-y-auto">
                   {filterOptions.map((option) => (
                     <div key={option} className="flex items-center space-x-2 py-1">
-                      <Checkbox
+                      <input
+                        type="checkbox"
                         id={`${String(column.field)}-${option}`}
                         checked={selectedValues.includes(option)}
-                        onCheckedChange={(checked) =>
-                          handleMultiSelectChange(option, checked as boolean)
+                        onChange={(e) =>
+                          handleMultiSelectChange(option, e.target.checked)
                         }
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       />
                       <label
                         htmlFor={`${String(column.field)}-${option}`}
@@ -266,12 +268,14 @@ export function DataTableColumnFilter<T>({
                 <div className="space-y-1">
                   {filterOptions.map((option) => (
                     <div key={option} className="flex items-center space-x-2">
-                      <Checkbox
+                      <input
+                        type="checkbox"
                         id={`${String(column.field)}-${option}`}
                         checked={selectedValues.includes(option)}
-                        onCheckedChange={(checked) =>
-                          handleMultiSelectChange(option, checked as boolean)
+                        onChange={(e) =>
+                          handleMultiSelectChange(option, e.target.checked)
                         }
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       />
                       <label
                         htmlFor={`${String(column.field)}-${option}`}
