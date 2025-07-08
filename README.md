@@ -139,7 +139,6 @@ interface DataTableColumn<T> {
   cellRenderer?: (value: any, row: T) => React.ReactNode  // Custom cell renderer
   headerRenderer?: (column: DataTableColumn<T>) => React.ReactNode  // Custom header renderer
   valueGetter?: (row: T) => any                    // Custom value extraction for sorting/filtering
-  valueGetterOnGroup?: (groupRows: T[], groupValue: string) => React.ReactNode  // Custom group header rendering
   options?: string[]                               // Options for select type columns
 }
 ```

@@ -12,7 +12,6 @@ interface DataTableGroupHeaderProps<T = any> {
   onToggle: () => void;
   level?: number;
   field?: string;
-  groupRows?: T[]; // Add group rows for valueGetterOnGroup
 }
 
 export function DataTableGroupHeader<T>({ 

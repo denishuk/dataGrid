@@ -151,45 +151,6 @@ const columns = [
 
 **Priority**: `valueGetter` has higher priority than the `field` property. If `valueGetter` is defined, it will be used for sorting, filtering, and grouping operations.
 
-### valueGetterOnGroup Property
-
-The `valueGetterOnGroup` property allows you to customize how group headers are rendered:
-
-```tsx
-const columns = [
-  {
-    field: 'department',
-    header: 'Department',
-    groupable: true,
-    valueGetterOnGroup: (groupRows, groupValue) => (
-      <div className="flex items-center gap-2">
-        <span className="font-bold">{groupValue}</span>
-        <span className="text-sm text-gray-500">
-          ({groupRows.length} employees, avg salary: ${
-            groupRows.reduce((sum, row) => sum + row.salary, 0) / groupRows.length
-          })
-        </span>
-      </div>
-    )
-  },
-  {
-    field: 'location',
-    header: 'Location',
-    groupable: true,
-    valueGetterOnGroup: (groupRows, groupValue) => (
-      <div className="flex items-center gap-2">
-        <span className="font-medium">{groupValue}</span>
-        <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-          {groupRows.length} people
-        </span>
-      </div>
-    )
-  }
-];
-```
-
-**Usage**: `valueGetterOnGroup` is called when rendering group headers and receives the array of rows in the group and the group value as parameters.
-
 ## API Reference
 
 ### DataTable Props
@@ -231,7 +192,6 @@ interface DataTableColumn<T> {
   cellRenderer?: (value: any, row: T) => React.ReactNode  // Custom cell renderer
   headerRenderer?: (column: DataTableColumn<T>) => React.ReactNode  // Custom header renderer
   valueGetter?: (row: T) => any                    // Custom value extraction for sorting/filtering
-  valueGetterOnGroup?: (groupRows: T[], groupValue: string) => React.ReactNode  // Custom group header rendering
   options?: string[]                               // Options for select type columns
 }
 ```

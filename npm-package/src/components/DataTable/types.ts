@@ -15,7 +15,6 @@ export interface DataTableColumn<T = any> {
   headerRenderer?: (column: DataTableColumn<T>) => React.ReactNode;
   options?: string[]; // For select type
   valueGetter?: (row: T) => any; // Custom value extraction for sorting, filtering, grouping
-  valueGetterOnGroup?: (groupRows: T[], groupValue: any) => React.ReactNode; // Custom group display
 }
 
 export interface DataTableProps<T = any> {
