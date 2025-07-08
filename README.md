@@ -1,7 +1,7 @@
 # Advanced React DataTable
 
-[![Tests](https://github.com/yourusername/advanced-react-datatable/actions/workflows/test.yml/badge.svg)](https://github.com/yourusername/advanced-react-datatable/actions/workflows/test.yml)
-[![Coverage Status](https://codecov.io/gh/yourusername/advanced-react-datatable/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/advanced-react-datatable)
+[![Tests](https://github.com/denishuk/dataGrid/actions/workflows/test.yml/badge.svg)](https://github.com/denishuk/dataGrid/actions/workflows/test.yml)
+[![Coverage Status](https://codecov.io/gh/denishuk/dataGrid/branch/main/graph/badge.svg)](https://codecov.io/gh/denishuk/dataGrid)
 [![npm version](https://badge.fury.io/js/advanced-react-datatable.svg)](https://badge.fury.io/js/advanced-react-datatable)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -145,8 +145,8 @@ interface DataTableColumn<T> {
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/advanced-react-datatable.git
-cd advanced-react-datatable
+git clone https://github.com/denishuk/dataGrid.git
+cd dataGrid
 
 # Install dependencies
 npm install
@@ -186,7 +186,7 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Support
 
-- 🐛 [Report bugs](https://github.com/yourusername/advanced-react-datatable/issues)
-- 💡 [Request features](https://github.com/yourusername/advanced-react-datatable/issues)
-- 📖 [Documentation](https://github.com/yourusername/advanced-react-datatable/wiki)
-- 💬 [Discussions](https://github.com/yourusername/advanced-react-datatable/discussions)
+- 🐛 [Report bugs](https://github.com/denishuk/dataGrid/issues)
+- 💡 [Request features](https://github.com/denishuk/dataGrid/issues)
+- 📖 [Documentation](https://github.com/denishuk/dataGrid/wiki)
+- 💬 [Discussions](https://github.com/denishuk/dataGrid/discussions)
