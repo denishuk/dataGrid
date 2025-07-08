@@ -118,6 +118,7 @@ The core component provides:
 - July 08, 2025. Removed unnecessary hooks folder (use-toast, use-mobile) from NPM package build
 - July 08, 2025. Excluded toast-related components (toast.tsx, toaster.tsx) from NPM package to reduce bundle size
 - July 08, 2025. Optimized package build process to include only DataTable-specific dependencies
+- July 08, 2025. Updated data-table-action-bar styling to use indigo color scheme (bg-indigo-600) instead of blue for consistent theming
 
 ## User Preferences
 
