@@ -213,7 +213,7 @@ export default function Demo() {
           data={employees as Employee[]}
           columns={columns}
           virtualScrolling={true}
-          selectionMode="multiple"
+  
           stickyHeader={true}
           stickyFooter={true}
           enablePdfExport={true}

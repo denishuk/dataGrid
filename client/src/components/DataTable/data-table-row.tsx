@@ -10,7 +10,6 @@ interface DataTableRowProps<T> {
   row: T;
   columns: DataTableColumn<T>[];
   isSelected: boolean;
-  showSelection: boolean;
   onRowSelect: (row: T) => void;
   onRowEdit?: (row: T) => void;
   onRowDelete?: (row: T) => void;
@@ -116,45 +115,9 @@ export function DataTableRow<T extends Record<string, any>>({
     );
   };
 
-  // Check if checkbox should be pinned based on first data column
-  const firstDataColumn = visibleColumns[0];
-  const checkboxShouldBeLeft = firstDataColumn?.pinned === 'left';
-
   return (
     <tr className="hover:bg-gray-50 transition-colors">
-      {showSelection && !checkboxShouldBeLeft && (
-        <td className="w-12 px-3 py-3 text-center border-b border-gray-200">
-          <input
-            type="checkbox"
-            checked={isSelected}
-            onChange={() => onRowSelect(row)}
-            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-          />
-        </td>
-      )}
-      {pinnedLeftColumns.flatMap((column, index) => {
-        const cells = [];
-
-        // Render checkbox with first pinned left column
-        if (showSelection && checkboxShouldBeLeft && index === 0) {
-          cells.push(
-            <td key={`checkbox-${String(column.field)}`} className={cn(
-              "w-12 px-3 py-3 text-center bg-white border-b border-gray-200",
-              "sticky left-0 z-10"
-            )}>
-              <input
-                type="checkbox"
-                checked={isSelected}
-                onChange={() => onRowSelect(row)}
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-              />
-            </td>
-          );
-        }
-
-        cells.push(renderCell(column, true));
-        return cells;
-      })}
+      {pinnedLeftColumns.map(column => renderCell(column, true))}
       {unpinnedColumns.map(column => renderCell(column))}
       {pinnedRightColumns.map(column => renderCell(column, true))}
     </tr>

@@ -16,7 +16,6 @@ interface DataTableHeaderProps<T> {
   onSort: (field: string) => void;
   onSelectAll: () => void;
   onFilterChange: (field: string, filter: FilterConfig | null) => void;
-  showSelection: boolean;
   showFilters?: boolean;
 }
 
@@ -133,46 +132,10 @@ export function DataTableHeader<T>({
     );
   };
 
-  // Check if checkbox should be pinned based on first data column
-  const firstDataColumn = visibleColumns[0];
-  const checkboxShouldBeLeft = firstDataColumn?.pinned === 'left';
-  
   return (
     <thead className="bg-gray-50 border-b border-gray-200 sticky top-0 z-20">
       <tr>
-        {showSelection && !checkboxShouldBeLeft && (
-          <th className="w-12 px-3 py-3 text-center bg-gray-50 border-b border-gray-300">
-            <input
-              type="checkbox"
-              checked={selectedRows.length === totalRows && totalRows > 0}
-              onChange={onSelectAll}
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-            />
-          </th>
-        )}
-        {pinnedLeftColumns.flatMap((column, index) => {
-          const cells = [];
-          
-          // Render checkbox with first pinned left column
-          if (showSelection && checkboxShouldBeLeft && index === 0) {
-            cells.push(
-              <th key={`checkbox-${String(column.field)}`} className={cn(
-                "w-12 px-3 py-3 text-center bg-gray-50/80 backdrop-blur-sm border-b border-gray-300",
-                "sticky left-0 z-20"
-              )}>
-                <input
-                  type="checkbox"
-                  checked={selectedRows.length === totalRows && totalRows > 0}
-                  onChange={onSelectAll}
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                />
-              </th>
-            );
-          }
-          
-          cells.push(renderHeaderCell(column, true));
-          return cells;
-        })}
+        {pinnedLeftColumns.map(column => renderHeaderCell(column, true))}
         {unpinnedColumns.map(column => renderHeaderCell(column))}
         {pinnedRightColumns.map(column => renderHeaderCell(column, true))}
       </tr>

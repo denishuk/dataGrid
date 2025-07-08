@@ -24,7 +24,6 @@ export interface DataTableProps<T = any> {
   columns: DataTableColumn<T>[];
   groupBy?: string | string[];
   virtualScrolling?: boolean;
-  selectionMode?: 'single' | 'multiple' | 'none';
   stickyHeader?: boolean;
   stickyFooter?: boolean; // Enable sticky footer
   showFilters?: boolean;

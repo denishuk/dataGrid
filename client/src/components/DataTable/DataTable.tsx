@@ -18,7 +18,6 @@ export function DataTable<T extends Record<string, any>>({
   columns: initialColumns,
   groupBy: initialGroupBy,
   virtualScrolling = false,
-  selectionMode = 'multiple',
   stickyHeader = true,
   stickyFooter = false,
   showFilters = true,
@@ -58,7 +57,7 @@ export function DataTable<T extends Record<string, any>>({
     data,
     initialColumns: columns,
     initialGroupBy: typeof initialGroupBy === 'string' ? initialGroupBy : initialGroupBy?.[0] || '',
-    selectionMode,
+    selectionMode: 'multiple',
     onRowSelect,
     onCellEdit,
   });
@@ -128,7 +127,7 @@ export function DataTable<T extends Record<string, any>>({
     setCurrentPage(1); // Reset to first page when changing page size
   };
 
-  const showSelection = selectionMode !== 'none';
+
 
   return (
     <div
@@ -187,7 +186,6 @@ export function DataTable<T extends Record<string, any>>({
                     onSort={toggleSort}
                     onSelectAll={toggleAllSelection}
                     onFilterChange={handleFilterChange}
-                    showSelection={showSelection}
                     showFilters={showFilters}
                   />
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -201,7 +199,7 @@ export function DataTable<T extends Record<string, any>>({
                               itemCount={(row as any).__itemCount}
                               expanded={(row as any).__expanded}
                               summaries={(row as any).__summaries}
-                              columns={showSelection ? [{ field: '__select__' as any, header: '' }, ...columns] : columns}
+                              columns={columns}
                               onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
                             />
                           </tr>
@@ -213,7 +211,6 @@ export function DataTable<T extends Record<string, any>>({
                           row={row}
                           columns={columns}
                           isSelected={selectedRows.some(r => (r as any).id === (row as any).id)}
-                          showSelection={showSelection}
                           onRowSelect={toggleRowSelection}
                           onCellEdit={onCellEdit}
                         />
@@ -237,7 +234,6 @@ export function DataTable<T extends Record<string, any>>({
                 onSort={toggleSort}
                 onSelectAll={toggleAllSelection}
                 onFilterChange={handleFilterChange}
-                showSelection={showSelection}
                 showFilters={showFilters}
               />
               <tbody className="bg-white divide-y divide-gray-200">
@@ -250,7 +246,7 @@ export function DataTable<T extends Record<string, any>>({
                           itemCount={(row as any).__itemCount}
                           expanded={(row as any).__expanded}
                           summaries={(row as any).__summaries}
-                          columns={showSelection ? [{ field: '__select__' as any, header: '' }, ...columns] : columns}
+                          columns={columns}
                           onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
                           level={(row as any).__level || 0}
                           field={(row as any).__field}
@@ -264,7 +260,6 @@ export function DataTable<T extends Record<string, any>>({
                       row={row}
                       columns={columns}
                       isSelected={selectedRows.some(r => (r as any).id === (row as any).id)}
-                      showSelection={showSelection}
                       onRowSelect={toggleRowSelection}
                       onCellEdit={onCellEdit}
                     />
