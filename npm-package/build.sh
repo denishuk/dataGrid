@@ -22,7 +22,7 @@ cp -r ../client/src/hooks src/
 echo "📝 Creating index.ts..."
 cat > src/index.ts << 'EOF'
 export { DataTable } from './components/DataTable/DataTable';
-export { useDataTable } from './components/DataTable/DataTable';
+export { useDataTable } from './components/DataTable/hooks/use-data-table';
 export { cn } from './lib/utils';
 export type {
   DataTableColumn,
@@ -76,7 +76,6 @@ export interface DataTableProps<T = any> {
   columns: DataTableColumn<T>[];
   groupBy?: string | string[];
   virtualScrolling?: boolean;
-  selectionMode?: 'single' | 'multiple' | 'none';
   stickyHeader?: boolean;
   stickyFooter?: boolean;
   showFilters?: boolean;

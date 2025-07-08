@@ -110,6 +110,8 @@ The core component provides:
 - July 08, 2025. Removed ALL @radix-ui dependencies and replaced with Headless UI components for button, dialog, label, separator, and switch
 - July 08, 2025. Reduced bundle size from 130KB to 84KB (ES) and 86KB to 56KB (CommonJS) by removing @radix-ui dependencies
 - July 08, 2025. Removed old Checkbox component and replaced all instances with native HTML checkboxes for consistent styling
+- July 08, 2025. Fixed duplicate checkbox columns issue by removing showSelection logic and keeping only useSelection column property
+- July 08, 2025. Fixed NPM package React dispatcher error by correcting useDataTable export path in build script
 
 ## User Preferences
 
