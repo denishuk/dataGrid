@@ -206,3 +206,10 @@ Preferred communication style: Simple, everyday language.
   - **Custom CSS Classes**: Replaced Tailwind utilities with custom CSS classes for better compatibility
   - **Manual Import Option**: Added fallback option to manually import styles if automatic loading fails
   - **NPM Package v1.6.1**: Fixed styling issues and removed borders for production-ready component
+- July 08, 2025: Enhanced column flexibility and styling customization:
+  - **valueGetter Property**: Added new column property for custom value extraction with priority over field property
+  - **Enhanced Data Processing**: valueGetter support integrated into sorting, filtering, and grouping operations
+  - **GitHub Links Update**: Updated README with correct repository links (https://github.com/denishuk/dataGrid)
+  - **CSS Optimization**: Cleaned up styles with hex colors and improved performance, resolved sticky header issues
+  - **Comprehensive Documentation**: Added styling customization guide and valueGetter usage examples
+  - **NPM Package v1.7.0**: Major enhancement with valueGetter support and improved styling system

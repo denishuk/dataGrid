@@ -1,5 +1,5 @@
 /* Advanced React DataTable Styles */
-/* This file contains the essential styles for the DataTable component */
+/* Essential styles for the DataTable component */
 
 /* Base table styles */
 .datatable-container {
@@ -20,7 +20,7 @@
 
 /* Action bar styles */
 .datatable-action-bar {
-  background: linear-gradient(135deg, rgb(37 99 235) 0%, rgb(59 130 246) 100%); /* blue gradient */
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
   padding: 1rem 1.25rem;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@
   flex-wrap: wrap;
   gap: 0.75rem;
   color: white;
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.1);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 .datatable-action-bar button {
@@ -101,7 +101,7 @@
 
 /* Header styles */
 .datatable-header {
-  background-color: rgb(249 250 251); /* gray-50 */
+  background-color: #f9fafb;
   position: sticky;
   top: 0;
   z-index: 30;
@@ -112,9 +112,9 @@
   text-align: left;
   font-weight: 600;
   font-size: 0.875rem;
-  color: rgb(55 65 81); /* gray-700 */
-  border-bottom: 1px solid rgb(229 231 235); /* gray-200 */
-  background-color: rgb(249 250 251); /* gray-50 */
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
   position: sticky;
   top: 0;
 }
@@ -236,19 +236,19 @@
 /* Filter styles */
 .datatable-filter {
   padding: 0.375rem 0.75rem;
-  border: 1px solid rgb(229 231 235); /* gray-200 - lighter border */
+  border: 1px solid #e5e7eb;
   border-radius: 0.375rem;
   font-size: 0.75rem;
   font-weight: 400;
-  color: rgb(55 65 81); /* gray-700 */
+  color: #374151;
   background-color: white;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .datatable-filter:focus {
   outline: none;
-  border-color: rgb(59 130 246); /* blue-500 */
-  box-shadow: 0 0 0 2px rgb(59 130 246 / 0.2);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .datatable-filter::placeholder {

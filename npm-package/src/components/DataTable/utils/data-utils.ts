@@ -1,5 +1,13 @@
 import { FilterConfig, SortConfig, DataTableColumn } from '../types';
 
+// Helper function to get value from row using valueGetter or field
+function getRowValue<T>(row: T, column: DataTableColumn<T>): any {
+  if (column.valueGetter) {
+    return column.valueGetter(row);
+  }
+  return (row as any)[column.field];
+}
+
 // Utility function to extract unique values from data for filter options
 export function getUniqueValues<T>(data: T[], field: keyof T): string[] {
   const values = new Set<string>();
@@ -13,10 +21,11 @@ export function getUniqueValues<T>(data: T[], field: keyof T): string[] {
 }
 
 // Enhanced filter function with multiselect support
-export function filterData<T>(data: T[], filters: FilterConfig[]): T[] {
+export function filterData<T>(data: T[], filters: FilterConfig[], columns: DataTableColumn<T>[] = []): T[] {
   return data.filter(row => {
     return filters.every(filter => {
-      const value = (row as any)[filter.field];
+      const column = columns.find(col => String(col.field) === filter.field);
+      const value = column ? getRowValue(row, column) : (row as any)[filter.field];
       const filterValue = filter.value;
 
       if (value == null) return false;
@@ -50,13 +59,14 @@ export function filterData<T>(data: T[], filters: FilterConfig[]): T[] {
   });
 }
 
-export function sortData<T>(data: T[], sorts: SortConfig[]): T[] {
+export function sortData<T>(data: T[], sorts: SortConfig[], columns: DataTableColumn<T>[] = []): T[] {
   if (sorts.length === 0) return data;
 
   return [...data].sort((a, b) => {
     for (const sort of sorts) {
-      const aValue = (a as any)[sort.field];
-      const bValue = (b as any)[sort.field];
+      const column = columns.find(col => String(col.field) === sort.field);
+      const aValue = column ? getRowValue(a, column) : (a as any)[sort.field];
+      const bValue = column ? getRowValue(b, column) : (b as any)[sort.field];
 
       if (aValue == null && bValue == null) continue;
       if (aValue == null) return 1;
@@ -99,7 +109,10 @@ export function groupData<T>(data: T[], groupFields: string | string[], expanded
     
     // Group items by current field
     items.forEach(item => {
-      const value = String((item as any)[currentField] || 'Ungrouped');
+      const column = columns.find(col => String(col.field) === currentField);
+      const value = column ? 
+        String(getRowValue(item, column) || 'Ungrouped') : 
+        String((item as any)[currentField] || 'Ungrouped');
       if (!groups.has(value)) {
         groups.set(value, []);
       }
@@ -122,7 +135,7 @@ export function groupData<T>(data: T[], groupFields: string | string[], expanded
       columns.forEach(column => {
         if (column.type === 'number') {
           const sum = groupItems.reduce((acc, item) => {
-            const value = Number((item as any)[column.field]);
+            const value = Number(getRowValue(item, column));
             return acc + (isNaN(value) ? 0 : value);
           }, 0);
           summaries.set(String(column.field), sum);

@@ -30,10 +30,10 @@ export function useDataTable<T extends Record<string, any>>({
     let result = [...data];
 
     // Apply filters
-    result = filterData(result, filters);
+    result = filterData(result, filters, columns);
 
     // Apply sorts
-    result = sortData(result, sorts);
+    result = sortData(result, sorts, columns);
 
     return result;
   }, [data, filters, sorts]);

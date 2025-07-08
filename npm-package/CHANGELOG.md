@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0] - 2025-07-08
+
+### Added
+- **valueGetter Property**: New column property for custom value extraction with priority over field property
+- **Enhanced Data Processing**: valueGetter support for sorting, filtering, and grouping operations
+- **Improved README**: Added comprehensive styling customization guide and valueGetter examples
+- **Minimal Styling Options**: Documentation for custom styling approaches
+
+### Changed
+- **Updated GitHub Links**: Changed repository links to https://github.com/denishuk/dataGrid
+- **CSS Optimization**: Cleaned up CSS styles using hex colors instead of RGB functions for better performance
+- **Data Utils Enhancement**: All data manipulation functions now support valueGetter for custom value extraction
+
+### Fixed
+- **Styling Issues**: Resolved sticky header, blue action bar, filter borders, and dropdown styling problems
+- **Performance**: Optimized CSS with cleaner hex color values and reduced complexity
+
 ## [1.6.1] - 2025-07-07
 
 ### Fixed
