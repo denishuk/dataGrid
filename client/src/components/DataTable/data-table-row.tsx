@@ -54,10 +54,10 @@ export function DataTableRow<T extends Record<string, any>>({
     // Handle checkbox selection column
     if (column.useSelection) {
       return (
-        <td
+        <div
           key={String(column.field)}
           className={cn(
-            "px-4 py-2.5 text-center border-b border-gray-200",
+            "px-4 py-2.5 text-center border-b border-gray-200 flex items-center justify-center",
             isPinned && "bg-white sticky z-10",
             column.pinned === 'left' && "left-0 border-r",
             column.pinned === 'right' && "right-0 border-l"
@@ -68,28 +68,26 @@ export function DataTableRow<T extends Record<string, any>>({
             width: column.width || 50,
           }}
         >
-          <div className="flex items-center justify-center">
-            <input
-              type="checkbox"
-              checked={isSelected}
-              onChange={(e) => {
-                e.stopPropagation();
-                onRowSelect(row);
-              }}
-              className={cn(
-                "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
-                "transition-all duration-150 ease-in-out",
-                "hover:scale-110 focus:scale-110",
-                isSelected && "animate-pulse"
-              )}
-            />
-          </div>
-        </td>
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={(e) => {
+              e.stopPropagation();
+              onRowSelect(row);
+            }}
+            className={cn(
+              "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
+              "transition-all duration-150 ease-in-out",
+              "hover:scale-110 focus:scale-110",
+              isSelected && "animate-pulse"
+            )}
+          />
+        </div>
       );
     }
 
     return (
-      <td
+      <div
         key={String(column.field)}
         className={cn(
           "px-4 py-2.5 border-b border-gray-200",
@@ -118,24 +116,37 @@ export function DataTableRow<T extends Record<string, any>>({
         ) : (
           column.cellRenderer ? column.cellRenderer(value, row) : value
         )}
-      </td>
+      </div>
     );
   };
 
+  // Generate grid columns template based on column widths
+  const generateGridColumns = () => {
+    const allColumns = [...pinnedLeftColumns, ...unpinnedColumns, ...pinnedRightColumns];
+    return allColumns.map(column => {
+      const width = column.width || column.minWidth || (column.filterable ? 180 : 120);
+      return `${width}px`;
+    }).join(' ');
+  };
+
   return (
-    <tr 
+    <div 
       className={cn(
-        'group relative border-b border-gray-200 dark:border-gray-700',
+        'group relative border-b border-gray-200 dark:border-gray-700 grid',
         'transition-all duration-200 ease-in-out',
         'hover:bg-gray-50 dark:hover:bg-gray-800/50',
         isSelected && 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 shadow-sm transform scale-[1.001]',
         'hover:shadow-md hover:z-10'
       )}
+      style={{
+        gridTemplateColumns: generateGridColumns(),
+        minWidth: 'fit-content'
+      }}
       onClick={() => onRowSelect(row)}
     >
       {pinnedLeftColumns.map(column => renderCell(column, true))}
-      {unpinnedColumns.map(column => renderCell(column))}
+      {unpinnedColumns.map(column => renderCell(column, false))}
       {pinnedRightColumns.map(column => renderCell(column, true))}
-    </tr>
+    </div>
   );
 }

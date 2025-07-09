@@ -51,11 +51,11 @@ export function DataTableHeader<T>({
     // Render checkbox header for selection column
     if (column.useSelection) {
       return (
-        <th
+        <div
           key={String(column.field)}
           className={cn(
             "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-            "bg-gray-50 border-b border-gray-200",
+            "bg-gray-50 border-b border-gray-200 flex items-center justify-center",
             isPinned && "sticky z-20",
             column.pinned === 'left' && "left-0 border-r",
             column.pinned === 'right' && "right-0 border-l"
@@ -66,25 +66,23 @@ export function DataTableHeader<T>({
             width: column.width || 50,
           }}
         >
-          <div className="flex items-center justify-center">
-            <input
-              type="checkbox"
-              checked={selectedRows.length === totalRows && totalRows > 0}
-              onChange={onSelectAll}
-              className={cn(
-                "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
-                "transition-all duration-150 ease-in-out",
-                "hover:scale-110 focus:scale-110",
-                selectedRows.length === totalRows && totalRows > 0 && "animate-pulse"
-              )}
-            />
-          </div>
-        </th>
+          <input
+            type="checkbox"
+            checked={selectedRows.length === totalRows && totalRows > 0}
+            onChange={onSelectAll}
+            className={cn(
+              "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
+              "transition-all duration-150 ease-in-out",
+              "hover:scale-110 focus:scale-110",
+              selectedRows.length === totalRows && totalRows > 0 && "animate-pulse"
+            )}
+          />
+        </div>
       );
     }
 
     return (
-      <th
+      <div
         key={String(column.field)}
         className={cn(
           "px-4 py-3 text-left bg-gray-50 border-b border-gray-300",
@@ -141,17 +139,30 @@ export function DataTableHeader<T>({
             </div>
           )}
         </div>
-      </th>
+      </div>
     );
   };
 
+  // Generate grid columns template based on column widths
+  const generateGridColumns = () => {
+    const allColumns = [...pinnedLeftColumns, ...unpinnedColumns, ...pinnedRightColumns];
+    return allColumns.map(column => {
+      const width = column.width || column.minWidth || (column.filterable ? 180 : 120);
+      return `${width}px`;
+    }).join(' ');
+  };
+
   return (
-    <thead className="bg-gray-50 border-b border-gray-200 sticky top-0 z-20">
-      <tr>
-        {pinnedLeftColumns.map(column => renderHeaderCell(column, true))}
-        {unpinnedColumns.map(column => renderHeaderCell(column))}
-        {pinnedRightColumns.map(column => renderHeaderCell(column, true))}
-      </tr>
-    </thead>
+    <div 
+      className="bg-gray-50 sticky top-0 z-10 grid border-b border-gray-200"
+      style={{
+        gridTemplateColumns: generateGridColumns(),
+        minWidth: 'fit-content'
+      }}
+    >
+      {pinnedLeftColumns.map(column => renderHeaderCell(column, true))}
+      {unpinnedColumns.map(column => renderHeaderCell(column, false))}
+      {pinnedRightColumns.map(column => renderHeaderCell(column, true))}
+    </div>
   );
 }

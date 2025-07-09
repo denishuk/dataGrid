@@ -189,7 +189,7 @@ export function DataTable<T extends Record<string, any>>({
           {virtualScrolling && (
             <div style={{ height: virtualization.totalHeight, position: 'relative' }}>
               <div style={{ transform: `translateY(${virtualization.offsetY}px)` }}>
-                <table className="min-w-full text-sm border-collapse table-fixed">
+                <div className="min-w-full text-sm">
                   <DataTableHeader
                     columns={columns}
                     sorts={sorts || []}
@@ -202,21 +202,20 @@ export function DataTable<T extends Record<string, any>>({
                     onFilterChange={handleFilterChange}
                     showFilters={showFilters}
                   />
-                  <tbody className="bg-white divide-y divide-gray-200 transition-all duration-300 ease-in-out">
+                  <div className="bg-white divide-y divide-gray-200 transition-all duration-300 ease-in-out">
                     {virtualization.visibleItems.map(index => {
                       const row = groupedData[index];
                       if ((row as any).__isGroupHeader) {
                         return (
-                          <tr key={`group-${(row as any).__groupKey || (row as any).__groupValue}`}>
-                            <DataTableGroupHeader
-                              groupValue={(row as any).__groupValue}
-                              itemCount={(row as any).__itemCount}
-                              expanded={(row as any).__expanded}
-                              summaries={(row as any).__summaries}
-                              columns={columns}
-                              onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
-                            />
-                          </tr>
+                          <DataTableGroupHeader
+                            key={`group-${(row as any).__groupKey || (row as any).__groupValue}`}
+                            groupValue={(row as any).__groupValue}
+                            itemCount={(row as any).__itemCount}
+                            expanded={(row as any).__expanded}
+                            summaries={(row as any).__summaries}
+                            columns={columns}
+                            onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
+                          />
                         );
                       }
                       return (
@@ -230,14 +229,14 @@ export function DataTable<T extends Record<string, any>>({
                         />
                       );
                     })}
-                  </tbody>
-                </table>
+                  </div>
+                </div>
               </div>
             </div>
           )}
 
           {!virtualScrolling && (
-            <table className="min-w-full text-sm border-collapse table-fixed">
+            <div className="min-w-full text-sm">
               <DataTableHeader
                 columns={columns}
                 sorts={sorts || []}
@@ -250,22 +249,21 @@ export function DataTable<T extends Record<string, any>>({
                 onFilterChange={handleFilterChange}
                 showFilters={showFilters}
               />
-              <tbody className="bg-white divide-y divide-gray-200 transition-all duration-300 ease-in-out">
+              <div className="bg-white divide-y divide-gray-200 transition-all duration-300 ease-in-out">
                 {paginatedData.map((row, index) => {
                   if ((row as any).__isGroupHeader) {
                     return (
-                      <tr key={`group-${(row as any).__groupKey || (row as any).__groupValue}`}>
-                        <DataTableGroupHeader
-                          groupValue={(row as any).__groupValue}
-                          itemCount={(row as any).__itemCount}
-                          expanded={(row as any).__expanded}
-                          summaries={(row as any).__summaries}
-                          columns={columns}
-                          onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
-                          level={(row as any).__level || 0}
-                          field={(row as any).__field}
-                        />
-                      </tr>
+                      <DataTableGroupHeader
+                        key={`group-${(row as any).__groupKey || (row as any).__groupValue}`}
+                        groupValue={(row as any).__groupValue}
+                        itemCount={(row as any).__itemCount}
+                        expanded={(row as any).__expanded}
+                        summaries={(row as any).__summaries}
+                        columns={columns}
+                        onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
+                        level={(row as any).__level || 0}
+                        field={(row as any).__field}
+                      />
                     );
                   }
                   return (
@@ -279,8 +277,8 @@ export function DataTable<T extends Record<string, any>>({
                     />
                   );
                 })}
-              </tbody>
-            </table>
+              </div>
+            </div>
           )}
         </div>
       </div>

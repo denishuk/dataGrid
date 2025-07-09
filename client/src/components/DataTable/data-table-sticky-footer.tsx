@@ -53,7 +53,7 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
     const summary = calculateSummary(column);
 
     return (
-      <td
+      <div
         key={String(column.field)}
         className={cn(
           "px-4 py-2 text-sm font-medium text-right border-t border-gray-200",
@@ -78,21 +78,31 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
             </span>
           </div>
         ) : null}
-      </td>
+      </div>
     );
+  };
+
+  // Generate grid columns template based on column widths
+  const generateGridColumns = () => {
+    return visibleColumns.map(column => {
+      const width = column.width || column.minWidth || (column.filterable ? 180 : 120);
+      return `${width}px`;
+    }).join(' ');
   };
 
   return (
     <div className={cn("sticky bottom-0 z-10 bg-white overflow-x-auto", className)}>
-      <table className="min-w-full text-sm border-collapse table-fixed">
-        <tfoot>
-          <tr className="bg-gray-50">
-            {visibleColumns.map((column, _index) => {
-              return renderSummaryCell(column, column.pinned === 'left' || column.pinned === 'right');
-            })}
-          </tr>
-        </tfoot>
-      </table>
+      <div 
+        className="min-w-full text-sm bg-gray-50 border-t border-gray-200 grid"
+        style={{
+          gridTemplateColumns: generateGridColumns(),
+          minWidth: 'fit-content'
+        }}
+      >
+        {visibleColumns.map((column, _index) => {
+          return renderSummaryCell(column, column.pinned === 'left' || column.pinned === 'right');
+        })}
+      </div>
     </div>
   );
 }

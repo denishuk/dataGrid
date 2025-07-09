@@ -27,8 +27,22 @@ export function DataTableGroupHeader<T>({
 }: DataTableGroupHeaderProps<T>) {
   const visibleColumns = columns.filter(col => !col.hidden);
   
+  // Generate grid columns template based on column widths
+  const generateGridColumns = () => {
+    return visibleColumns.map(column => {
+      const width = column.width || column.minWidth || (column.filterable ? 180 : 120);
+      return `${width}px`;
+    }).join(' ');
+  };
+
   return (
-    <>
+    <div 
+      className="bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200 grid"
+      style={{
+        gridTemplateColumns: generateGridColumns(),
+        minWidth: 'fit-content'
+      }}
+    >
       {visibleColumns.map((column, index) => {
         // Check if this is a checkbox column (usually first column with field '__select__' or if it's the first data column)
         const isCheckboxColumn = String(column.field) === '__select__';
@@ -41,14 +55,15 @@ export function DataTableGroupHeader<T>({
           // First data column: show the group text with indentation based on level
           // ColSpan with checkbox column if it exists for more width
           const hasCheckboxColumn = visibleColumns.some(col => String(col.field) === '__select__');
-          const colSpan = hasCheckboxColumn ? 2 : 1;
           const indentSize = level * 30; // 30px per level for better hierarchy visualization
           
           return (
-            <td 
+            <div 
               key={String(column.field)} 
-              className="px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200"
-              colSpan={colSpan}
+              className={cn(
+                "px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200",
+                hasCheckboxColumn && "col-span-2"
+              )}
               style={{
                 minWidth: hasCheckboxColumn ? '200px' : (column.minWidth || '120px'),
               }}
@@ -93,7 +108,7 @@ export function DataTableGroupHeader<T>({
                   )}
                 </div>
               </div>
-            </td>
+            </div>
           );
         } else {
           // Other columns: show summary if available
@@ -101,7 +116,7 @@ export function DataTableGroupHeader<T>({
           const summary = summaries?.get(fieldName);
           
           return (
-            <td 
+            <div 
               key={String(column.field)} 
               className="px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200"
               style={{
@@ -113,10 +128,10 @@ export function DataTableGroupHeader<T>({
                   ${summary.toLocaleString()}
                 </span>
               ) : null}
-            </td>
+            </div>
           );
         }
       })}
-    </>
+    </div>
   );
 }
