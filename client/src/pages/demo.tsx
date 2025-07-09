@@ -5,7 +5,7 @@ import { Employee } from '@shared/schema';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
 import { MoreHorizontal, Eye, Edit, UserPlus, Trash2 } from 'lucide-react';
 
 export default function Demo() {
@@ -122,35 +122,87 @@ export default function Demo() {
       minWidth: 80,
       pinned: 'right',
       cellRenderer: (value, row) => (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => console.log('View', row)}>
-              <Eye className="mr-2 h-4 w-4" />
-              View
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log('Edit', row)}>
-              <Edit className="mr-2 h-4 w-4" />
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log('Assign', row)}>
-              <UserPlus className="mr-2 h-4 w-4" />
-              Assign
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => console.log('Delete', row)}
-              className="text-red-600"
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Menu as="div" className="relative">
+          <MenuButton
+            as={Button}
+            variant="ghost"
+            size="sm"
+            className="h-8 w-8 p-0"
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+          >
+            <MoreHorizontal className="h-4 w-4" />
+          </MenuButton>
+          <MenuItems
+            portal
+            className="absolute right-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[9999]"
+          >
+            <MenuItem>
+              {({ active }) => (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log('View', row);
+                  }}
+                  className={`${
+                    active ? 'bg-gray-100' : ''
+                  } group flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100`}
+                >
+                  <Eye className="mr-2 h-4 w-4" />
+                  View
+                </button>
+              )}
+            </MenuItem>
+            <MenuItem>
+              {({ active }) => (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log('Edit', row);
+                  }}
+                  className={`${
+                    active ? 'bg-gray-100' : ''
+                  } group flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100`}
+                >
+                  <Edit className="mr-2 h-4 w-4" />
+                  Edit
+                </button>
+              )}
+            </MenuItem>
+            <MenuItem>
+              {({ active }) => (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log('Assign', row);
+                  }}
+                  className={`${
+                    active ? 'bg-gray-100' : ''
+                  } group flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100`}
+                >
+                  <UserPlus className="mr-2 h-4 w-4" />
+                  Assign
+                </button>
+              )}
+            </MenuItem>
+            <div className="border-t border-gray-100 my-1" />
+            <MenuItem>
+              {({ active }) => (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log('Delete', row);
+                  }}
+                  className={`${
+                    active ? 'bg-red-50 text-red-700' : 'text-red-600'
+                  } group flex w-full items-center px-4 py-2 text-sm hover:bg-red-50 hover:text-red-700`}
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete
+                </button>
+              )}
+            </MenuItem>
+          </MenuItems>
+        </Menu>
       ),
     },
   ];

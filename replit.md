@@ -128,6 +128,7 @@ The core component provides:
 - July 09, 2025. Replaced hardcoded virtualization containerHeight with dynamic calculation based on viewport size, fullscreen mode, and active components for better responsive behavior
 - July 09, 2025. Fixed checkbox integration issue where columns with useSelection=true were not showing filter inputs and sort icons properly
 - July 09, 2025. Fixed dynamic height calculation gap (reduced by 8px) and dropdown menu z-index overlap issue with pinned columns, prevented checkbox selection when clicking dropdown actions
+- July 09, 2025. Replaced custom dropdown menu with Headless UI Menu component using portal=true to solve z-index issues with pinned columns, ensuring actions dropdown always appears above all table elements
 
 ## User Preferences
 
