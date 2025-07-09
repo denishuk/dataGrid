@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { DataTableColumn } from './types';
 import { DataTableEditableCell } from './data-table-editable-cell';
 import { cn } from '@/lib/utils';
+import { DEFAULT_ROW_HEIGHT, INDENT_SIZE } from '@/components/DataTable/constants.ts';
 
 interface DataTableRowProps<T> {
   row: T;
+  level?: number;
   columns: DataTableColumn<T>[];
   isSelected: boolean;
   onRowSelect: (row: T) => void;
@@ -16,6 +18,7 @@ interface DataTableRowProps<T> {
 
 export function DataTableRow<T extends Record<string, any>>({
   row,
+  level,
   columns,
   isSelected,
   onRowSelect,
@@ -26,6 +29,7 @@ export function DataTableRow<T extends Record<string, any>>({
   const [editingCell, setEditingCell] = useState<keyof T | null>(null);
 
   const visibleColumns = columns.filter(col => !col.hidden);
+  const firstColumn = visibleColumns[0];
   const pinnedLeftColumns = visibleColumns.filter(col => col.pinned === 'left');
   const unpinnedColumns = visibleColumns.filter(col => !col.pinned);
   const pinnedRightColumns = visibleColumns.filter(col => col.pinned === 'right');
@@ -50,6 +54,9 @@ export function DataTableRow<T extends Record<string, any>>({
   const renderCell = (column: DataTableColumn<T>, isPinned: boolean = false) => {
     const value = column.valueGetter ? column.valueGetter(row) : row[column.field];
     const isEditing = editingCell === column.field;
+    const isFirstColumn = firstColumn.field === column.field;
+
+    console.log('isFirstColumn', isFirstColumn);
 
     // Handle checkbox as part of column content (not separate column)
     if (column.useSelection) {
@@ -57,13 +64,15 @@ export function DataTableRow<T extends Record<string, any>>({
         <div
           key={String(column.field)}
           className={cn(
-            "px-4 py-2 flex items-center justify-start gap-3 min-h-[44px]",
+            `min-h-[${DEFAULT_ROW_HEIGHT}px]`,
+            "px-4 py-2 flex items-center justify-start gap-3",
             "transition-all duration-200 ease-in-out",
             isPinned && "bg-white z-10 sticky border-gray-800/10 shadow-lg overflow-x-hidden",
             column.pinned === 'left' && "left-0 border-r",
             column.pinned === 'right' && "right-0 border-l"
           )}
           style={{
+            paddingLeft: isFirstColumn && level ? `${level * INDENT_SIZE}px` : undefined,
             minWidth: column.minWidth || 180,
             maxWidth: column.maxWidth,
             width: column.width,
@@ -94,7 +103,8 @@ export function DataTableRow<T extends Record<string, any>>({
       <div
         key={String(column.field)}
         className={cn(
-          "px-4 py-2 flex items-center justify-start min-h-[44px]",
+          `min-h-[${DEFAULT_ROW_HEIGHT}px]`,
+          "px-4 py-2 flex items-center justify-start",
           "transition-all duration-200 ease-in-out",
           isPinned && "bg-white sticky z-10 border-gray-800/10",
           column.pinned === 'left' && "left-0 border-r shadow-lg",
@@ -103,6 +113,7 @@ export function DataTableRow<T extends Record<string, any>>({
           editingCell === column.field && "bg-blue-50 ring-2 ring-indigo-500 ring-inset"
         )}
         style={{
+          paddingLeft: isFirstColumn && level ? `${level * INDENT_SIZE}px` : undefined,
           minWidth: column.minWidth,
           maxWidth: column.maxWidth,
           width: column.width,

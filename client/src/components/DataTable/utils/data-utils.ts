@@ -101,16 +101,16 @@ export function sortData<T>(data: T[], sorts: SortConfig[]): T[] {
 export function groupData<T>(data: T[], groupFields: string | string[], expandedGroups: Set<string>, columns: any[]): T[] {
   const fields = Array.isArray(groupFields) ? groupFields : [groupFields];
   if (fields.length === 0 || fields[0] === '') return data;
-  
+
   // Helper function to build hierarchical group structure
   function buildHierarchy(items: T[], fieldIndex: number, parentPath: string = ''): any[] {
     if (fieldIndex >= fields.length) {
       return items;
     }
-    
+
     const currentField = fields[fieldIndex];
     const groups = new Map<string, T[]>();
-    
+
     // Group items by current field
     items.forEach(item => {
       const value = String((item as any)[currentField] || 'Ungrouped');
@@ -119,18 +119,18 @@ export function groupData<T>(data: T[], groupFields: string | string[], expanded
       }
       groups.get(value)!.push(item);
     });
-    
+
     const result: any[] = [];
-    
+
     groups.forEach((groupItems, groupValue) => {
       const groupPath = parentPath ? `${parentPath}|${groupValue}` : groupValue;
       const isExpanded = expandedGroups.has(groupPath);
-      
+
       // Calculate total count for this group (including nested items)
       function getTotalCount(items: T[]): number {
         return items.length;
       }
-      
+
       // Calculate summaries for numeric columns
       const summaries = new Map<string, number>();
       columns.forEach(column => {
@@ -142,7 +142,7 @@ export function groupData<T>(data: T[], groupFields: string | string[], expanded
           summaries.set(String(column.field), sum);
         }
       });
-      
+
       // Create group header with level information
       const groupHeader = {
         __isGroupHeader: true,
@@ -155,14 +155,17 @@ export function groupData<T>(data: T[], groupFields: string | string[], expanded
         __level: fieldIndex,
         __field: currentField
       } as any;
-      
+
       result.push(groupHeader);
-      
+
       // Add nested content if expanded
       if (isExpanded) {
         if (fieldIndex === fields.length - 1) {
           // Last level - add actual data rows
-          result.push(...groupItems);
+          result.push(...groupItems.map((groupItem) => ({
+            ...groupItem,
+            __level: fields.length + 1,
+          })));
         } else {
           // Intermediate level - recursively add nested groups
           const nestedGroups = buildHierarchy(groupItems, fieldIndex + 1, groupPath);
@@ -170,9 +173,9 @@ export function groupData<T>(data: T[], groupFields: string | string[], expanded
         }
       }
     });
-    
+
     return result;
   }
-  
+
   return buildHierarchy(data, 0);
 }

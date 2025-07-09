@@ -2,6 +2,7 @@
 import { Badge } from '@/components/ui/badge';
 import { DataTableColumn } from './types';
 import { cn } from '@/lib/utils';
+import { DEFAULT_ROW_HEIGHT } from '@/components/DataTable/constants.ts';
 
 interface DataTableStickyFooterProps<T> {
   columns: DataTableColumn<T>[];
@@ -56,7 +57,8 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
       <div
         key={String(column.field)}
         className={cn(
-          "px-4 py-2 font-medium flex text-xs font-mono min-h-[44px]",
+          `min-h-[${DEFAULT_ROW_HEIGHT}px]`,
+          "px-4 py-2 font-medium flex text-xs font-mono",
           isPinned && "sticky z-10 bg-gray-50",
           column.pinned === 'left' && "left-0 border-r border-gray-800/10",
           column.pinned === 'right' && "right-0 border-l border-gray-800/10"

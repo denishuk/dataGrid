@@ -69,7 +69,7 @@ export function DataTable<T extends Record<string, any>>({
   const paginatedData = virtualScrolling ? groupedData : groupedData.slice(startIndex, endIndex);
 
   const [containerHeight, setContainerHeight] = useState<number>(600);
-  
+
   useEffect(() => {
     const calculateHeight = () => {
       if (isFullscreen) {
@@ -85,7 +85,7 @@ export function DataTable<T extends Record<string, any>>({
         const groupingAreaHeight = currentGroupBy ? 48 : 0; // Only if grouping is active
         const paginationHeight = !virtualScrolling ? 64 : 0; // Only if pagination is shown
         const padding = 40; // Additional padding
-        
+
         const availableHeight = viewportHeight - headerHeight - actionBarHeight - groupingAreaHeight - paginationHeight - padding;
         // Subtract additional 8px to prevent gap between footer and last row
         setContainerHeight(Math.max(400, Math.min(availableHeight - 8, 800))); // Min 400px, max 800px
@@ -160,8 +160,6 @@ export function DataTable<T extends Record<string, any>>({
     setCurrentPage(1); // Reset to first page when changing page size
   };
 
-
-
   return (
     <div
       className={cn(
@@ -203,7 +201,7 @@ export function DataTable<T extends Record<string, any>>({
             virtualScrolling && "overflow-y-auto",
             isSorting && "opacity-80"
           )}
-          style={{ 
+          style={{
             height: virtualScrolling ? `${containerHeight}px` : 'auto',
             minHeight: virtualScrolling ? '400px' : 'auto'
           }}
@@ -246,6 +244,7 @@ export function DataTable<T extends Record<string, any>>({
                             expanded={(row as any).__expanded}
                             summaries={(row as any).__summaries}
                             columns={columns}
+                            level={row.__level}
                             onToggle={() => toggleGroup((row as any).__groupKey || (row as any).__groupValue)}
                           />
                         );
@@ -255,8 +254,9 @@ export function DataTable<T extends Record<string, any>>({
                           key={(row as any).id || index}
                           row={row}
                           columns={columns}
+                          level={currentGroupBy && row.__level}
                           isSelected={
-                            (row as any).id 
+                            (row as any).id
                               ? selectedRows.some(r => (r as any).id === (row as any).id)
                               : selectedRows.some(r => JSON.stringify(r) === JSON.stringify(row))
                           }
@@ -308,7 +308,7 @@ export function DataTable<T extends Record<string, any>>({
                       row={row}
                       columns={columns}
                       isSelected={
-                        (row as any).id 
+                        (row as any).id
                           ? selectedRows.some(r => (r as any).id === (row as any).id)
                           : selectedRows.some(r => JSON.stringify(r) === JSON.stringify(row))
                       }
