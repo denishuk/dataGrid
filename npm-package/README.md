@@ -1,8 +1,29 @@
 # Advanced React DataTable
 
-A comprehensive React data grid component with advanced features like pinned columns, inline editing, grouping, filtering, and export capabilities.
+[![Tests](https://github.com/denishuk/dataGrid/actions/workflows/test.yml/badge.svg)](https://github.com/denishuk/dataGrid/actions/workflows/test.yml)
+[![Coverage Status](https://codecov.io/gh/denishuk/dataGrid/branch/main/graph/badge.svg)](https://codecov.io/gh/denishuk/dataGrid)
+[![npm version](https://badge.fury.io/js/advanced-react-datatable.svg)](https://badge.fury.io/js/advanced-react-datatable)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A comprehensive React data grid component with advanced features like hierarchical multi-level grouping, pinned columns, inline editing, multiselect filters, and export capabilities.
 
 ![preview](preview.png)
+
+## Features
+
+- **Advanced Grouping**: Multi-level hierarchical grouping with drag-and-drop reordering
+- **Pinned Columns**: Pin columns to left or right with modern grid layout and proper shadows
+- **Inline Editing**: Double-click cells to edit values with type-specific editors
+- **Multiselect Filters**: Checkbox-based filters for select and boolean columns
+- **Export Functionality**: CSV and optional PDF export
+- **Column Management**: Show/hide, reorder, and configure columns
+- **Responsive Design**: Mobile-friendly with horizontal scrolling
+- **TypeScript Support**: Full type safety with customizable column definitions
+- **Sticky Headers/Footers**: Configurable sticky positioning for headers and footers
+- **Selection System**: Tailwind-based checkbox selection tied to column definitions with `useSelection` property
+- **Aggregation Functions**: Built-in aggregation functions (count, sum, avg, min, max) applied only when defined in column properties
+- **Modern Grid Layout**: CSS Grid-based layout with proper column alignment and pinned column support
+- **Pure Tailwind CSS**: No external CSS dependencies for maximum customization flexibility
 
 ## Installation
 
@@ -13,173 +34,75 @@ npm install advanced-react-datatable
 ## Quick Start
 
 ```tsx
-import { DataTable } from 'advanced-react-datatable';
+import React from 'react'
+import { DataTable } from 'advanced-react-datatable'
 
-const data = [
-  { id: 1, name: 'John Doe', email: 'john@example.com', department: 'Engineering' },
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com', department: 'Marketing' },
-];
+interface Employee {
+  id: number
+  name: string
+  department: string
+  salary: number
+}
+
+const employees: Employee[] = [
+  { id: 1, name: 'John Doe', department: 'Engineering', salary: 85000 },
+  { id: 2, name: 'Jane Smith', department: 'Marketing', salary: 72000 }
+]
 
 const columns = [
-  { 
-    field: 'selected', 
-    header: 'Select', 
-    useSelection: true, 
-    pinned: 'left', 
-    width: 50 
-  },
   { field: 'name', header: 'Name', sortable: true, filterable: true },
-  { field: 'email', header: 'Email', sortable: true, filterable: true },
-  { 
-    field: 'department', 
-    header: 'Department', 
-    sortable: true, 
-    filterable: true, 
-    groupable: true 
-  },
-  {
-    field: 'salary',
-    header: 'Salary',
-    type: 'number',
-    sortable: true,
-    filterable: true,
-    aggregation: 'sum' // Show sum in footer
-  }
-];
+  { field: 'department', header: 'Department', groupable: true },
+  { field: 'salary', header: 'Salary', type: 'number', sortable: true }
+]
 
 function App() {
   return (
     <DataTable
-      data={data}
+      data={employees}
       columns={columns}
-      pageSize={10}
       showFilters={true}
-      selectionMode="multiple"
-      stickyHeader={true}
-      stickyFooter={true}
+      showColumnConfig={true}
+      pageSize={10}
     />
-  );
+  )
 }
 ```
 
-## Features
+## Testing
 
-- **Selection System**: Tailwind-based checkbox selection tied to column definitions with `useSelection` property
-- **Sticky Headers/Footers**: Configurable sticky positioning for headers and footers
-- **Aggregation Functions**: Built-in aggregation functions (count, sum, avg, min, max) applied only when defined in column properties
-- **Modern Grid Layout**: CSS Grid-based layout with proper column alignment and pinned column support
-- **Pure Tailwind CSS**: No external CSS dependencies for maximum customization flexibility
-- **Advanced Filtering**: Column-specific filters with operators (contains, equals, etc.)
-- **Multi-Level Grouping**: Group by multiple columns with hierarchical display
-- **Pinned Columns**: Pin columns to left or right side
-- **Inline Editing**: Double-click cells to edit values
-- **Export**: CSV and PDF export capabilities
-- **Responsive Design**: Mobile-friendly with horizontal scrolling
-- **TypeScript**: Full type safety and IntelliSense support
+This component includes comprehensive test coverage with:
 
-## Styling
+- **Unit Tests**: All components and utilities are tested individually
+- **Integration Tests**: Full DataTable functionality testing
+- **Coverage Reports**: Detailed code coverage metrics
+- **CI/CD**: Automated testing on every push and pull request
 
-The component uses Tailwind CSS classes for styling and does not require any additional CSS files. All UI components are built with Headless UI primitives instead of @radix-ui for better performance and smaller bundle size.
+### Running Tests
 
-### Custom Styling
+```bash
+# Run all tests
+npm test
 
-You can customize the DataTable appearance by overriding the Tailwind classes or using the `className` prop:
+# Run tests with coverage
+npm run test:coverage
 
-```tsx
-<DataTable
-  data={data}
-  columns={columns}
-  className="border-2 border-gray-300 rounded-lg"
-/>
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with UI
+npm run test:ui
 ```
 
-### Tailwind CSS Classes Used
+### Test Coverage
 
-The component uses standard Tailwind CSS classes for styling:
-
-- **Container**: `bg-white rounded-lg overflow-hidden`
-- **Action Bar**: `bg-gradient-to-r from-blue-600 to-blue-500 p-4 flex items-center justify-between`
-- **Header**: `bg-gray-50 sticky top-0 z-30`
-- **Rows**: `transition-colors hover:bg-gray-50`
-- **Filters**: `px-3 py-2 border border-gray-300 rounded-md text-sm`
-- **Pagination**: `flex items-center justify-between p-4 bg-gray-50 border-t`
-
-### Theme Customization
-
-You can customize colors and styling by modifying your Tailwind configuration or using CSS custom properties.
-
-## Column Configuration
-
-### Column Properties
-
-#### useSelection
-Enable checkbox selection for a column:
-
-```tsx
-{
-  field: 'selected',
-  header: 'Select',
-  useSelection: true,
-  pinned: 'left',
-  width: 50
-}
-```
-
-#### aggregation
-Define aggregation functions for footer calculations:
-
-```tsx
-{
-  field: 'salary',
-  header: 'Salary',
-  type: 'number',
-  aggregation: 'sum' // Options: 'count', 'sum', 'avg', 'min', 'max'
-}
-```
-
-#### stickyFooter
-Enable sticky footer for the DataTable:
-
-```tsx
-<DataTable
-  data={data}
-  columns={columns}
-  stickyFooter={true}
-/>
-```
-
-### valueGetter Property
-
-The `valueGetter` property allows you to define custom value extraction for sorting, filtering, and grouping:
-
-```tsx
-const columns = [
-  {
-    field: 'fullName',
-    header: 'Full Name',
-    sortable: true,
-    filterable: true,
-    groupable: true,
-    valueGetter: (row) => `${row.firstName} ${row.lastName}`, // Custom value
-  },
-  {
-    field: 'status',
-    header: 'Status',
-    sortable: true,
-    filterable: true,
-    valueGetter: (row) => row.active ? 'Active' : 'Inactive', // Boolean to string
-  },
-  {
-    field: 'totalSales',
-    header: 'Total Sales',
-    sortable: true,
-    type: 'number',
-    valueGetter: (row) => row.sales.reduce((sum, sale) => sum + sale.amount, 0), // Calculated value
-  },
-];
-```
-
-**Priority**: `valueGetter` has higher priority than the `field` property. If `valueGetter` is defined, it will be used for sorting, filtering, and grouping operations.
+Current test coverage includes:
+- ✅ Core DataTable component
+- ✅ Filtering and sorting functionality
+- ✅ Grouping and hierarchical display
+- ✅ Pagination and data manipulation
+- ✅ Column configuration and management
+- ✅ Export functionality
+- ✅ Utility functions and helpers
 
 ## API Reference
 
@@ -226,118 +149,101 @@ interface DataTableColumn<T> {
 }
 ```
 
-### Advanced Examples
-
-#### Custom Cell Rendering
+### Filter Configuration
 
 ```tsx
-const columns = [
-  {
-    field: 'status',
-    header: 'Status',
-    type: 'select',
-    cellRenderer: (value, row) => (
-      <span className={`badge ${value === 'active' ? 'badge-success' : 'badge-danger'}`}>
-        {value}
-      </span>
-    )
-  },
-  {
-    field: 'avatar',
-    header: 'User',
-    cellRenderer: (value, row) => (
-      <div className="flex items-center gap-2">
-        <img src={row.avatar} alt={row.name} className="w-8 h-8 rounded-full" />
-        <span>{row.name}</span>
-      </div>
-    )
-  }
-];
-```
-
-#### Pinned Columns
-
-```tsx
-const columns = [
-  {
-    field: 'id',
-    header: 'ID',
-    pinned: 'left',
-    width: 80
-  },
-  {
-    field: 'name',
-    header: 'Name',
-    pinned: 'left',
-    minWidth: 200
-  },
-  {
-    field: 'email',
-    header: 'Email',
-    filterable: true,
-    sortable: true
-  },
-  {
-    field: 'actions',
-    header: 'Actions',
-    pinned: 'right',
-    width: 100,
-    cellRenderer: (value, row) => (
-      <button onClick={() => editRow(row)}>Edit</button>
-    )
-  }
-];
-```
-
-#### Multi-Level Grouping
-
-```tsx
-<DataTable
-  data={employees}
-  columns={columns}
-  groupBy={['department', 'location']}  // Group by department, then by location
-  showFilters={true}
-/>
-```
-
-#### Event Handling
-
-```tsx
-function MyComponent() {
-  const handleRowSelect = (selectedRows) => {
-    console.log('Selected rows:', selectedRows);
-  };
-
-  const handleCellEdit = (row, field, value) => {
-    console.log(`Updated ${field} to ${value} for row:`, row);
-    // Update your data source here
-  };
-
-  const handleExport = (data, format) => {
-    if (format === 'csv') {
-      // Handle CSV export
-      const csvContent = convertToCSV(data);
-      downloadFile(csvContent, 'data.csv');
-    }
-  };
-
-  return (
-    <DataTable
-      data={data}
-      columns={columns}
-      selectionMode="multiple"
-      onRowSelect={handleRowSelect}
-      onCellEdit={handleCellEdit}
-      onExport={handleExport}
-    />
-  );
+interface FilterConfig {
+  field: string                                    // Field to filter
+  operator: 'contains' | 'equals' | 'startsWith' | 'endsWith' | 'gt' | 'lt' | 'gte' | 'lte' | 'in'
+  value: any                                       // Filter value
+  type: 'text' | 'number' | 'date' | 'select' | 'boolean'  // Filter type
 }
 ```
 
-## Version
+### Sort Configuration
 
-Current version: 1.8.0
+```tsx
+interface SortConfig {
+  field: string                                    // Field to sort by
+  direction: 'asc' | 'desc'                       // Sort direction
+}
+```
+
+### Group Configuration
+
+```tsx
+interface GroupConfig {
+  field: string                                    // Field to group by
+  expanded: boolean                                // Group expansion state
+}
+```
+
+### Group Summary
+
+```tsx
+interface GroupSummary {
+  field: string                                    // Field being summarized
+  count: number                                    // Number of items in group
+  sum?: number                                     // Sum of numeric values
+  avg?: number                                     // Average of numeric values
+  min?: number                                     // Minimum value
+  max?: number                                     // Maximum value
+}
+```
+
+## Development
+
+### Prerequisites
+
+- Node.js 18.x or higher
+- npm or yarn
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/denishuk/dataGrid.git
+cd dataGrid
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run tests
+npm test
+```
+
+### Building
+
+```bash
+# Build for production
+npm run build
+
+# Build NPM package
+cd npm-package
+npm run build
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Add tests for your changes
+5. Ensure all tests pass (`npm test`)
+6. Commit your changes (`git commit -m 'Add amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+## License
+
+MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Support
 
-For issues and questions, please visit our [GitHub repository](https://github.com/denishuk/dataGrid).
+- 🐛 [Report bugs](https://github.com/denishuk/dataGrid/issues)
+- 💡 [Request features](https://github.com/denishuk/dataGrid/issues)
+- 📖 [Documentation](https://github.com/denishuk/dataGrid/wiki)
+- 💬 [Discussions](https://github.com/denishuk/dataGrid/discussions)
