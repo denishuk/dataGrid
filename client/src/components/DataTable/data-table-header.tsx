@@ -55,9 +55,9 @@ export function DataTableHeader<T>({
           key={String(column.field)}
           className={cn(
             "px-4 py-3 text-left bg-gray-50 border-b border-gray-300 flex items-center justify-start gap-3",
-            isPinned && "sticky z-20 bg-gray-50/95 backdrop-blur-sm",
-            column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-lg",
-            column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-lg"
+            isPinned && "sticky z-20 bg-gray-50 shadow-sm",
+            column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-md",
+            column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-md"
           )}
           style={{
             minWidth: column.minWidth || 180,
@@ -68,7 +68,11 @@ export function DataTableHeader<T>({
           <input
             type="checkbox"
             checked={selectedRows.length > 0 && selectedRows.length === totalRows}
-            onChange={onSelectAll}
+            onChange={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              onSelectAll();
+            }}
             className={cn(
               "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
               "transition-all duration-150 ease-in-out",
@@ -86,9 +90,9 @@ export function DataTableHeader<T>({
         key={String(column.field)}
         className={cn(
           "px-4 py-3 text-left bg-gray-50 border-b border-gray-300",
-          isPinned && "sticky z-20 bg-gray-50/95 backdrop-blur-sm",
-          column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-lg",
-          column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-lg"
+          isPinned && "sticky z-20 bg-gray-50 shadow-sm",
+          column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-md",
+          column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-md"
         )}
         style={{
           minWidth: column.minWidth || (column.filterable ? '180px' : '120px'),

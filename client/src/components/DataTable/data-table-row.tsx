@@ -74,6 +74,7 @@ export function DataTableRow<T extends Record<string, any>>({
             checked={isSelected}
             onChange={(e) => {
               e.stopPropagation();
+              e.preventDefault();
               onRowSelect(row);
             }}
             className={cn(

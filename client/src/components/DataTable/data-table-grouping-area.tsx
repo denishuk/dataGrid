@@ -25,13 +25,13 @@ export function DataTableGroupingArea<T>({
   const handleAddGroup = (field: string) => {
     if (!activeGroups.includes(field)) {
       const newGroups = [...activeGroups, field];
-      onGroupByChange(newGroups.length === 1 ? newGroups[0] : newGroups);
+      onGroupByChange(newGroups);
     }
   };
 
   const handleRemoveGroup = (field: string) => {
     const newGroups = activeGroups.filter(g => g !== field);
-    onGroupByChange(newGroups.length === 0 ? null : newGroups.length === 1 ? newGroups[0] : newGroups);
+    onGroupByChange(newGroups.length === 0 ? null : newGroups);
   };
 
   const handleDragStart = (e: React.DragEvent, index: number) => {
@@ -53,6 +53,7 @@ export function DataTableGroupingArea<T>({
     e.preventDefault();
 
     if (draggedIndex === null || draggedIndex === dropIndex) {
+      setDraggedIndex(null);
       return;
     }
 
@@ -61,7 +62,7 @@ export function DataTableGroupingArea<T>({
     newGroups.splice(draggedIndex, 1);
     newGroups.splice(dropIndex, 0, draggedItem);
 
-    onGroupByChange(newGroups.length === 0 ? null : newGroups.length === 1 ? newGroups[0] : newGroups);
+    onGroupByChange(newGroups.length === 0 ? null : newGroups);
     setDraggedIndex(null);
   };
 
