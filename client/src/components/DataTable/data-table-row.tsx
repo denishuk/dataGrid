@@ -96,7 +96,7 @@ export function DataTableRow<T extends Record<string, any>>({
         className={cn(
           "px-4 py-2 flex items-center justify-start min-h-[44px]",
           "transition-all duration-200 ease-in-out",
-          isPinned && "bg-white sticky z-20 border-gray-800/10",
+          isPinned && "bg-white sticky z-10 border-gray-800/10",
           column.pinned === 'left' && "left-0 border-r shadow-lg",
           column.pinned === 'right' && "right-0 border-l shadow-lg",
           column.editable && "cursor-pointer hover:bg-gray-50 hover:scale-[1.02]",

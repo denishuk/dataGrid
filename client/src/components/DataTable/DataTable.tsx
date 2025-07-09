@@ -75,8 +75,8 @@ export function DataTable<T extends Record<string, any>>({
       if (isFullscreen) {
         // In fullscreen mode, use most of the viewport
         const viewportHeight = window.innerHeight;
-        const reservedHeight = 200; // Reserve space for controls
-        setContainerHeight(Math.max(400, viewportHeight - reservedHeight));
+        const reservedHeight = 140; // Reserve space for action bar + grouping + pagination
+        setContainerHeight(Math.max(500, viewportHeight - reservedHeight));
       } else {
         // Calculate available height: viewport - header - action bar - grouping area - pagination
         const viewportHeight = window.innerHeight;

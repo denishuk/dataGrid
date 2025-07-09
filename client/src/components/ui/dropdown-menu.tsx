@@ -15,7 +15,7 @@ const DropdownMenu: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
   return (
     <DropdownMenuContext.Provider value={{ isOpen, setIsOpen }}>
-      <div className="relative inline-block text-left w-full">
+      <div className="relative inline-block text-left w-full" style={{ zIndex: 999 }}>
         {children}
       </div>
     </DropdownMenuContext.Provider>
@@ -77,18 +77,24 @@ const DropdownMenuContent = React.forwardRef<HTMLDivElement, {
   const alignmentClass = align === 'end' ? 'right-0' : align === 'center' ? 'left-1/2 -translate-x-1/2' : 'left-0';
 
   return (
-    <div
-      ref={contentRef}
-      className={cn(
-        "absolute top-full z-[60] min-w-[8rem] bg-white border border-gray-800/10 overflow-hidden rounded bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
-        alignmentClass,
-        className
-      )}
-      style={{ marginTop: sideOffset }}
-      {...props}
-    >
-      {children}
-    </div>
+    <>
+      <div
+        ref={contentRef}
+        className={cn(
+          "absolute top-full min-w-[8rem] bg-white border border-gray-800/10 overflow-hidden rounded bg-popover p-1 text-popover-foreground shadow-lg animate-in fade-in-0 zoom-in-95",
+          alignmentClass,
+          className
+        )}
+        style={{ 
+          marginTop: sideOffset,
+          zIndex: 9999,
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+        }}
+        {...props}
+      >
+        {children}
+      </div>
+    </>
   );
 });
 DropdownMenuContent.displayName = "DropdownMenuContent";
