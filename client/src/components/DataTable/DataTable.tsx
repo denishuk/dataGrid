@@ -68,10 +68,38 @@ export function DataTable<T extends Record<string, any>>({
   const endIndex = Math.min(startIndex + currentPageSize, filteredData.length);
   const paginatedData = virtualScrolling ? groupedData : groupedData.slice(startIndex, endIndex);
 
+  const [containerHeight, setContainerHeight] = useState<number>(600);
+  
+  useEffect(() => {
+    const calculateHeight = () => {
+      if (isFullscreen) {
+        // In fullscreen mode, use most of the viewport
+        const viewportHeight = window.innerHeight;
+        const reservedHeight = 200; // Reserve space for controls
+        setContainerHeight(Math.max(400, viewportHeight - reservedHeight));
+      } else {
+        // Calculate available height: viewport - header - action bar - grouping area - pagination
+        const viewportHeight = window.innerHeight;
+        const headerHeight = 120; // Approximate header height
+        const actionBarHeight = 64; // Action bar height
+        const groupingAreaHeight = currentGroupBy ? 48 : 0; // Only if grouping is active
+        const paginationHeight = !virtualScrolling ? 64 : 0; // Only if pagination is shown
+        const padding = 40; // Additional padding
+        
+        const availableHeight = viewportHeight - headerHeight - actionBarHeight - groupingAreaHeight - paginationHeight - padding;
+        setContainerHeight(Math.max(400, Math.min(availableHeight, 800))); // Min 400px, max 800px
+      }
+    };
+
+    calculateHeight();
+    window.addEventListener('resize', calculateHeight);
+    return () => window.removeEventListener('resize', calculateHeight);
+  }, [isFullscreen, currentGroupBy, virtualScrolling]);
+
   const virtualization = useVirtualization({
     itemCount: groupedData.length,
     itemHeight: 48,
-    containerHeight: 600,
+    containerHeight,
     overscan: 10,
   });
 
@@ -174,7 +202,10 @@ export function DataTable<T extends Record<string, any>>({
             virtualScrolling && "overflow-y-auto",
             isSorting && "opacity-80"
           )}
-          style={{ height: virtualScrolling ? '600px' : 'auto' }}
+          style={{ 
+            height: virtualScrolling ? `${containerHeight}px` : 'auto',
+            minHeight: virtualScrolling ? '400px' : 'auto'
+          }}
           onScroll={virtualScrolling ? virtualization.handleScroll : undefined}
         >
           {/* Sorting Indicator */}

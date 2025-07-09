@@ -125,6 +125,7 @@ The core component provides:
 - July 08, 2025. Improved grid layout with first column expanding to fill available space using minmax(200px, 1fr) and integrated checkbox into column definition instead of separate column
 - July 09, 2025. Fixed multiple critical issues: range filtering now supports min/max values without reset, multi-column grouping functionality restored, pagination only shows when needed (pageSize reduced to 10), fullscreen mode improved with proper z-index and background, column configuration modal enhanced with better positioning
 - July 09, 2025. Added vertical center alignment to all cell content using flex items-center with 44px minimum height across all table components
+- July 09, 2025. Replaced hardcoded virtualization containerHeight with dynamic calculation based on viewport size, fullscreen mode, and active components for better responsive behavior
 
 ## User Preferences
 
