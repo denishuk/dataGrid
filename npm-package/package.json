@@ -9,7 +9,9 @@
     "dist",
     "README.md",
     "README-CSS.md",
-    "LICENSE"
+    "example-standalone-css.md",
+    "LICENSE",
+    "dist/datatable.css"
   ],
   "sideEffects": false,
   "scripts": {

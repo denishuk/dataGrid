@@ -129,6 +129,7 @@ The core component provides:
 - July 09, 2025. Fixed checkbox integration issue where columns with useSelection=true were not showing filter inputs and sort icons properly
 - July 09, 2025. Fixed dynamic height calculation gap (reduced by 8px) and dropdown menu z-index overlap issue with pinned columns, prevented checkbox selection when clicking dropdown actions
 - July 09, 2025. Replaced custom dropdown menu with Headless UI Menu component using portal=true to solve z-index issues with pinned columns, ensuring actions dropdown always appears above all table elements
+- July 09, 2025. Created comprehensive standalone CSS file (datatable.css) with all component styles to prevent Tailwind CSS purging in external applications. Updated build process to include CSS bundling and extraction. Added React portal solution for dropdown positioning above all table elements with fixed z-index issues.
 
 ## User Preferences
 
