@@ -12,7 +12,7 @@ const DropdownMenuContext = React.createContext<DropdownMenuContextType | null>(
 
 const DropdownMenu: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  
+
   return (
     <DropdownMenuContext.Provider value={{ isOpen, setIsOpen }}>
       <div className="relative inline-block text-left w-full">
@@ -22,18 +22,18 @@ const DropdownMenu: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   );
 };
 
-const DropdownMenuTrigger: React.FC<{ 
-  children: React.ReactNode; 
+const DropdownMenuTrigger: React.FC<{
+  children: React.ReactNode;
   asChild?: boolean;
 }> = ({ children, asChild }) => {
   const context = React.useContext(DropdownMenuContext);
-  
+
   if (asChild) {
     return React.cloneElement(children as React.ReactElement, {
       onClick: () => context?.setIsOpen(!context.isOpen)
     });
   }
-  
+
   return (
     <div onClick={() => context?.setIsOpen(!context.isOpen)}>
       {children}
@@ -41,15 +41,15 @@ const DropdownMenuTrigger: React.FC<{
   );
 };
 
-const DropdownMenuContent = React.forwardRef<HTMLDivElement, { 
-  children: React.ReactNode; 
-  className?: string; 
+const DropdownMenuContent = React.forwardRef<HTMLDivElement, {
+  children: React.ReactNode;
+  className?: string;
   sideOffset?: number;
   align?: 'start' | 'center' | 'end';
 }>(({ className, children, sideOffset = 4, align = 'start', ...props }, ref) => {
   const context = React.useContext(DropdownMenuContext);
   const contentRef = React.useRef<HTMLDivElement>(null);
-  
+
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (contentRef.current && !contentRef.current.contains(event.target as Node)) {
@@ -74,7 +74,7 @@ const DropdownMenuContent = React.forwardRef<HTMLDivElement, {
     <div
       ref={contentRef}
       className={cn(
-        "absolute top-full z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+        "absolute top-full z-50 min-w-[8rem] bg-white border border-gray-800/10 overflow-hidden rounded bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
         alignmentClass,
         className
       )}
@@ -103,10 +103,10 @@ const DropdownMenuRadioGroup: React.FC<{ children: React.ReactNode }> = ({ child
   <div>{children}</div>
 );
 
-const DropdownMenuSubTrigger = React.forwardRef<HTMLDivElement, { 
-  children: React.ReactNode; 
-  className?: string; 
-  inset?: boolean 
+const DropdownMenuSubTrigger = React.forwardRef<HTMLDivElement, {
+  children: React.ReactNode;
+  className?: string;
+  inset?: boolean
 }>(({ className, inset, children, ...props }, ref) => (
   <div
     ref={ref}
@@ -123,9 +123,9 @@ const DropdownMenuSubTrigger = React.forwardRef<HTMLDivElement, {
 ));
 DropdownMenuSubTrigger.displayName = "DropdownMenuSubTrigger";
 
-const DropdownMenuSubContent = React.forwardRef<HTMLDivElement, { 
-  children: React.ReactNode; 
-  className?: string; 
+const DropdownMenuSubContent = React.forwardRef<HTMLDivElement, {
+  children: React.ReactNode;
+  className?: string;
 }>(({ className, children, ...props }, ref) => (
   <div
     ref={ref}
@@ -140,14 +140,14 @@ const DropdownMenuSubContent = React.forwardRef<HTMLDivElement, {
 ));
 DropdownMenuSubContent.displayName = "DropdownMenuSubContent";
 
-const DropdownMenuItem = React.forwardRef<HTMLDivElement, { 
-  children: React.ReactNode; 
-  className?: string; 
+const DropdownMenuItem = React.forwardRef<HTMLDivElement, {
+  children: React.ReactNode;
+  className?: string;
   inset?: boolean;
   onClick?: () => void;
 }>(({ className, inset, children, onClick, ...props }, ref) => {
   const context = React.useContext(DropdownMenuContext);
-  
+
   return (
     <div
       ref={ref}
@@ -168,9 +168,9 @@ const DropdownMenuItem = React.forwardRef<HTMLDivElement, {
 });
 DropdownMenuItem.displayName = "DropdownMenuItem";
 
-const DropdownMenuCheckboxItem = React.forwardRef<HTMLDivElement, { 
-  children: React.ReactNode; 
-  className?: string; 
+const DropdownMenuCheckboxItem = React.forwardRef<HTMLDivElement, {
+  children: React.ReactNode;
+  className?: string;
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
 }>(({ className, children, checked, onCheckedChange, ...props }, ref) => (
@@ -191,9 +191,9 @@ const DropdownMenuCheckboxItem = React.forwardRef<HTMLDivElement, {
 ));
 DropdownMenuCheckboxItem.displayName = "DropdownMenuCheckboxItem";
 
-const DropdownMenuRadioItem = React.forwardRef<HTMLDivElement, { 
-  children: React.ReactNode; 
-  className?: string; 
+const DropdownMenuRadioItem = React.forwardRef<HTMLDivElement, {
+  children: React.ReactNode;
+  className?: string;
   value?: string;
 }>(({ className, children, ...props }, ref) => (
   <div
@@ -212,9 +212,9 @@ const DropdownMenuRadioItem = React.forwardRef<HTMLDivElement, {
 ));
 DropdownMenuRadioItem.displayName = "DropdownMenuRadioItem";
 
-const DropdownMenuLabel = React.forwardRef<HTMLDivElement, { 
-  children: React.ReactNode; 
-  className?: string; 
+const DropdownMenuLabel = React.forwardRef<HTMLDivElement, {
+  children: React.ReactNode;
+  className?: string;
   inset?: boolean;
 }>(({ className, inset, children, ...props }, ref) => (
   <div
@@ -231,8 +231,8 @@ const DropdownMenuLabel = React.forwardRef<HTMLDivElement, {
 ));
 DropdownMenuLabel.displayName = "DropdownMenuLabel";
 
-const DropdownMenuSeparator = React.forwardRef<HTMLDivElement, { 
-  className?: string; 
+const DropdownMenuSeparator = React.forwardRef<HTMLDivElement, {
+  className?: string;
 }>(({ className, ...props }, ref) => (
   <div
     ref={ref}

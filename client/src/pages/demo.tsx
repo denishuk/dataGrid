@@ -75,7 +75,7 @@ export default function Demo() {
       minWidth: 140,
       aggregation: 'sum',
       cellRenderer: (value) => (
-        <span className="font-mono text-sm text-gray-900 bg-green-50 px-2 py-1 rounded">
+        <span className="font-mono text-xs text-gray-900">
           ${Number(value).toLocaleString()}
         </span>
       ),
@@ -205,7 +205,6 @@ export default function Demo() {
           data={employees as Employee[]}
           columns={columns}
           virtualScrolling={true}
-  
           stickyHeader={true}
           stickyFooter={true}
           enablePdfExport={true}

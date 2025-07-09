@@ -57,11 +57,11 @@ export function DataTableRow<T extends Record<string, any>>({
         <div
           key={String(column.field)}
           className={cn(
-            "px-4 py-2.5 border-b border-gray-200 flex items-center justify-start gap-3 min-h-[44px]",
+            "px-4 py-2 flex items-center justify-start gap-3 min-h-[44px]",
             "transition-all duration-200 ease-in-out",
-            isPinned && "bg-white sticky z-20",
-            column.pinned === 'left' && "left-0 border-r shadow-lg",
-            column.pinned === 'right' && "right-0 border-l shadow-lg"
+            isPinned && "bg-white z-10 sticky border-gray-800/10 shadow-lg overflow-x-hidden",
+            column.pinned === 'left' && "left-0 border-r",
+            column.pinned === 'right' && "right-0 border-l"
           )}
           style={{
             minWidth: column.minWidth || 180,
@@ -81,10 +81,9 @@ export function DataTableRow<T extends Record<string, any>>({
             className={cn(
               "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
               "transition-all duration-150 ease-in-out",
-              "hover:scale-110 focus:scale-110"
             )}
           />
-          <span className="flex-1">
+          <span className={cn("flex-1", isPinned ? "truncate" : "")}>
             {column.cellRenderer ? column.cellRenderer(value, row) : value}
           </span>
         </div>
@@ -95,9 +94,9 @@ export function DataTableRow<T extends Record<string, any>>({
       <div
         key={String(column.field)}
         className={cn(
-          "px-4 py-2.5 border-b border-gray-200 flex items-center justify-start min-h-[44px]",
+          "px-4 py-2 flex items-center justify-start min-h-[44px]",
           "transition-all duration-200 ease-in-out",
-          isPinned && "bg-white sticky z-20",
+          isPinned && "bg-white sticky z-20 border-gray-800/10",
           column.pinned === 'left' && "left-0 border-r shadow-lg",
           column.pinned === 'right' && "right-0 border-l shadow-lg",
           column.editable && "cursor-pointer hover:bg-gray-50 hover:scale-[1.02]",
@@ -139,13 +138,11 @@ export function DataTableRow<T extends Record<string, any>>({
   };
 
   return (
-    <div 
+    <div
       className={cn(
-        'group relative border-b border-gray-200 dark:border-gray-700 grid',
+        'group relative grid',
         'transition-all duration-200 ease-in-out',
-        'hover:bg-gray-50 dark:hover:bg-gray-800/50',
-        isSelected && 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 shadow-sm transform scale-[1.001]',
-        'hover:shadow-md hover:z-10'
+        isSelected && '*:bg-blue-50  transform',
       )}
       style={{
         gridTemplateColumns: generateGridColumns(),
