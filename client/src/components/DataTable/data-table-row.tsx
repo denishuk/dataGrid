@@ -79,8 +79,7 @@ export function DataTableRow<T extends Record<string, any>>({
             className={cn(
               "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
               "transition-all duration-150 ease-in-out",
-              "hover:scale-110 focus:scale-110",
-              isSelected && "animate-pulse"
+              "hover:scale-110 focus:scale-110"
             )}
           />
           <span className="flex-1">

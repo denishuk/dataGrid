@@ -227,7 +227,11 @@ export function DataTable<T extends Record<string, any>>({
                           key={(row as any).id || index}
                           row={row}
                           columns={columns}
-                          isSelected={selectedRows.some(r => (r as any).id === (row as any).id)}
+                          isSelected={
+                            (row as any).id 
+                              ? selectedRows.some(r => (r as any).id === (row as any).id)
+                              : selectedRows.some(r => JSON.stringify(r) === JSON.stringify(row))
+                          }
                           onRowSelect={toggleRowSelection}
                           onCellEdit={onCellEdit}
                         />
@@ -275,7 +279,11 @@ export function DataTable<T extends Record<string, any>>({
                       key={(row as any).id || index}
                       row={row}
                       columns={columns}
-                      isSelected={selectedRows.some(r => (r as any).id === (row as any).id)}
+                      isSelected={
+                        (row as any).id 
+                          ? selectedRows.some(r => (r as any).id === (row as any).id)
+                          : selectedRows.some(r => JSON.stringify(r) === JSON.stringify(row))
+                      }
                       onRowSelect={toggleRowSelection}
                       onCellEdit={onCellEdit}
                     />

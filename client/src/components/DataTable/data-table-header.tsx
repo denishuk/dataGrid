@@ -67,13 +67,12 @@ export function DataTableHeader<T>({
         >
           <input
             type="checkbox"
-            checked={selectedRows.length === totalRows && totalRows > 0}
+            checked={selectedRows.length > 0 && selectedRows.length === totalRows}
             onChange={onSelectAll}
             className={cn(
               "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
               "transition-all duration-150 ease-in-out",
-              "hover:scale-110 focus:scale-110",
-              selectedRows.length === totalRows && totalRows > 0 && "animate-pulse"
+              "hover:scale-110 focus:scale-110"
             )}
           />
           <span className="font-medium text-gray-900">{column.header}</span>

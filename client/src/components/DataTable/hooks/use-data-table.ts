@@ -74,9 +74,16 @@ export function useDataTable<T extends Record<string, any>>({
 
   const toggleRowSelection = useCallback((row: T) => {
     setSelectedRows(prev => {
-      const isSelected = prev.some(r => r.id === row.id);
+      // Try to use id first, fallback to object comparison
+      const rowId = (row as any).id;
+      const isSelected = rowId 
+        ? prev.some(r => (r as any).id === rowId)
+        : prev.some(r => JSON.stringify(r) === JSON.stringify(row));
+      
       if (isSelected) {
-        return prev.filter(r => r.id !== row.id);
+        return rowId 
+          ? prev.filter(r => (r as any).id !== rowId)
+          : prev.filter(r => JSON.stringify(r) !== JSON.stringify(row));
       } else {
         return [...prev, row];
       }
@@ -84,7 +91,13 @@ export function useDataTable<T extends Record<string, any>>({
   }, []);
 
   const toggleAllSelection = useCallback(() => {
-    setSelectedRows(prev => prev.length === filteredData.length ? [] : [...filteredData]);
+    setSelectedRows(prev => {
+      if (prev.length === filteredData.length && filteredData.length > 0) {
+        return [];
+      } else {
+        return [...filteredData];
+      }
+    });
   }, [filteredData]);
 
   const toggleGroup = useCallback((groupKey: string) => {
