@@ -3,6 +3,12 @@ export interface DataTableSortOptions {
   getSortIcon: (field: string) => React.ReactNode;
 }
 
+export interface DataTableSelectionOptions<T> {
+  totalRows: number;
+  onSelectAll: () => void;
+  selectedRows: T[],
+}
+
 export interface DataTableColumn<T = any> {
   field: keyof T;
   header: string;
@@ -19,7 +25,7 @@ export interface DataTableColumn<T = any> {
   useSelection?: boolean; // Enable checkbox selection for this column
   aggregation?: 'count' | 'sum' | 'avg' | 'min' | 'max'; // Aggregation function for footer
   cellRenderer?: (value: any, row: T) => React.ReactNode;
-  headerRenderer?: (column: DataTableColumn<T>, sortOptions: DataTableSortOptions) => React.ReactNode;
+  headerRenderer?: (column: DataTableColumn<T>, sortOptions: DataTableSortOptions, selectOptions?: DataTableSelectionOptions<T>) => React.ReactNode;
   valueGetter?: (row: T) => any; // Custom value extraction for sorting, filtering, grouping
   options?: string[]; // For select type
 }

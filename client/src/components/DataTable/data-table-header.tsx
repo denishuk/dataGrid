@@ -50,6 +50,9 @@ export function DataTableHeader<T>({
 
     // Render checkbox as part of column header (not separate column)
     if (column.useSelection) {
+
+
+
       return (
         <div
           key={String(column.field)}
@@ -67,45 +70,49 @@ export function DataTableHeader<T>({
         >
           <div className="space-y-2">
             {/* Header Content with Checkbox */}
-            <div className="flex items-center gap-3">
-              <input
-                type="checkbox"
-                checked={selectedRows.length > 0 && selectedRows.length === totalRows}
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-                onChange={() => {
-                  onSelectAll();
-                }}
-                className={cn(
-                  "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
-                  "transition-all duration-150 ease-in-out",
-                  "hover:scale-110 focus:scale-110"
-                )}
-              />
-              <div className="flex items-center gap-2">
-                <span className="font-medium text-gray-900">{column.header}</span>
-                {column.pinned && <Pin className="h-3 w-3 text-primary-500" />}
-                {column.sortable && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
+
+            {column.headerRenderer
+              ? column.headerRenderer(column, { getSortIcon, onSort }, { selectedRows, onSelectAll, totalRows })
+              : (<div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    checked={selectedRows.length > 0 && selectedRows.length === totalRows}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                    onChange={() => {
+                      onSelectAll();
+                    }}
                     className={cn(
-                      "p-0 h-4 w-4",
-                      "transition-all duration-200 ease-in-out",
-                      "hover:scale-110 hover:bg-gray-100 hover:shadow-sm",
-                      "active:scale-95",
-                      "focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
+                      "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
+                      "transition-all duration-150 ease-in-out",
+                      "hover:scale-110 focus:scale-110"
                     )}
-                    onClick={() => onSort(String(column.field))}
-                  >
-                    <div className="transition-transform duration-200 ease-in-out hover:rotate-[5deg]">
-                      {getSortIcon(String(column.field))}
-                    </div>
-                  </Button>
-                )}
-              </div>
-            </div>
+                  />
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-gray-900">{column.header}</span>
+                    {column.pinned && <Pin className="h-3 w-3 text-primary-500" />}
+                    {column.sortable && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className={cn(
+                          "p-0 h-4 w-4",
+                          "transition-all duration-200 ease-in-out",
+                          "hover:scale-110 hover:bg-gray-100 hover:shadow-sm",
+                          "active:scale-95",
+                          "focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
+                        )}
+                        onClick={() => onSort(String(column.field))}
+                      >
+                        <div className="transition-transform duration-200 ease-in-out hover:rotate-[5deg]">
+                          {getSortIcon(String(column.field))}
+                        </div>
+                      </Button>
+                    )}
+                  </div>
+                </div>)
+            }
 
             {/* Column Filter */}
             {showFilters && column.filterable && (
