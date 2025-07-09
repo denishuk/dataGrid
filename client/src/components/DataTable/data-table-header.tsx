@@ -142,7 +142,7 @@ export function DataTableHeader<T>({
           {/* Header Content */}
           <div className="flex items-center gap-2">
             {column.headerRenderer ? (
-              column.headerRenderer(column)
+              column.headerRenderer(column, { getSortIcon, onSort })
             ) : (
               <>
                 <span className="font-medium text-gray-900">{column.header}</span>
