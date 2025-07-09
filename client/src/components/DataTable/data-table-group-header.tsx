@@ -59,7 +59,7 @@ export function DataTableGroupHeader<T>({
           return (
             <div 
               key={String(column.field)} 
-              className="px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200"
+              className="px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200 flex items-center justify-start min-h-[44px]"
               style={{
                 minWidth: '200px',
               }}
@@ -114,7 +114,7 @@ export function DataTableGroupHeader<T>({
           return (
             <div 
               key={String(column.field)} 
-              className="px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200"
+              className="px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200 flex items-center justify-start min-h-[44px]"
               style={{
                 minWidth: column.minWidth || '120px',
               }}

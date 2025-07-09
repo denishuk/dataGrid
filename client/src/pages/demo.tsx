@@ -17,17 +17,9 @@ export default function Demo() {
 
   const columns: DataTableColumn<Employee>[] = [
     {
-      field: 'selected',
-      header: 'Select',
-      useSelection: true,
-      pinned: 'left',
-      width: 50,
-      minWidth: 50,
-      maxWidth: 50,
-    },
-    {
       field: 'email',
       header: 'Email',
+      useSelection: true,
       pinned: 'left',
       sortable: true,
       filterable: true,

@@ -54,7 +54,7 @@ export function DataTableHeader<T>({
         <div
           key={String(column.field)}
           className={cn(
-            "px-4 py-3 text-left bg-gray-50 border-b border-gray-300 flex items-center gap-3",
+            "px-4 py-3 text-left bg-gray-50 border-b border-gray-300 flex items-center justify-start gap-3",
             isPinned && "sticky z-20 bg-gray-50/95 backdrop-blur-sm",
             column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-lg",
             column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-lg"

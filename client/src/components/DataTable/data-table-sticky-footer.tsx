@@ -56,7 +56,7 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
       <div
         key={String(column.field)}
         className={cn(
-          "px-4 py-2 text-sm font-medium text-right border-t border-gray-200",
+          "px-4 py-2 text-sm font-medium text-right border-t border-gray-200 flex items-center justify-end min-h-[44px]",
           isPinned && "sticky z-10 bg-gray-50",
           column.pinned === 'left' && "left-0 border-r",
           column.pinned === 'right' && "right-0 border-l"
