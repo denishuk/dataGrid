@@ -28,6 +28,7 @@ export default defineConfig({
       formats: ['es', 'cjs'],
       fileName: (format) => `index.${format === 'es' ? 'es' : 'cjs'}.js`,
     },
+    cssCodeSplit: false,
     rollupOptions: {
       external: [
         'react',

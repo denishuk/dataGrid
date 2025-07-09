@@ -8,11 +8,14 @@
   "files": [
     "dist",
     "README.md",
+    "README-CSS.md",
     "LICENSE"
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "./build.sh",
+    "build": "node build-with-css.js",
+    "build:simple": "node build-simple.js",
+    "build:shell": "./build.sh",
     "dev": "vite build --watch --config vite.config.simple.ts",
     "type-check": "tsc --noEmit",
     "preview": "vite preview"
