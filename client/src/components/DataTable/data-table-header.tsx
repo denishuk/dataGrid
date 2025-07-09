@@ -55,9 +55,9 @@ export function DataTableHeader<T>({
           key={String(column.field)}
           className={cn(
             "px-4 py-3 text-left bg-gray-50",
-            isPinned && "sticky z-20 bg-gray-50 shadow-sm",
-            column.pinned === 'left' && "left-0 border-r border-gray-800/10 shadow-md",
-            column.pinned === 'right' && "right-0 border-l border-gray-800/10 shadow-md"
+            isPinned && "sticky z-20 bg-gray-50",
+            column.pinned === 'left' && "left-0 border-r border-gray-800/10",
+            column.pinned === 'right' && "right-0 border-l border-gray-800/10"
           )}
           style={{
             minWidth: column.minWidth || (column.filterable ? '180px' : '120px'),
@@ -128,9 +128,9 @@ export function DataTableHeader<T>({
         key={String(column.field)}
         className={cn(
           "px-4 py-3 text-left bg-gray-50",
-          isPinned && "sticky z-20 bg-gray-50 shadow-sm",
-          column.pinned === 'left' && "left-0 border-r border-gray-800/10 shadow-md",
-          column.pinned === 'right' && "right-0 border-l border-gray-800/10 shadow-md"
+          isPinned && "sticky z-20 bg-gray-50",
+          column.pinned === 'left' && "left-0 border-r border-gray-800/10",
+          column.pinned === 'right' && "right-0 border-l border-gray-800/10"
         )}
         style={{
           minWidth: column.minWidth || (column.filterable ? '180px' : '120px'),
@@ -200,7 +200,7 @@ export function DataTableHeader<T>({
 
   return (
     <div
-      className="bg-gray-50 sticky top-0 z-10 grid border-b border-gray-200"
+      className="bg-gray-50 sticky top-0 z-30 grid border-b border-gray-200"
       style={{
         gridTemplateColumns: generateGridColumns(),
         minWidth: 'fit-content'
