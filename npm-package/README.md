@@ -2,6 +2,8 @@
 
 A comprehensive React data grid component with advanced features like pinned columns, inline editing, grouping, filtering, and export capabilities.
 
+![preview](preview.png)
+
 ## Installation
 
 ```bash

@@ -7,6 +7,8 @@
 
 A comprehensive React data grid component with advanced features like hierarchical multi-level grouping, pinned columns, inline editing, multiselect filters, and export capabilities.
 
+![preview](preview.png)
+
 ## Features
 
 - **Advanced Grouping**: Multi-level hierarchical grouping with drag-and-drop reordering
