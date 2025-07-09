@@ -68,9 +68,10 @@ export function DataTableHeader<T>({
           <input
             type="checkbox"
             checked={selectedRows.length > 0 && selectedRows.length === totalRows}
-            onChange={(e) => {
+            onClick={(e) => {
               e.stopPropagation();
-              e.preventDefault();
+            }}
+            onChange={() => {
               onSelectAll();
             }}
             className={cn(

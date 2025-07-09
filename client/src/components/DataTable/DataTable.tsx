@@ -108,11 +108,7 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   const handleGroupByChange = (value: string | string[] | null) => {
-    if (Array.isArray(value)) {
-      setGroupBy(value[0] || '');
-    } else {
-      setGroupBy(value || '');
-    }
+    setGroupBy(value || '');
   };
 
   const handleFilterChange = (field: string, filter: any) => {
@@ -159,7 +155,7 @@ export function DataTable<T extends Record<string, any>>({
       <DataTableGroupingArea
         columns={columns}
         groupBy={currentGroupBy}
-        onGroupByChange={handleGroupByChange}
+        onGroupByChange={setGroupBy}
       />
 
       {/* Column Configuration Modal */}
