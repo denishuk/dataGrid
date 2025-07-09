@@ -54,34 +54,71 @@ export function DataTableHeader<T>({
         <div
           key={String(column.field)}
           className={cn(
-            "px-4 py-3 text-left bg-gray-50 border-b border-gray-300 flex items-center justify-start gap-3",
+            "px-4 py-3 text-left bg-gray-50 border-b border-gray-300",
             isPinned && "sticky z-20 bg-gray-50 shadow-sm",
             column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-md",
             column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-md"
           )}
           style={{
-            minWidth: column.minWidth || 180,
+            minWidth: column.minWidth || (column.filterable ? '180px' : '120px'),
             maxWidth: column.maxWidth,
             width: column.width,
           }}
         >
-          <input
-            type="checkbox"
-            checked={selectedRows.length > 0 && selectedRows.length === totalRows}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            onChange={() => {
-              onSelectAll();
-            }}
-            className={cn(
-              "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
-              "transition-all duration-150 ease-in-out",
-              "hover:scale-110 focus:scale-110"
+          <div className="space-y-2">
+            {/* Header Content with Checkbox */}
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={selectedRows.length > 0 && selectedRows.length === totalRows}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                onChange={() => {
+                  onSelectAll();
+                }}
+                className={cn(
+                  "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
+                  "transition-all duration-150 ease-in-out",
+                  "hover:scale-110 focus:scale-110"
+                )}
+              />
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-gray-900">{column.header}</span>
+                {column.pinned && <Pin className="h-3 w-3 text-primary-500" />}
+                {column.sortable && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={cn(
+                      "p-0 h-4 w-4",
+                      "transition-all duration-200 ease-in-out",
+                      "hover:scale-110 hover:bg-gray-100 hover:shadow-sm",
+                      "active:scale-95",
+                      "focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
+                    )}
+                    onClick={() => onSort(String(column.field))}
+                  >
+                    <div className="transition-transform duration-200 ease-in-out hover:rotate-[5deg]">
+                      {getSortIcon(String(column.field))}
+                    </div>
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* Column Filter */}
+            {showFilters && column.filterable && (
+              <div className="w-full min-w-0">
+                <DataTableColumnFilter
+                  column={column}
+                  filter={currentFilter}
+                  data={data}
+                  onFilterChange={(filter) => onFilterChange(String(column.field), filter)}
+                />
+              </div>
             )}
-          />
-          <span className="font-medium text-gray-900">{column.header}</span>
-          {column.pinned && <Pin className="h-3 w-3 text-primary-500" />}
+          </div>
         </div>
       );
     }
@@ -133,7 +170,7 @@ export function DataTableHeader<T>({
           </div>
 
           {/* Column Filter */}
-          {showFilters && (
+          {showFilters && column.filterable && (
             <div className="w-full min-w-0">
               <DataTableColumnFilter
                 column={column}
