@@ -1,4 +1,5 @@
 import * as React from "react"
+import { createPortal } from "react-dom"
 import { Check, ChevronRight, Circle } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -6,16 +7,19 @@ import { cn } from "@/lib/utils"
 interface DropdownMenuContextType {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  triggerElement?: HTMLElement;
+  setTriggerElement?: (element: HTMLElement) => void;
 }
 
 const DropdownMenuContext = React.createContext<DropdownMenuContextType | null>(null);
 
 const DropdownMenu: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [triggerElement, setTriggerElement] = React.useState<HTMLElement | undefined>();
 
   return (
-    <DropdownMenuContext.Provider value={{ isOpen, setIsOpen }}>
-      <div className="relative inline-block text-left w-full" style={{ zIndex: 999 }}>
+    <DropdownMenuContext.Provider value={{ isOpen, setIsOpen, triggerElement, setTriggerElement }}>
+      <div className="relative inline-block text-left w-full">
         {children}
       </div>
     </DropdownMenuContext.Provider>
@@ -27,21 +31,36 @@ const DropdownMenuTrigger: React.FC<{
   asChild?: boolean;
 }> = ({ children, asChild }) => {
   const context = React.useContext(DropdownMenuContext);
+  const triggerRef = React.useRef<HTMLElement>(null);
 
   if (asChild) {
     return React.cloneElement(children as React.ReactElement, {
+      ref: triggerRef,
+      'data-dropdown-trigger': true,
       onClick: (e: React.MouseEvent) => {
         e.stopPropagation();
         context?.setIsOpen(!context.isOpen);
+        // Store trigger element for positioning
+        if (context?.setTriggerElement) {
+          context.setTriggerElement(e.currentTarget as HTMLElement);
+        }
       }
     });
   }
 
   return (
-    <div onClick={(e) => {
-      e.stopPropagation();
-      context?.setIsOpen(!context.isOpen);
-    }}>
+    <div 
+      ref={triggerRef}
+      data-dropdown-trigger="true"
+      onClick={(e) => {
+        e.stopPropagation();
+        context?.setIsOpen(!context.isOpen);
+        // Store trigger element for positioning
+        if (context?.setTriggerElement) {
+          context.setTriggerElement(e.currentTarget as HTMLElement);
+        }
+      }}
+    >
       {children}
     </div>
   );
@@ -55,6 +74,8 @@ const DropdownMenuContent = React.forwardRef<HTMLDivElement, {
 }>(({ className, children, sideOffset = 4, align = 'start', ...props }, ref) => {
   const context = React.useContext(DropdownMenuContext);
   const contentRef = React.useRef<HTMLDivElement>(null);
+  const triggerRef = React.useRef<HTMLDivElement>(null);
+  const [position, setPosition] = React.useState({ top: 0, left: 0 });
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -65,37 +86,44 @@ const DropdownMenuContent = React.forwardRef<HTMLDivElement, {
 
     if (context?.isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      // Calculate position relative to viewport
+      if (context.triggerElement) {
+        const rect = context.triggerElement.getBoundingClientRect();
+        setPosition({
+          top: rect.bottom + sideOffset,
+          left: align === 'end' ? rect.right - 192 : rect.left // 192px = w-48
+        });
+      }
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [context?.isOpen, context]);
+  }, [context?.isOpen, context, align, sideOffset]);
 
   if (!context?.isOpen) return null;
 
-  const alignmentClass = align === 'end' ? 'right-0' : align === 'center' ? 'left-1/2 -translate-x-1/2' : 'left-0';
-
-  return (
-    <>
-      <div
-        ref={contentRef}
-        className={cn(
-          "absolute top-full min-w-[8rem] bg-white border border-gray-800/10 overflow-hidden rounded bg-popover p-1 text-popover-foreground shadow-lg animate-in fade-in-0 zoom-in-95",
-          alignmentClass,
-          className
-        )}
-        style={{ 
-          marginTop: sideOffset,
-          zIndex: 9999,
-          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
-        }}
-        {...props}
-      >
-        {children}
-      </div>
-    </>
+  const content = (
+    <div
+      ref={contentRef}
+      className={cn(
+        "fixed min-w-[8rem] bg-white border border-gray-800/10 overflow-hidden rounded bg-popover p-1 text-popover-foreground shadow-lg animate-in fade-in-0 zoom-in-95",
+        className
+      )}
+      style={{ 
+        top: position.top,
+        left: position.left,
+        zIndex: 9999,
+        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+      }}
+      {...props}
+    >
+      {children}
+    </div>
   );
+
+  // Use portal to render outside of table container
+  return createPortal(content, document.body);
 });
 DropdownMenuContent.displayName = "DropdownMenuContent";
 
