@@ -87,7 +87,8 @@ export function DataTable<T extends Record<string, any>>({
         const padding = 40; // Additional padding
         
         const availableHeight = viewportHeight - headerHeight - actionBarHeight - groupingAreaHeight - paginationHeight - padding;
-        setContainerHeight(Math.max(400, Math.min(availableHeight, 800))); // Min 400px, max 800px
+        // Subtract additional 8px to prevent gap between footer and last row
+        setContainerHeight(Math.max(400, Math.min(availableHeight - 8, 800))); // Min 400px, max 800px
       }
     };
 

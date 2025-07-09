@@ -30,12 +30,18 @@ const DropdownMenuTrigger: React.FC<{
 
   if (asChild) {
     return React.cloneElement(children as React.ReactElement, {
-      onClick: () => context?.setIsOpen(!context.isOpen)
+      onClick: (e: React.MouseEvent) => {
+        e.stopPropagation();
+        context?.setIsOpen(!context.isOpen);
+      }
     });
   }
 
   return (
-    <div onClick={() => context?.setIsOpen(!context.isOpen)}>
+    <div onClick={(e) => {
+      e.stopPropagation();
+      context?.setIsOpen(!context.isOpen);
+    }}>
       {children}
     </div>
   );
@@ -74,7 +80,7 @@ const DropdownMenuContent = React.forwardRef<HTMLDivElement, {
     <div
       ref={contentRef}
       className={cn(
-        "absolute top-full z-50 min-w-[8rem] bg-white border border-gray-800/10 overflow-hidden rounded bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+        "absolute top-full z-[60] min-w-[8rem] bg-white border border-gray-800/10 overflow-hidden rounded bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
         alignmentClass,
         className
       )}
@@ -156,7 +162,8 @@ const DropdownMenuItem = React.forwardRef<HTMLDivElement, {
         inset && "pl-8",
         className
       )}
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         onClick?.();
         context?.setIsOpen(false);
       }}

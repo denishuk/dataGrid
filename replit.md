@@ -127,6 +127,7 @@ The core component provides:
 - July 09, 2025. Added vertical center alignment to all cell content using flex items-center with 44px minimum height across all table components
 - July 09, 2025. Replaced hardcoded virtualization containerHeight with dynamic calculation based on viewport size, fullscreen mode, and active components for better responsive behavior
 - July 09, 2025. Fixed checkbox integration issue where columns with useSelection=true were not showing filter inputs and sort icons properly
+- July 09, 2025. Fixed dynamic height calculation gap (reduced by 8px) and dropdown menu z-index overlap issue with pinned columns, prevented checkbox selection when clicking dropdown actions
 
 ## User Preferences
 
