@@ -24,7 +24,7 @@ export function DataTableColumnConfigModal<T>({
       portalContainer.style.position = 'fixed';
       portalContainer.style.top = '0';
       portalContainer.style.left = '0';
-      portalContainer.style.zIndex = '9999';
+      portalContainer.style.zIndex = '999';
       portalContainer.style.pointerEvents = 'none';
       document.body.appendChild(portalContainer);
 

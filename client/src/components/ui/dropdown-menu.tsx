@@ -49,7 +49,7 @@ const DropdownMenuTrigger: React.FC<{
   }
 
   return (
-    <div 
+    <div
       ref={triggerRef}
       data-dropdown-trigger="true"
       onClick={(e) => {
@@ -107,14 +107,12 @@ const DropdownMenuContent = React.forwardRef<HTMLDivElement, {
     <div
       ref={contentRef}
       className={cn(
-        "fixed min-w-[8rem] bg-white border border-gray-800/10 overflow-hidden rounded bg-popover p-1 text-popover-foreground shadow-lg animate-in fade-in-0 zoom-in-95",
+        "fixed min-w-[8rem] bg-white border border-gray-800/10 overflow-hidden rounded p-1 text-popover-foreground shadow-lg animate-in fade-in-0 zoom-in-95",
         className
       )}
-      style={{ 
+      style={{
         top: position.top,
         left: position.left,
-        zIndex: 9999,
-        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
       }}
       {...props}
     >
@@ -277,7 +275,7 @@ const DropdownMenuSeparator = React.forwardRef<HTMLDivElement, {
 }>(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    className={cn("-mx-1 my-1 h-px bg-gray-800/10", className)}
     {...props}
   />
 ));
