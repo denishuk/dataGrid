@@ -51,21 +51,22 @@ export function DataTableRow<T extends Record<string, any>>({
     const value = column.valueGetter ? column.valueGetter(row) : row[column.field];
     const isEditing = editingCell === column.field;
 
-    // Handle checkbox selection column
+    // Handle checkbox as part of column content (not separate column)
     if (column.useSelection) {
       return (
         <div
           key={String(column.field)}
           className={cn(
-            "px-4 py-2.5 text-center border-b border-gray-200 flex items-center justify-center",
+            "px-4 py-2.5 border-b border-gray-200 flex items-center gap-3",
+            "transition-all duration-200 ease-in-out",
             isPinned && "bg-white sticky z-10",
             column.pinned === 'left' && "left-0 border-r",
             column.pinned === 'right' && "right-0 border-l"
           )}
           style={{
-            minWidth: column.minWidth || 50,
-            maxWidth: column.maxWidth || 50,
-            width: column.width || 50,
+            minWidth: column.minWidth || 180,
+            maxWidth: column.maxWidth,
+            width: column.width,
           }}
         >
           <input
@@ -82,6 +83,9 @@ export function DataTableRow<T extends Record<string, any>>({
               isSelected && "animate-pulse"
             )}
           />
+          <span className="flex-1">
+            {column.cellRenderer ? column.cellRenderer(value, row) : value}
+          </span>
         </div>
       );
     }
@@ -123,7 +127,11 @@ export function DataTableRow<T extends Record<string, any>>({
   // Generate grid columns template based on column widths
   const generateGridColumns = () => {
     const allColumns = [...pinnedLeftColumns, ...unpinnedColumns, ...pinnedRightColumns];
-    return allColumns.map(column => {
+    return allColumns.map((column, index) => {
+      // First column should expand to fill available space
+      if (index === 0) {
+        return 'minmax(200px, 1fr)';
+      }
       const width = column.width || column.minWidth || (column.filterable ? 180 : 120);
       return `${width}px`;
     }).join(' ');

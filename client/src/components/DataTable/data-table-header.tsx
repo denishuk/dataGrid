@@ -48,22 +48,21 @@ export function DataTableHeader<T>({
   const renderHeaderCell = (column: DataTableColumn<T>, isPinned: boolean = false) => {
     const currentFilter = filters?.find(f => f.field === String(column.field));
 
-    // Render checkbox header for selection column
+    // Render checkbox as part of column header (not separate column)
     if (column.useSelection) {
       return (
         <div
           key={String(column.field)}
           className={cn(
-            "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-            "bg-gray-50 border-b border-gray-200 flex items-center justify-center",
-            isPinned && "sticky z-20",
-            column.pinned === 'left' && "left-0 border-r",
-            column.pinned === 'right' && "right-0 border-l"
+            "px-4 py-3 text-left bg-gray-50 border-b border-gray-300 flex items-center gap-3",
+            isPinned && "sticky z-20 bg-gray-50/95 backdrop-blur-sm",
+            column.pinned === 'left' && "left-0 border-r border-gray-300 shadow-lg",
+            column.pinned === 'right' && "right-0 border-l border-gray-300 shadow-lg"
           )}
           style={{
-            minWidth: column.minWidth || 50,
-            maxWidth: column.maxWidth || 50,
-            width: column.width || 50,
+            minWidth: column.minWidth || 180,
+            maxWidth: column.maxWidth,
+            width: column.width,
           }}
         >
           <input
@@ -77,6 +76,8 @@ export function DataTableHeader<T>({
               selectedRows.length === totalRows && totalRows > 0 && "animate-pulse"
             )}
           />
+          <span className="font-medium text-gray-900">{column.header}</span>
+          {column.pinned && <Pin className="h-3 w-3 text-primary-500" />}
         </div>
       );
     }
@@ -146,7 +147,11 @@ export function DataTableHeader<T>({
   // Generate grid columns template based on column widths
   const generateGridColumns = () => {
     const allColumns = [...pinnedLeftColumns, ...unpinnedColumns, ...pinnedRightColumns];
-    return allColumns.map(column => {
+    return allColumns.map((column, index) => {
+      // First column should expand to fill available space
+      if (index === 0) {
+        return 'minmax(200px, 1fr)';
+      }
       const width = column.width || column.minWidth || (column.filterable ? 180 : 120);
       return `${width}px`;
     }).join(' ');

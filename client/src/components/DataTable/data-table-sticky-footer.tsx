@@ -84,7 +84,11 @@ export function DataTableStickyFooter<T extends Record<string, any>>({
 
   // Generate grid columns template based on column widths
   const generateGridColumns = () => {
-    return visibleColumns.map(column => {
+    return visibleColumns.map((column, index) => {
+      // First column should expand to fill available space
+      if (index === 0) {
+        return 'minmax(200px, 1fr)';
+      }
       const width = column.width || column.minWidth || (column.filterable ? 180 : 120);
       return `${width}px`;
     }).join(' ');

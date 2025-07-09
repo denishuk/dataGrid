@@ -29,7 +29,11 @@ export function DataTableGroupHeader<T>({
   
   // Generate grid columns template based on column widths
   const generateGridColumns = () => {
-    return visibleColumns.map(column => {
+    return visibleColumns.map((column, index) => {
+      // First column should expand to fill available space
+      if (index === 0) {
+        return 'minmax(200px, 1fr)';
+      }
       const width = column.width || column.minWidth || (column.filterable ? 180 : 120);
       return `${width}px`;
     }).join(' ');
@@ -48,24 +52,16 @@ export function DataTableGroupHeader<T>({
         const isCheckboxColumn = String(column.field) === '__select__';
         const isFirstDataColumn = !isCheckboxColumn && index === (visibleColumns.some(col => String(col.field) === '__select__') ? 1 : 0);
         
-        if (isCheckboxColumn) {
-          // Checkbox column: Skip rendering - will be handled by colSpan in first data column
-          return null;
-        } else if (isFirstDataColumn) {
-          // First data column: show the group text with indentation based on level
-          // ColSpan with checkbox column if it exists for more width
-          const hasCheckboxColumn = visibleColumns.some(col => String(col.field) === '__select__');
+        if (isCheckboxColumn || isFirstDataColumn) {
+          // First column (whether checkbox or data): show the group text with full width
           const indentSize = level * 30; // 30px per level for better hierarchy visualization
           
           return (
             <div 
               key={String(column.field)} 
-              className={cn(
-                "px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200",
-                hasCheckboxColumn && "col-span-2"
-              )}
+              className="px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors border-b border-gray-200"
               style={{
-                minWidth: hasCheckboxColumn ? '200px' : (column.minWidth || '120px'),
+                minWidth: '200px',
               }}
             >
               <div className="flex items-center gap-3" style={{ paddingLeft: `${indentSize}px` }}>
