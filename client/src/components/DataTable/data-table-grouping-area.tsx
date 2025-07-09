@@ -7,7 +7,7 @@ import { DataTableColumn } from './types';
 interface DataTableGroupingAreaProps<T> {
   columns: DataTableColumn<T>[];
   groupBy?: string | string[];
-  onGroupByChange: (fields: string | null) => void;
+  onGroupByChange: (fields: string | string[] | null) => void;
 }
 
 export function DataTableGroupingArea<T>({
@@ -23,13 +23,15 @@ export function DataTableGroupingArea<T>({
   const activeGroups = Array.isArray(groupBy) ? groupBy : (groupBy ? [groupBy] : []);
 
   const handleAddGroup = (field: string) => {
-    const newGroups = [...activeGroups, field];
-    onGroupByChange(newGroups[0] || null);
+    if (!activeGroups.includes(field)) {
+      const newGroups = [...activeGroups, field];
+      onGroupByChange(newGroups.length === 1 ? newGroups[0] : newGroups);
+    }
   };
 
   const handleRemoveGroup = (field: string) => {
     const newGroups = activeGroups.filter(g => g !== field);
-    onGroupByChange(newGroups.length > 0 ? newGroups[0] : null);
+    onGroupByChange(newGroups.length === 0 ? null : newGroups.length === 1 ? newGroups[0] : newGroups);
   };
 
   const handleDragStart = (e: React.DragEvent, index: number) => {
@@ -59,7 +61,7 @@ export function DataTableGroupingArea<T>({
     newGroups.splice(draggedIndex, 1);
     newGroups.splice(dropIndex, 0, draggedItem);
 
-    onGroupByChange(newGroups[0] || null);
+    onGroupByChange(newGroups.length === 0 ? null : newGroups.length === 1 ? newGroups[0] : newGroups);
     setDraggedIndex(null);
   };
 

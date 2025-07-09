@@ -22,8 +22,14 @@ export function DataTableColumnFilter<T>({
   onFilterChange,
 }: DataTableColumnFilterProps<T>) {
   const [filterValue, setFilterValue] = useState(filter?.value || '');
-  const [rangeMin, setRangeMin] = useState(filter?.operator === 'gte' ? filter.value : '');
-  const [rangeMax, setRangeMax] = useState(filter?.operator === 'lte' ? filter.value : '');
+  const [rangeMin, setRangeMin] = useState(
+    filter?.operator === 'gte' ? filter.value : 
+    (filter?.value?.min || '')
+  );
+  const [rangeMax, setRangeMax] = useState(
+    filter?.operator === 'lte' ? filter.value : 
+    (filter?.value?.max || '')
+  );
   const [selectedValues, setSelectedValues] = useState<string[]>(
     filter?.operator === 'in' && Array.isArray(filter.value) ? filter.value : []
   );
@@ -39,8 +45,21 @@ export function DataTableColumnFilter<T>({
   useEffect(() => {
     if (filter) {
       setFilterValue(filter.value || '');
-      if (filter.operator === 'gte') setRangeMin(filter.value);
-      if (filter.operator === 'lte') setRangeMax(filter.value);
+      if (filter.operator === 'gte') {
+        if (typeof filter.value === 'object' && filter.value.min !== undefined) {
+          setRangeMin(filter.value.min);
+          setRangeMax(filter.value.max || '');
+        } else {
+          setRangeMin(filter.value);
+        }
+      } else if (filter.operator === 'lte') {
+        if (typeof filter.value === 'object' && filter.value.max !== undefined) {
+          setRangeMax(filter.value.max);
+          setRangeMin(filter.value.min || '');
+        } else {
+          setRangeMax(filter.value);
+        }
+      }
       if (filter.operator === 'in' && Array.isArray(filter.value)) {
         setSelectedValues(filter.value);
       }

@@ -22,7 +22,7 @@ export function DataTable<T extends Record<string, any>>({
   stickyFooter = false,
   showFilters = true,
   // showColumnConfig = true,
-  pageSize: initialPageSize = 50,
+  pageSize: initialPageSize = 10,
   className,
   enablePdfExport = false,
   onRowSelect,
@@ -107,8 +107,12 @@ export function DataTable<T extends Record<string, any>>({
     }
   };
 
-  const handleGroupByChange = (value: string | null) => {
-    setGroupBy(value || '');
+  const handleGroupByChange = (value: string | string[] | null) => {
+    if (Array.isArray(value)) {
+      setGroupBy(value[0] || '');
+    } else {
+      setGroupBy(value || '');
+    }
   };
 
   const handleFilterChange = (field: string, filter: any) => {
@@ -136,7 +140,7 @@ export function DataTable<T extends Record<string, any>>({
   return (
     <div
       className={cn(
-        isFullscreen && "fixed inset-0 z-50",
+        isFullscreen && "fixed inset-0 z-50 bg-white overflow-auto",
         className
       )}
     >
@@ -292,15 +296,17 @@ export function DataTable<T extends Record<string, any>>({
         />
       )}
 
-      {/* Pagination */}
-      <DataTablePagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        pageSize={currentPageSize}
-        totalItems={filteredData.length}
-        onPageChange={setCurrentPage}
-        onPageSizeChange={handlePageSizeChange}
-      />
+      {/* Pagination - Only show if there are more records than page size */}
+      {!virtualScrolling && filteredData.length > currentPageSize && (
+        <DataTablePagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          pageSize={currentPageSize}
+          totalItems={filteredData.length}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={handlePageSizeChange}
+        />
+      )}
     </div>
   );
 }

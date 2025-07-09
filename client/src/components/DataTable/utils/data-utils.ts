@@ -35,8 +35,22 @@ export function filterData<T>(data: T[], filters: FilterConfig[]): T[] {
         case 'lt':
           return Number(value) < Number(filterValue);
         case 'gte':
+          if (typeof filterValue === 'object' && filterValue.min !== undefined) {
+            // Handle range filter with both min and max
+            const numValue = Number(value);
+            const minValue = Number(filterValue.min);
+            const maxValue = Number(filterValue.max);
+            return numValue >= minValue && (filterValue.max === '' || numValue <= maxValue);
+          }
           return Number(value) >= Number(filterValue);
         case 'lte':
+          if (typeof filterValue === 'object' && filterValue.max !== undefined) {
+            // Handle range filter with both min and max
+            const numValue = Number(value);
+            const minValue = Number(filterValue.min);
+            const maxValue = Number(filterValue.max);
+            return numValue <= maxValue && (filterValue.min === '' || numValue >= minValue);
+          }
           return Number(value) <= Number(filterValue);
         case 'in':
           if (Array.isArray(filterValue)) {
