@@ -130,6 +130,7 @@ The core component provides:
 - July 09, 2025. Fixed dynamic height calculation gap (reduced by 8px) and dropdown menu z-index overlap issue with pinned columns, prevented checkbox selection when clicking dropdown actions
 - July 09, 2025. Replaced custom dropdown menu with Headless UI Menu component using portal=true to solve z-index issues with pinned columns, ensuring actions dropdown always appears above all table elements
 - July 09, 2025. Created comprehensive standalone CSS file (datatable.css) with all component styles to prevent Tailwind CSS purging in external applications. Updated build process to include CSS bundling and extraction. Added React portal solution for dropdown positioning above all table elements with fixed z-index issues.
+- July 10, 2025. Implemented dynamic type extraction system for NPM package build process. Created extract-types.js script that automatically reads types.ts and generates export statements, eliminating hardcoded interface definitions in build.sh. Build process now automatically syncs with source code changes.
 
 ## User Preferences
 

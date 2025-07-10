@@ -9,9 +9,10 @@
     "dist",
     "README.md",
     "README-CSS.md",
+    "README-BUILD.md",
     "example-standalone-css.md",
     "LICENSE",
-    "dist/datatable.css"
+    "extract-types.js"
   ],
   "sideEffects": false,
   "scripts": {
