@@ -38,8 +38,6 @@ function extractTypes() {
   
   const allTypes = [...interfaces, ...types];
   
-  console.log('Found types:', allTypes.join(', '));
-  
   return allTypes;
 }
 
@@ -138,7 +136,8 @@ switch (command) {
     console.log(generateTypeDefinitions());
     break;
   case 'list':
-    extractTypes();
+    const types = extractTypes();
+    console.log('Found types:', types.join(', '));
     break;
   default:
     console.error('Usage: node extract-types.js [exports|definitions|list]');
