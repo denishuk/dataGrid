@@ -12,7 +12,8 @@
     "README-BUILD.md",
     "example-standalone-css.md",
     "LICENSE",
-    "extract-types.js"
+    "extract-types.js",
+    "donation-qr.png"
   ],
   "sideEffects": false,
   "scripts": {

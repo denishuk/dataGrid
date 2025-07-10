@@ -142,10 +142,24 @@ interface DataTableColumn<T> {
   maxWidth?: number                                // Maximum column width in pixels
   hidden?: boolean                                 // Hide column (default: false)
   editable?: boolean                               // Enable inline editing (default: false)
+  useSelection?: boolean                           // Enable checkbox selection for this column
+  aggregation?: 'count' | 'sum' | 'avg' | 'min' | 'max'  // Aggregation function for footer
   cellRenderer?: (value: any, row: T) => React.ReactNode  // Custom cell renderer
-  headerRenderer?: (column: DataTableColumn<T>) => React.ReactNode  // Custom header renderer
+  headerRenderer?: (column: DataTableColumn<T>, sortOptions: DataTableSortOptions, selectOptions?: DataTableSelectionOptions<T>) => React.ReactNode  // Custom header renderer
   valueGetter?: (row: T) => any                    // Custom value extraction for sorting/filtering
   options?: string[]                               // Options for select type columns
+}
+
+// Supporting interfaces for headerRenderer
+interface DataTableSortOptions {
+  onSort: (field: string) => void
+  getSortIcon: (field: string) => React.ReactNode
+}
+
+interface DataTableSelectionOptions<T> {
+  totalRows: number
+  onSelectAll: () => void
+  selectedRows: T[]
 }
 ```
 
@@ -190,6 +204,28 @@ interface GroupSummary {
   max?: number                                     // Maximum value
 }
 ```
+
+## Styling
+
+### Tailwind CSS Integration
+
+To ensure all component styles are properly applied, import the component's Tailwind styles in your main CSS file:
+
+```css
+@source "../../node_modules/advanced-react-datatable";
+```
+
+This approach ensures all Tailwind CSS classes used by the component are available and won't be purged by your build process.
+
+### Standalone CSS (Alternative)
+
+If you prefer not to use Tailwind CSS or need standalone styles, you can import the pre-built CSS file:
+
+```tsx
+import 'advanced-react-datatable/dist/datatable.css'
+```
+
+This includes all component styles as a 16KB standalone CSS file that works independently of Tailwind CSS.
 
 ## Development
 
@@ -240,6 +276,22 @@ npm run build
 ## License
 
 MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support the Project
+
+If you find this DataTable component useful, please consider supporting its development:
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/donate/?hosted_button_id=V99JQD5H894BW)
+
+### Donation Options
+
+**PayPal**: [https://www.paypal.com/donate/?hosted_button_id=V99JQD5H894BW](https://www.paypal.com/donate/?hosted_button_id=V99JQD5H894BW)
+
+**QR Code for Mobile Donations**:
+
+<img src="donation-qr.png" alt="Donation QR Code" width="200" height="200">
+
+Your contributions help maintain and improve this project. Every donation, no matter how small, is greatly appreciated and helps keep the project active and up-to-date.
 
 ## Support
 
