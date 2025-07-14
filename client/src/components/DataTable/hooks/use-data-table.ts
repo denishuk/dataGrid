@@ -76,12 +76,12 @@ export function useDataTable<T extends Record<string, any>>({
     setSelectedRows(prev => {
       // Try to use id first, fallback to object comparison
       const rowId = (row as any).id;
-      const isSelected = rowId 
+      const isSelected = rowId
         ? prev.some(r => (r as any).id === rowId)
         : prev.some(r => JSON.stringify(r) === JSON.stringify(row));
-      
+
       if (isSelected) {
-        return rowId 
+        return rowId
           ? prev.filter(r => (r as any).id !== rowId)
           : prev.filter(r => JSON.stringify(r) !== JSON.stringify(row));
       } else {
@@ -127,7 +127,7 @@ export function useDataTable<T extends Record<string, any>>({
   const clearSelection = useCallback(() => {
     setSelectedRows([]);
   }, []);
-  
+
   const filterByColumn = useCallback((field: string, filter: FilterConfig | null) => {
     if (filter) {
       addFilter(filter);
@@ -137,7 +137,6 @@ export function useDataTable<T extends Record<string, any>>({
   }, [addFilter, removeFilter]);
 
   const handleGroupByChange = useCallback((field: string | string[] | null) => {
-    console.log('GroupBy change:', groupBy, '->', field);
     setGroupBy(field || []);
     setExpandedGroups(new Set()); // Reset expanded groups when grouping changes
   }, [groupBy]);

@@ -56,8 +56,6 @@ export function DataTableRow<T extends Record<string, any>>({
     const isEditing = editingCell === column.field;
     const isFirstColumn = firstColumn.field === column.field;
 
-    console.log('isFirstColumn', isFirstColumn);
-
     // Handle checkbox as part of column content (not separate column)
     if (column.useSelection) {
       return (
@@ -67,7 +65,7 @@ export function DataTableRow<T extends Record<string, any>>({
             `min-h-[${DEFAULT_ROW_HEIGHT}px]`,
             "px-4 py-2 flex items-center justify-start gap-3",
             "transition-all duration-200 ease-in-out",
-            isPinned && "bg-white z-10 sticky border-gray-800/10 shadow-lg overflow-x-hidden",
+            isPinned && "bg-white z-10 sticky border-gray-800/10 overflow-x-hidden",
             column.pinned === 'left' && "left-0 border-r",
             column.pinned === 'right' && "right-0 border-l"
           )}
@@ -107,8 +105,8 @@ export function DataTableRow<T extends Record<string, any>>({
           "px-4 py-2 flex items-center justify-start",
           "transition-all duration-200 ease-in-out",
           isPinned && "bg-white sticky z-10 border-gray-800/10",
-          column.pinned === 'left' && "left-0 border-r shadow-lg",
-          column.pinned === 'right' && "right-0 border-l shadow-lg",
+          column.pinned === 'left' && "left-0 border-r",
+          column.pinned === 'right' && "right-0 border-l",
           column.editable && "cursor-pointer hover:bg-gray-50 hover:scale-[1.02]",
           editingCell === column.field && "bg-blue-50 ring-2 ring-indigo-500 ring-inset"
         )}

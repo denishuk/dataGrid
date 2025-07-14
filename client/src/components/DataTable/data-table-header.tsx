@@ -50,9 +50,6 @@ export function DataTableHeader<T>({
 
     // Render checkbox as part of column header (not separate column)
     if (column.useSelection) {
-
-
-
       return (
         <div
           key={String(column.field)}

@@ -27,7 +27,7 @@ export function DataTableActionBar({
   const hasActiveFilters = filters.length > 0;
 
   return (
-    <div className="bg-indigo-600 text-white p-4">
+    <div className="bg-gray-900 text-white p-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3 flex-wrap">
           {/* Export Buttons */}
@@ -36,7 +36,7 @@ export function DataTableActionBar({
               variant="outline"
               size="sm"
               onClick={() => onExport?.('csv')}
-              className="flex items-center gap-2 bg-indigo-700 hover:bg-indigo-800 text-white border-indigo-500 hover:border-indigo-400"
+              className="flex items-center gap-2 bg-gray-800/50 hover:bg-gray-800 text-white border-gray-400 hover:border-gray-400/10"
             >
               <Download className="h-4 w-4 text-white" />
               Export CSV
@@ -47,7 +47,7 @@ export function DataTableActionBar({
                 variant="outline"
                 size="sm"
                 onClick={() => onExport?.('pdf')}
-                className="flex items-center gap-2 bg-indigo-700 hover:bg-indigo-800 text-white border-indigo-500 hover:border-indigo-400"
+                className="flex items-center gap-2 bg-gray-800/50 hover:bg-gray-800 text-white border-gray-400 hover:border-gray-400/10"
               >
                 <Download className="h-4 w-4 text-white" />
                 Export PDF
