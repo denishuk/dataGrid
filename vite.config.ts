@@ -4,6 +4,7 @@ import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 
 export default defineConfig({
+  root: 'client',
   plugins: [
     react(),
     dts({
@@ -38,6 +39,10 @@ export default defineConfig({
     },
     outDir: 'dist',
     sourcemap: true
+  },
+  server: {
+    port: 5001,
+    host: true,
   },
   resolve: {
     alias: {
