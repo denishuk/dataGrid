@@ -17,8 +17,8 @@ export type {
 } from './types'
 
 // Utility exports
-export { cn } from '@/lib/utils'
+export { cn } from '../../lib/utils'
 
 // Sample data exports for demos
-export { employees, employeeColumns } from '@/data/employees'
-export type { Employee } from '@/data/employees'
+export { employees, employeeColumns } from '../../data/employees'
+export type { Employee } from '../../data/employees'

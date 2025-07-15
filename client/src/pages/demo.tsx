@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { DataTable, DataTableColumn } from '@/components/DataTable';
-import { Employee } from '@shared/schema';
+import { employees, Employee } from '@/data/employees';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,10 +9,6 @@ import { MoreHorizontal, Eye, Edit, UserPlus, Trash2 } from 'lucide-react';
 
 export default function Demo() {
   const [selectedRows, setSelectedRows] = useState<Employee[]>([]);
-
-  const { data: employees = [], isLoading } = useQuery<Employee[]>({
-    queryKey: ['/api/employees'],
-  });
 
   const columns: DataTableColumn<Employee>[] = [
     {
@@ -44,7 +39,7 @@ export default function Demo() {
           </div>
           <div>
             <div className="font-medium text-gray-900">{value}</div>
-            <div className="text-sm text-gray-500">{row.title}</div>
+            <div className="text-sm text-gray-500">{row.email}</div>
           </div>
         </div>
       ),
@@ -58,7 +53,7 @@ export default function Demo() {
       editable: true,
       type: 'select',
       minWidth: 180,
-      options: ['Engineering', 'Marketing', 'Sales', 'HR', 'Finance'],
+      options: ['Engineering', 'Marketing', 'Finance', 'HR'],
       cellRenderer: (value) => (
         <Badge variant="secondary" className="bg-blue-100 text-blue-800">
           {value}
@@ -81,26 +76,19 @@ export default function Demo() {
       ),
     },
     {
-      field: 'status',
-      header: 'Status',
+      field: 'active',
+      header: 'Active',
       sortable: true,
       filterable: true,
       editable: true,
-      type: 'select',
+      type: 'boolean',
       minWidth: 150,
-      options: ['Active', 'Inactive', 'On Leave'],
       cellRenderer: (value) => (
         <Badge
-          variant={value === 'Active' ? 'default' : value === 'On Leave' ? 'secondary' : 'destructive'}
-          className={
-            value === 'Active'
-              ? 'bg-green-100 text-green-800'
-              : value === 'On Leave'
-              ? 'bg-yellow-100 text-yellow-800'
-              : 'bg-red-100 text-red-800'
-          }
+          variant={value ? 'default' : 'destructive'}
+          className={value ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}
         >
-          {value}
+          {value ? 'Active' : 'Inactive'}
         </Badge>
       ),
     },
@@ -169,17 +157,6 @@ export default function Demo() {
     // For demo purposes, we'll just log the change
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading data...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       {/* Header Section */}
@@ -202,7 +179,7 @@ export default function Demo() {
       <div className="max-w-7xl mx-auto space-y-6">
         <DataTable
           className="bg-white rounded shadow-sm"
-          data={employees as Employee[]}
+          data={employees}
           columns={columns}
           virtualScrolling={true}
           stickyHeader={true}
@@ -238,7 +215,7 @@ export default function Demo() {
                 </div>
                 <div>
                   <div className="text-sm text-gray-600">Total Rows</div>
-                  <div className="text-lg font-semibold text-gray-900">{(employees as Employee[]).length}</div>
+                  <div className="text-lg font-semibold text-gray-900">{employees.length}</div>
                 </div>
               </div>
             </CardContent>

@@ -131,6 +131,8 @@ The core component provides:
 - July 09, 2025. Replaced custom dropdown menu with Headless UI Menu component using portal=true to solve z-index issues with pinned columns, ensuring actions dropdown always appears above all table elements
 - July 09, 2025. Created comprehensive standalone CSS file (datatable.css) with all component styles to prevent Tailwind CSS purging in external applications. Updated build process to include CSS bundling and extraction. Added React portal solution for dropdown positioning above all table elements with fixed z-index issues.
 - July 10, 2025. Implemented dynamic type extraction system for NPM package build process. Created extract-types.js script that automatically reads types.ts and generates export statements, eliminating hardcoded interface definitions in build.sh. Build process now automatically syncs with source code changes.
+- July 15, 2025. Fixed extract-types.js debug output issue that was causing TypeScript syntax errors in build.sh by removing debug console.log statements from export generation.
+- July 15, 2025. Simplified package architecture by removing server-side dependencies and creating client-only version with hardcoded employee data. Created simple-package/ directory structure with minimal dependencies and relative imports instead of @/ aliases. Updated demo.tsx to use hardcoded data from /data/employees.ts instead of API calls.
 
 ## User Preferences
 
