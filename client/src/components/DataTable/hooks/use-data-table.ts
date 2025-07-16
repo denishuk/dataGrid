@@ -15,9 +15,6 @@ export function useDataTable<T extends Record<string, any>>({
   data,
   initialColumns,
   initialGroupBy,
-  // selectionMode = 'none',
-  // onRowSelect,
-  // onCellEdit,
 }: UseDataTableProps<T>) {
   const [columns, setColumns] = useState<DataTableColumn<T>[]>(initialColumns);
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
@@ -112,13 +109,6 @@ export function useDataTable<T extends Record<string, any>>({
     });
   }, []);
 
-  // const onFilterChange = useCallback((field: string, filter: FilterConfig | null) => {
-  //   if (filter) {
-  //     addFilter(filter);
-  //   } else {
-  //     removeFilter(field);
-  //   }
-  // }, [addFilter, removeFilter]);
 
   // Additional methods needed by new data-table component
   const processedData = groupedData; // Alias for backward compatibility
@@ -128,7 +118,7 @@ export function useDataTable<T extends Record<string, any>>({
     setSelectedRows([]);
   }, []);
 
-  const filterByColumn = useCallback((field: string, filter: FilterConfig | null) => {
+  const filterByColumn = useCallback((field: string, filter: FilterConfig<T> | null) => {
     if (filter) {
       addFilter(filter);
     } else {
