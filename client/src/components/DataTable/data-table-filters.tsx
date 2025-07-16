@@ -9,8 +9,8 @@ import { DataTableColumn, FilterConfig } from './types';
 
 interface DataTableFiltersProps<T> {
   columns: DataTableColumn<T>[];
-  filters: FilterConfig[];
-  onAddFilter: (filter: FilterConfig) => void;
+  filters: FilterConfig<T>[];
+  onAddFilter: (filter: FilterConfig<T>) => void;
   onRemoveFilter: (field: string) => void;
   onClearFilters: () => void;
   isExpanded: boolean;
@@ -21,7 +21,6 @@ export function DataTableFilters<T>({
   columns,
   filters,
   onAddFilter,
-  // onRemoveFilter,
   onClearFilters,
   isExpanded,
   onToggleExpanded,
@@ -46,6 +45,7 @@ export function DataTableFilters<T>({
           onAddFilter({
             field,
             operator,
+            valueGetter: column.valueGetter,
             value,
             type: column.type || 'text'
           });

@@ -1,25 +1,17 @@
 import { FilterConfig, SortConfig } from '../types';
+import { defaultValueGetter } from '@/lib/utils.ts';
 
-// Utility function to extract unique values from data for filter options
-export function getUniqueValues<T>(data: T[], field: keyof T): string[] {
-  const values = new Set<string>();
-  data.forEach(row => {
-    const value = row[field];
-    if (value != null) {
-      values.add(String(value));
-    }
-  });
-  return Array.from(values).sort();
-}
 
 // Enhanced filter function with multiselect support
-export function filterData<T>(data: T[], filters: FilterConfig[]): T[] {
+export function filterData<T>(data: T[], filters: FilterConfig<T>[]): T[] {
   return data.filter(row => {
     return filters.every(filter => {
-      const value = (row as any)[filter.field];
+      const value = filter?.valueGetter ? filter.valueGetter(row) : defaultValueGetter<T>(row, filter.field);
       const filterValue = filter.value;
 
-      if (value == null) return false;
+      if (value == null) {
+        return false;
+      }
 
       switch (filter.operator) {
         case 'contains':
@@ -179,3 +171,4 @@ export function groupData<T>(data: T[], groupFields: string | string[], expanded
 
   return buildHierarchy(data, 0);
 }
+

@@ -9,13 +9,13 @@ import { cn } from '@/lib/utils';
 interface DataTableHeaderProps<T> {
   columns: DataTableColumn<T>[];
   sorts: SortConfig[];
-  filters: FilterConfig[];
+  filters: FilterConfig<T>[];
   selectedRows: T[];
   totalRows: number;
   data: T[];
   onSort: (field: string) => void;
   onSelectAll: () => void;
-  onFilterChange: (field: string, filter: FilterConfig | null) => void;
+  onFilterChange: (field: string, filter: FilterConfig<T> | null) => void;
   showFilters?: boolean;
 }
 

@@ -21,7 +21,7 @@ export function useDataTable<T extends Record<string, any>>({
 }: UseDataTableProps<T>) {
   const [columns, setColumns] = useState<DataTableColumn<T>[]>(initialColumns);
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
-  const [filters, setFilters] = useState<FilterConfig[]>([]);
+  const [filters, setFilters] = useState<FilterConfig<T>[]>([]);
   const [sorts, setSorts] = useState<SortConfig[]>([]);
   const [groupBy, setGroupBy] = useState<string | string[]>(initialGroupBy || '');
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
@@ -60,7 +60,7 @@ export function useDataTable<T extends Record<string, any>>({
     });
   }, []);
 
-  const addFilter = useCallback((filter: FilterConfig) => {
+  const addFilter = useCallback((filter: FilterConfig<T>) => {
     setFilters(prev => [...prev.filter(f => f.field !== filter.field), filter]);
   }, []);
 

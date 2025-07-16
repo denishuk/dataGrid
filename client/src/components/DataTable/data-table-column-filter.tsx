@@ -6,13 +6,13 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Badge } from '@/components/ui/badge';
 import { ChevronDown, X } from 'lucide-react';
 import { DataTableColumn, FilterConfig } from './types';
-import { getUniqueValues } from './utils/data-utils';
+import { getUniqueValues } from '@/lib/utils.ts';
 
 interface DataTableColumnFilterProps<T> {
   column: DataTableColumn<T>;
-  filter?: FilterConfig;
+  filter?: FilterConfig<T>;
   data: T[];
-  onFilterChange: (filter: FilterConfig | null) => void;
+  onFilterChange: (filter: FilterConfig<T> | null) => void;
 }
 
 export function DataTableColumnFilter<T>({
@@ -23,11 +23,11 @@ export function DataTableColumnFilter<T>({
 }: DataTableColumnFilterProps<T>) {
   const [filterValue, setFilterValue] = useState(filter?.value || '');
   const [rangeMin, setRangeMin] = useState(
-    filter?.operator === 'gte' ? filter.value : 
+    filter?.operator === 'gte' ? filter.value :
     (filter?.value?.min || '')
   );
   const [rangeMax, setRangeMax] = useState(
-    filter?.operator === 'lte' ? filter.value : 
+    filter?.operator === 'lte' ? filter.value :
     (filter?.value?.max || '')
   );
   const [selectedValues, setSelectedValues] = useState<string[]>(
@@ -71,15 +71,16 @@ export function DataTableColumnFilter<T>({
     }
   }, [filter]);
 
-  const handleFilterChange = useCallback((value: any, operator: string = 'contains') => {
+  const handleFilterChange = useCallback((value: any, operator: FilterConfig<T>['operator'] = 'contains') => {
     if (value === '' || value === null || value === undefined || value === '__all__') {
       onFilterChange(null);
       return;
     }
 
-    const newFilter: FilterConfig = {
+    const newFilter: FilterConfig<T> = {
       field: String(column.field),
-      operator: operator as any,
+      valueGetter: column.valueGetter,
+      operator: operator,
       value,
       type: column.type || 'text',
     };
@@ -98,8 +99,9 @@ export function DataTableColumnFilter<T>({
         return [];
       }
 
-      const newFilter: FilterConfig = {
+      const newFilter: FilterConfig<T> = {
         field: String(column.field),
+        valueGetter: column.valueGetter,
         operator: 'in',
         value: newValues,
         type: column.type || 'text',
@@ -117,9 +119,10 @@ export function DataTableColumnFilter<T>({
   const handleRangeChange = useCallback(() => {
     if (rangeMin !== '' && rangeMax !== '') {
       // For range filters, we'll use a combined approach
-      const newFilter: FilterConfig = {
+      const newFilter: FilterConfig<T> = {
         field: String(column.field),
         operator: 'gte',
+        valueGetter: column.valueGetter,
         value: { min: rangeMin, max: rangeMax },
         type: column.type || 'number',
       };
@@ -324,7 +327,7 @@ export function DataTableColumnFilter<T>({
   };
 
   return (
-    <div className="flex items-center gap-1 w-full">
+    <div className="flex items-center gap-1 w-full relative">
       <div className="flex-1 min-w-0">
         {renderFilter()}
       </div>
@@ -332,7 +335,7 @@ export function DataTableColumnFilter<T>({
         <Button
           variant="ghost"
           size="sm"
-          className="h-6 w-6 p-0 flex-shrink-0"
+          className="absolute right-0 h-6 w-6 p-0 flex-shrink-0"
           onClick={clearFilter}
         >
           <X className="h-3 w-3" />

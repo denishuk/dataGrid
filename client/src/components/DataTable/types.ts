@@ -48,8 +48,9 @@ export interface DataTableProps<T = any> {
   onCellEdit?: (row: T, field: keyof T, value: any) => void;
 }
 
-export interface FilterConfig {
+export interface FilterConfig<T> {
   field: string;
+  valueGetter?: (row: T) => any;
   operator: 'contains' | 'equals' | 'startsWith' | 'endsWith' | 'gt' | 'lt' | 'gte' | 'lte' | 'in';
   value: any;
   type: 'text' | 'number' | 'date' | 'select' | 'boolean';
