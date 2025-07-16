@@ -40,10 +40,6 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true
   },
-  server: {
-    port: 5001,
-    host: true,
-  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'client/src'),
